@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<!-- First page that users see -->
+
+<html>
+    <head>
+        <link rel="stylesheet" href="landing.css">
+    </head>
+    <body>
+        <div> Welcome to Harry's landing page </div>
+        <div> Ito ang unang page na makikita ng user na hindi pa logged in </div>
+
+        <form action="/signup" method="post">
+            <div>
+                Sign up: 
+            </div>
+            <input name="first_name" placeholder="first_name" value="Harry">
+            <input name="last_name" placeholder="last_name" value="Emelo">
+            <input name="username" placeholder="username"   value="harryememelo">
+            <input name="password" placeholder="password" value="EME">
+            <input type="submit">
+        </form>
+
+        <form action="/home" method="post">
+            <div>
+                Log in: 
+            </div>
+            <input name="username" placeholder="username"   value="harryememelo">
+            <input name="password" placeholder="password" value="EME">
+            <input type="submit">
+        </form>
+    </body>
+</html>
