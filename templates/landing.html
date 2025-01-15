@@ -4,7 +4,15 @@
 
 <html>
     <head>
-        <link rel="stylesheet" href="landing.css">
+        <script>
+            function display_error() {
+              current_url = new URL(window.location.href)
+              url_params = new URLSearchParams(current_url.search)
+              if (url_params.has('error')) {
+                window.alert(url_params.get('error'))
+              }
+            }
+        </script>
     </head>
     <body>
         <div> Welcome to Harry's landing page </div>
@@ -21,7 +29,7 @@
             <input type="submit">
         </form>
 
-        <form action="/home" method="post">
+        <form action="/login" method="post">
             <div>
                 Log in: 
             </div>
@@ -29,5 +37,9 @@
             <input name="password" placeholder="password" value="EME">
             <input type="submit">
         </form>
+
+        <script>
+            display_error()
+        </script>
     </body>
 </html>

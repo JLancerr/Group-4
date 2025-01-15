@@ -12,27 +12,36 @@ CREATE TABLE Users (
     last_name VARCHAR(20),
     username VARCHAR(20),
     password VARCHAR(20),
-    joined_classes TEXT 
+    joined_classrooms TEXT 
 );'''
 
 # In questions_answers, the format is JSON where the key is the question and the answer as the value
 query2 = '''
 CREATE TABLE Classroom (
-    class_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-    class_name VARCHAR(50),
+    classroom_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    classroom_name VARCHAR(50),
     author_user_id INT,
     users_joined TEXT,
     questions_answers TEXT 
 );'''
 
 # Random queries to test the database
-query3 = 'SELECT * FROM Users'
-query4 = "INSERT INTO Users (first_name, last_name, username, password) VALUES ('Harry', 'Emelo', 'harharemem', 'em')"
-query5 = "PRAGMA table_info(Users);"
-query6 = "ALTER TABLE Class ADD user_joined TEXT;"
+def show_all():
+    query3 = 'SELECT * FROM Classroom'
+    query4 = 'SELECT * FROM Users'
+    print("\n\n")
+    print(cursor.execute(query3).fetchall())
+    print(cursor.execute(query4).fetchall(), end="\n\n\n")
 
+def del_all():
+    query3 = 'DELETE FROM Classroom'
+    query4 = 'DELETE FROM Users'
+    cursor.execute(query3)
+    cursor.execute(query4)
 
-data = cursor.execute(query3).fetchall()
-print(data)
+def check_schema():
+    print(cursor.execute("PRAGMA table_info(Classroom)").fetchall())
 
+# del_all()
+show_all()
 sqlite_connection.commit()

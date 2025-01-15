@@ -6,12 +6,14 @@
   <head>
     <link rel="stylesheet" href="landing.css" />
     <script>
-      function show(message) {
-        if (message) {
-          alert(message);
+      function display_error() {
+        current_url = new URL(window.location.href)
+        url_params = new URLSearchParams(current_url.search)
+        if (url_params.has('error')) {
+          window.alert(url_params.get('error'))
         }
       }
-    </script>
+  </script>
   </head>
   <body>
     <div>Welcome to Harry's home page</div>
@@ -28,10 +30,18 @@
       <input type="submit" />
     </form>
 
+    <div>Create class</div>
     <form action="/create_classroom" method="post">
-      <input name="classroom_name" />
+      <input name="classroom_name" placeholder="classroom_name" />
       <input type="submit" />
     </form>
+
+    <div>Classes joined:</div>
+    <div>
+      {% for classroom_id in joined_classrooms %}
+        <div> {{ classroom_id }} - {{ joined_classrooms[classroom_id] }} </div>
+      {% endfor %}
+    </div>
 
     <br />
     <div>Displayed info of users using Jinja</div>
@@ -41,8 +51,7 @@
       {% endfor %}
     </div>
     <script>
-      message = "{{message}}";
-      show(message);
-    </script>
+      display_error()
+  </script>
   </body>
 </html>
