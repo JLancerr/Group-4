@@ -12,19 +12,23 @@ def landing():
     # Display landing page
     return render_template('landing.html')
 
-@app.route('/home', methods=['POST'])
+@app.route('/home', methods=['GET', 'POST'])
 def home():
-    # Trigger session
-    session['logged_in'] = True
-
+    # Create instance of the user
     user = classes.User(None , None, request.form['username'], request.form['password'])
     login_success = user.login()
 
     if login_success == False:
         return redirect('/')
     else:
+        # Put all user attributes to the session
+        user_attributes = user.get_all_attributes()
+
+        for key in user_attributes:
+            session[f'{key}'] = user_attributes[f'{key}']
+
         # Display home page
-        return render_template('home.html', user_data=user.get_all_attributes())
+        return render_template('home.html', user_data=user.user_attributes)
 
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -43,8 +47,28 @@ def signup():
         # Direct user back to the landing page
         return redirect('/')
 
-@app.route('/join_class', methods=['POST'])
-def joinclass():
+@app.route('/join_classroom', methods=['POST'])
+def join_classroom(): 
+    # Retrieve instance of user from the session
+    user = classes.User()
+
+    # User will use the join_class(class_id) method
+    inputted_classroom_id = request.form["classroom_id"]
+    join_success = user.join_classroom(inputted_classroom_id)
+
+    # 
+    if join_success == False:
+        return redirect('/home', message="Error")
+
+@app.route('/create_classroom', methods=["POST"])
+def create_classroom():
+    # Retrieve instance of user from the session
+    # User will use the create_class(classroom_name)
+    pass
+
+@app.route('/create_question', methods=["POST"])
+def create_question():
+    # Retrieve instance of user from the session
     pass
 
 if __name__ == '__main__':

@@ -3,32 +3,46 @@
 <!-- Page users see if they're logged in -->
 
 <html>
-    <head>
-        <link rel="stylesheet" href="landing.css">
-    </head>
-    <body>
-        <div> Welcome to Harry's home page </div>
-        <div> Ito ang page na makikita kapag nag login ang user </div>
+  <head>
+    <link rel="stylesheet" href="landing.css" />
+    <script>
+      function show(message) {
+        if (message) {
+          alert(message);
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div>Welcome to Harry's home page</div>
+    <div>Ito ang page na makikita kapag nag login ang user</div>
 
-        <form action="/" method="get">
-            <button type="submit"> Log out </button>
-        </form>
+    <form action="/" method="get">
+      <button type="submit">Log out</button>
+    </form>
 
-        <br>
-        <div> Join class </div>
-        <form action="/" method="post">
-            <input name="class_id" placeholder="class_id">
-            <input type="submit">
-        </form>
+    <br />
+    <div>Join class</div>
+    <form action="/join_classroom" method="post">
+      <input name="classroom_id" placeholder="classroom_id" />
+      <input type="submit" />
+    </form>
 
-        <br>
-        <div> Displayed info of users using Jinja </div>
-        <div> 
-            {%  for data in user_data %}
-                <div>
-                    {{ data }} - {{ user_data[data] }}
-                </div>
-            {% endfor %}
-        </div>
-    </body>
+    <form action="/create_classroom" method="post">
+      <input name="classroom_name" />
+      <input type="submit" />
+    </form>
+
+    <br />
+    <div>Displayed info of users using Jinja</div>
+    <div>
+      {% for data in user_data %}
+      <div>{{ data }} - {{ user_data[data] }}</div>
+      {% endfor %}
+    </div>
+    <script>
+      message = "{{message}}";
+      show(message);
+    </script>
+  </body>
 </html>
