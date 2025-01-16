@@ -1,7 +1,6 @@
 from flask import Flask, render_template, session, request, redirect, url_for
-import sqlite3
-import json
-import classes
+from user import User
+from directory import *
 
 app = Flask(__name__)
 
@@ -16,16 +15,21 @@ def landing():
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     # Create instance of the user
-    user = classes.User(session['user_id'], session['first_name'], session['last_name'], session['username'], session['password'])
-    joined_classrooms = user.get_joined_classrooms()
+    user = User(session['user_id'], session['first_name'], session['last_name'], session['username'], session['password'])
+
+    # Create instance of a classroom
+    classroom = Classroom(user.get_user_id)
+
+    # Retrieve all 
+    classroom.get_subdirectories_info()
 
     # Display home page
-    return render_template('home.html', user_data=user.get_all_attributes(), joined_classrooms=joined_classrooms)
+    return render_template('home.html', user_data=user.get_all_attributes())
 
 @app.route('/login', methods=['POST'])
 def login():
     # Create instance of the user
-    user = classes.User(None, None, None, request.form['username'], request.form['password'])
+    user = User(None, None, None, request.form['username'], request.form['password'])
     login_outcome = user.login()
     
     if login_outcome != "success":
@@ -44,7 +48,7 @@ def signup():
     # This is for verifying data inputted by the user during signup
 
     # Create instance of user
-    user = classes.User(None, request.form['first_name'], request.form['last_name'], request.form['username'], request.form['password'])
+    user = User(None, request.form['first_name'], request.form['last_name'], request.form['username'], request.form['password'])
     signup_outcome = user.signup()
 
     if signup_outcome != "success":
@@ -58,37 +62,18 @@ def signup():
 
         return redirect(url_for('home'))
 
-@app.route('/join_classroom', methods=['POST'])
-def join_classroom(): 
-    # Retrieve instance of user from the session
-    user = classes.User(session['user_id'], session['first_name'], session['last_name'], session['username'], session['password'])
+@app.route('/display', methods=['POST'])
+def display():
+    directory_type = request.form['directory_type']
+    directory_id = request.form['directory_id']
 
-    # User will use the join_class(class_id) method
-    inputted_classroom_id = request.form["classroom_id"]
-    join_attempt_outcome = user.join_classroom(inputted_classroom_id)
-
-    if join_attempt_outcome != "success":
-        return redirect(url_for('home', error=join_attempt_outcome))
+    if directory_type == "question":
+        pass
     else:
-        return redirect(url_for('home', error=join_attempt_outcome))
+        dir = Directory(directory_type, directory_id)
+        children_names_and_ids = dir.get_subdirectories_info()
+        return render_template('generic_directory.html', children_names_and_ids=children_names_and_ids)
 
-@app.route('/create_classroom', methods=["POST"])
-def create_classroom():
-    # Retrieve instance of user from the session
-    user = classes.User(session['user_id'], session['first_name'], session['last_name'], session['username'], session['password'])
-
-    # User will create classroom
-    user.create_classroom(request.form['classroom_name'])
-
-    return redirect(url_for('home'))
-
-@app.route('/create_question', methods=["POST"])
-def create_question():
-    # Retrieve instance of user from the session
-    user = classes.User(session['user_id'], session['first_name'], session['last_name'], session['username'], session['password'])
-
-    # 
-    pass
 
 if __name__ == '__main__':
     app.run()

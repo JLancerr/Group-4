@@ -23,19 +23,6 @@
       <button type="submit">Log out</button>
     </form>
 
-    <br />
-    <div>Join class</div>
-    <form action="/join_classroom" method="post">
-      <input name="classroom_id" placeholder="classroom_id" />
-      <input type="submit" />
-    </form>
-
-    <div>Create class</div>
-    <form action="/create_classroom" method="post">
-      <input name="classroom_name" placeholder="classroom_name" />
-      <input type="submit" />
-    </form>
-
     <div>Classes joined:</div>
     <div>
       {% for classroom_id in joined_classrooms %}

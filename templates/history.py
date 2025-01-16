@@ -1,50 +1,5 @@
-import sqlite3
-import json
-
+# This doesn't work, just a file to store unused code
 class User:
-    def __init__(self, user_id, first_name, last_name, username, password):
-        self.__user_id = user_id
-        self.__first_name = first_name
-        self.__last_name = last_name
-        self.__username = username
-        self.__password = password
-
-        self.sqlite_connection = sqlite3.connect('app.db') # Connects to the database
-        self.cursor = self.sqlite_connection.cursor() # Creates instance of a cursor which is used for executing querie
-
-    def signup(self):
-        # Check if username already exists in the database
-        usernames = self.cursor.execute('SELECT username FROM Users WHERE username = ?;', (self.__username,)).fetchall()
-        # If username already exists, signup fails
-        if len(usernames) > 0:
-            return "username-already-exists"
-        # If username does not exist in the database, insert user's info into the Users table
-        else:
-            self.cursor.execute("INSERT INTO Users (first_name, last_name, username, password, joined_classrooms) VALUES (?, ?, ?, ?, ?);", 
-                           (self.__first_name, self.__last_name, self.__username, self.__password, ""))
-            self.__user_id = self.cursor.execute("SELECT user_id FROM Users WHERE username = ?", (self.__username,))
-            self.sqlite_connection.commit()
-            return "success"
-        
-    def login(self):
-        # Check if username already exists in the database
-        username = self.cursor.execute('SELECT username FROM Users WHERE username = ?;', (self.__username,)).fetchall()
-        # If username does not exist, login attempt fails
-        if len(username) == 0:
-            return "username-not-found"
-
-        # If username exists but password does not match the user's given password
-        # data[password][first_name][last_name][user_id]
-        data = self.cursor.execute('SELECT password, first_name, last_name, user_id FROM Users WHERE username = ?;', (username[0][0],)).fetchall()
-        if self.__password != data[0][0]:
-            return "password-incorrect"
-        
-        # Initiliazed these vars as user is verified
-        self.__first_name = data[0][1]
-        self.__last_name = data[0][2]
-        self.__user_id = data[0][3]
-        return "success"
-    
     def create_classroom(self, classroom_name):
         self.cursor.execute("INSERT INTO Classroom (classroom_name, author_user_id, users_joined) VALUES (?, ?, ?);", (classroom_name, self.__user_id, ''))
         self.sqlite_connection.commit()
@@ -108,36 +63,3 @@ class User:
                 i += 1
 
         return joined_classrooms_dict
-        
-
-    def get_first_name(self):
-        return self.__first_name
-    
-    def get_last_name(self):
-        return self.__last_name
-    
-    def get_username(self):
-        return self.__username
-    
-    def get_password(self):
-        return self.__password
-    
-    def get_user_id(self):
-        return self.__user_id
-
-    # Returns all attributes in dictionary form
-    def get_all_attributes(self):
-        return {
-            'user_id': self.__user_id, 
-            'first_name': self.__first_name, 
-            'last_name':  self.__last_name, 
-            'username':  self.__username, 
-            'password':  self.__password}
-
-class Classroom:
-    def __init__(self, name):
-        self.name = name
-        self.users = []
-        self.questions = {}
-
-    
