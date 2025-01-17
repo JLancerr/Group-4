@@ -51,21 +51,24 @@ CREATE TABLE Users_Classrooms_Relationship (
 
 # Random queries to test the database
 def show_all():
+    print(cursor.execute("SELECT * FROM Users").fetchall())
     pass
 
 def del_all():
     pass
 
 def check_schema():
-    print(cursor.execute("PRAGMA table_info(Questions)").fetchall())
+    print(cursor.execute("PRAGMA table_info(Classrooms)").fetchall())
 
-if not 1:
-    del_all()
-if not 1:
+if 1:
     show_all()
-if not 1:
+if 0:
+    del_all()
+if 0:
     check_schema()
 
-cursor.execute("DROP TABLE Classrooms;")
-cursor.execute(query2)
+"""cursor.execute("INSERT INTO Classrooms (classroom_name, user_parent_id) VALUES ('DCIT24A', 1)")
+
+cursor.execute("INSERT INTO Users_Classrooms_Relationship (user_id, classroom_id) VALUES (1, 1)")"""
+
 sqlite_connection.commit()

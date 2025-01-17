@@ -1,0 +1,47 @@
+Notes for the Frontend:
+    - Each files listed here will be sent variables from the backend
+    - Use these variables with Jinja to display information coming from the backend
+    - The files here will also send data back to the backend
+    - NOTE THAT THE FRONTEND MUST USE THE NAMES OF EACH VARIABLE LISTED HERE 
+
+- home.html
+    - Data that the backend will be sending to this file:
+        user_data{
+            'user_id': user_id, 
+            'first_name': first_name, 
+            'last_name':  last_name, 
+            'username':  username, 
+            'password':  password
+        }
+
+        classrooms_info{ 
+            authored_classrooms{ classroom_id : classroom_name }, # Logined user is the ownder of there classrooms
+            joined_classrooms{ classroom_id : classroom_name } # Doesn't contain classrooms user is authoring, they're part of authored_classrooms
+        }
+
+    - Data that the backend expects to receive from this file:
+        - To display the subjects of a clicked classroom directory
+            - Send to route '/display'
+            - Method is POST request
+            - With these data variables
+                - directory_type = "classroom" 
+                - directory_id = the id of the classroom that the user clicked on
+        
+        - To add a new classroom
+            - Send to route '/add_directory'
+            - Method is POST request
+            - With these data variables 
+                - directory_name = the name of the classroom that that is inputted by the user 
+                - directory_type = "classroom" 
+                - parent_id = the id of the user since they are going to be the author of this new classroom
+
+        - To delete a classroom that the user authors
+            - First of all, ipapakita niyo lang yung delete option kung si user ay isang author ng classroom na iyon
+                - Para malaman kung author ba sila non
+                    - Dapat nasa authored_classroom_names_and_ids
+            - Send to route '/delete_directory'
+            - Method is POST request
+            - With these data variables 
+                - directory_id
+
+

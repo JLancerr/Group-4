@@ -1,5 +1,5 @@
 from flask import Flask, render_template, session, request, redirect, url_for
-from user import User
+from user import *
 from directory import *
 
 app = Flask(__name__)
@@ -15,21 +15,18 @@ def landing():
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     # Create instance of the user
-    user = User(session['user_id'], session['first_name'], session['last_name'], session['username'], session['password'])
+    user = User(session)
 
-    # Create instance of a classroom
-    classroom = Classroom(user.get_user_id)
-
-    # Retrieve all 
-    classroom.get_subdirectories_info()
+    # Retrieve all classrooms the user is joined in 
+    classrooms_info = user.get_classrooms_info()
 
     # Display home page
-    return render_template('home.html', user_data=user.get_all_attributes())
+    return render_template('home.html', user_data=user.get_all_attributes(), classrooms_info=classrooms_info)
 
 @app.route('/login', methods=['POST'])
 def login():
     # Create instance of the user
-    user = User(None, None, None, request.form['username'], request.form['password'])
+    user = User(request.form)
     login_outcome = user.login()
     
     if login_outcome != "success":
@@ -48,7 +45,7 @@ def signup():
     # This is for verifying data inputted by the user during signup
 
     # Create instance of user
-    user = User(None, request.form['first_name'], request.form['last_name'], request.form['username'], request.form['password'])
+    user = User(request.form)
     signup_outcome = user.signup()
 
     if signup_outcome != "success":
@@ -57,6 +54,7 @@ def signup():
     else:
         # Put all user attributes to the session
         user_attributes = user.get_all_attributes()
+
         for key in user_attributes:
             session[f'{key}'] = user_attributes[f'{key}']
 
@@ -65,15 +63,46 @@ def signup():
 @app.route('/display', methods=['POST'])
 def display():
     directory_type = request.form['directory_type']
-    directory_id = request.form['directory_id']
 
     if directory_type == "question":
         pass
     else:
-        dir = Directory(directory_type, directory_id)
+        # Needs directory_type and directory_id
+        dir = Directory(request.form)
         children_names_and_ids = dir.get_subdirectories_info()
-        return render_template('generic_directory.html', children_names_and_ids=children_names_and_ids)
 
+        # This is volatile, remember to change it when files to render in this route are not named as the format below
+        return render_template(f'{directory_type}.html', children_names_and_ids=children_names_and_ids)
+
+@app.route('/add_directory', method=["POST"])
+def add_directory():
+    directory_type = request.form['directory_type']
+
+    if directory_type == "question":
+        pass
+    else:
+        # Needs directory_name and parent_id
+        dir = Directory(request.form)
+        outcome = dir.add_dir_to_database()
+
+        # Implement some sort of error handling in directory.py / add_dir_to_database
+        if outcome != "success" and False:
+            pass
+        else:
+            # This is volatile, remember to change it when files to render in this route are not named as the format below
+            return redirect(url_for('/display'))
+
+@app.route('/delete_directory', method=["POST"])
+def delete_directory():
+    dir = Directory(request.form)
+    outcome = dir.delete_directory()
+
+    # Implement some sort of error handling in directory.py / add_dir_to_database
+    if outcome != "success" and False:
+        pass
+    else:
+        # This is volatile, remember to change it when files to render in this route are not named as the format below
+        return render_template(f'{directory_type}.html')
 
 if __name__ == '__main__':
     app.run()

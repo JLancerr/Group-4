@@ -5,15 +5,23 @@ children_of = {"user" : "classroom",
                "subject" : "lesson",
                "lesson" : "question"}
 
-class Directory:
-    def __init__(self, directory_type, directory_id):
-        self.__directory_type = directory_type
-        self.__children_type = children_of["directory_type"]
-        self.__directory_id = directory_id
-        # self.__parent_id = None
+parent_of = {  "classroom" : "user",
+               "subject" : "classroom",
+               "lesson" : "subject",
+               "question" : "lesson"}
 
-        self.sqlite_connection = sqlite3.connect('app.db')
-        self.cursor = self.sqlite_connection.cursor()
+class Directory:
+    def __init__(self, args_dict):
+        self.__directory_name = args_dict.get('directory_name')
+        self.__directory_type = args_dict.get('directory_type')
+        self.__directory_id = args_dict.get('directory_id')
+
+        self.__children_type = children_of.get(self.__directory_type)
+        self.__parent_type = parent_of.get(self.__directory_type)
+        self.__parent_id = args_dict.get('parent_id')
+
+        self.__sqlite_connection = sqlite3.connect('app.db')
+        self.__cursor = self.__sqlite_connection.cursor()
 
     # Gets all children names and ids of a specific directory
     # This is for the purpose of displaying the sub-directories of a parent directory
@@ -29,7 +37,7 @@ class Directory:
         parent_id = f"{self.__directory_type}_id"
 
         query = f"SELECT {children_id_column_name}, {children_name_column_name} FROM {children_table_name} WHERE {parent_id} = ?"
-        ids_and_names = self.cursor.execute(query, (self.__directory_id,)).fetchall()
+        ids_and_names = self.__cursor.execute(query, (self.__directory_id,)).fetchall()
 
         for given in ids_and_names:
             id = given[0]
@@ -38,48 +46,36 @@ class Directory:
 
         return children_names_and_ids
 
-    def add(self):
+    def add_dir_to_database(self):
+        
+        table_name = f"{self.__directory_type}".capitalize()
+        name_column_name = f"{self.__directory_type}_name"
+        parent_id_column_name = f"{self.__parent_type}_parent_id"
+
+        query = f"INSERT INTO {table_name} ({name_column_name}, {parent_id_column_name}) VALUES (?, ?)"
+        self.__cursor.execute(query, (self.__directory_name, self.__parent_id))
+        self.__sqlite_connection.commit()
+
+        return "success"
+
+    def delete_directory(self):
         pass
 
-class Classroom(Directory):
-    def __init__(self, user_id):
-        super().__init__("classroom", user_id)
-
-    # Gets all names, ids, author's info, and participators' info of all classrooms the user is joined in
-    # Return type: classroom_list[ classroom_information[classroom_id, classroom_name, author_info[], participator_list[ participator_info[] ] ]
-    def get_subdirectories_info(self):
-
-        classroom_list = []
-        classroom_names_and_ids = super().get_subdirectories_info()
-
-        # Loop through each classroom
-        for id in classroom_names_and_ids:
-            classroom_information = []
-            classroom_information.append(id, classroom_names_and_ids[id])
-
-            # Query the author id
-            query1 = "SELECT user_parent_id FROM Classrooms WHERE classroom_id = ?"
-            author_id = self.cursor.execute(query1, (id,)).fetchone()[0]
-
-            # Query the author info
-            query2 = "SELECT first_name, last_name, username FROM Users WHERE user_id = ?"
-            # Return type: (first_name, last_name, username)
-            author_info = self.cursor.execute(query2, (author_id,)).fetchone()
-            classroom_information.append(list(author_info))
-
-            # Query the participators' id of the given classroom
-            query3 = "SELECT user_id FROM Users_Classrooms_Relationship WHERE classroom_id = ?"
-            participator_ids = self.cursor.execute(query3, (id,)).fetchall()
-
-            # Get all participators' info of the given classroom
-            participator_list = []
-            for user_id in participator_ids:
-                query4 = "SELECT first_name, last_name, username FROM Users WHERE user_id = ?"
-                participator_info = self.cursor.execute(query4, (user_id,)).fetchone()
-                participator_list.append(list(participator_info))
-
-            classroom_information.append(participator_list)
-
-        return classroom_list
-
+    def get_directory_name(self):
+        return self.__directory_name
+    
+    def get_directory_type(self):
+        return self.__directory_type
+    
+    def get_directory_id(self):
+        return self.__directory_id
+    
+    def get_children_type(self):
+        return self.__children_type
+    
+    def get_parent_type(self):
+        return self.__parent_type
+    
+    def get_parent_id(self):
+        return self.__parent_id
             

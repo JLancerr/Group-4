@@ -1,4 +1,5 @@
 import sqlite3
+from directory import Directory
 
 children_of = {"user" : "classroom",
                "classroom" : "subject",
@@ -6,40 +7,41 @@ children_of = {"user" : "classroom",
                "lesson" : "question"}
 
 class User:
-    def __init__(self, user_id, first_name, last_name, username, password):
-        self.__user_id = user_id
-        self.__first_name = first_name
-        self.__last_name = last_name
-        self.__username = username
-        self.__password = password
+    def __init__(self, args_dict):
+        self.__user_id = args_dict.get('user_id')
+        self.__first_name = args_dict.get('first_name')
+        self.__last_name = args_dict.get('last_name')
+        self.__username = args_dict.get('username')
+        self.__password = args_dict.get('password')
 
-        self.sqlite_connection = sqlite3.connect('app.db') # Connects to the database
-        self.cursor = self.sqlite_connection.cursor() # Creates instance of a cursor which is used for executing queries
+        self.__sqlite_connection = sqlite3.connect('app.db') # Connects to the database
+        self.__cursor = self.__sqlite_connection.cursor() # Creates instance of a cursor which is used for executing queries
 
     def signup(self):
         # Check if username already exists in the database
-        usernames = self.cursor.execute('SELECT username FROM Users WHERE username = ?;', (self.__username,)).fetchall()
+        usernames = self.__cursor.execute('SELECT username FROM Users WHERE username = ?;', (self.__username,)).fetchall()
         # If username already exists, signup fails
         if len(usernames) > 0:
             return "username-already-exists"
         # If username does not exist in the database, insert user's info into the Users table
         else:
-            self.cursor.execute("INSERT INTO Users (first_name, last_name, username, password, joined_classrooms) VALUES (?, ?, ?, ?, ?);", 
-                           (self.__first_name, self.__last_name, self.__username, self.__password, ""))
-            self.__user_id = self.cursor.execute("SELECT user_id FROM Users WHERE username = ?", (self.__username,))
-            self.sqlite_connection.commit()
+            self.__cursor.execute("INSERT INTO Users (first_name, last_name, username, password) VALUES (?, ?, ?, ?);", 
+                           (self.__first_name, self.__last_name, self.__username, self.__password))
+            
+            self.__user_id = self.__cursor.execute("SELECT user_id FROM Users WHERE username = ?", (self.__username,)).fetchone()[0]
+            self.__sqlite_connection.commit()
             return "success"
         
     def login(self):
         # Check if username already exists in the database
-        username = self.cursor.execute('SELECT username FROM Users WHERE username = ?;', (self.__username,)).fetchall()
+        username = self.__cursor.execute('SELECT username FROM Users WHERE username = ?;', (self.__username,)).fetchall()
         # If username does not exist, login attempt fails
         if len(username) == 0:
             return "username-not-found"
 
         # If username exists but password does not match the user's given password
         # data[password][first_name][last_name][user_id]
-        data = self.cursor.execute('SELECT password, first_name, last_name, user_id FROM Users WHERE username = ?;', (username[0][0],)).fetchall()
+        data = self.__cursor.execute('SELECT password, first_name, last_name, user_id FROM Users WHERE username = ?;', (username[0][0],)).fetchall()
         if self.__password != data[0][0]:
             return "password-incorrect"
         
@@ -49,60 +51,27 @@ class User:
         self.__user_id = data[0][3]
         return "success"
 
-    def get_subdirectories_info(self, directory_type, directory_id):
-        children_type = children_of[directory_type]
-        children_names_and_ids = {}
+    def get_classrooms_info(self):
+        authored_classroom_names_and_ids = {}
+        joined_classroom_names_and_ids = {}
 
-        # String variables for creating custom query
-        children_id_column_name = f"{children_type}_id"
-        children_name_column_name = f"{children_type}_name"
-        children_table_name = f"{children_type}s".capitalize()
-        parent_id = f"{directory_type}_id"
-
-        query = f"SELECT {children_id_column_name}, {children_name_column_name} FROM {children_table_name} WHERE {parent_id} = ?"
-        ids_and_names = self.cursor.execute(query, (directory_id,)).fetchall()
+        # Retrieve the user's authored classrooms
+        query1 = "SELECT classroom_id, classroom_name FROM Classrooms WHERE user_parent_id = ?"
+        ids_and_names = self.__cursor.execute(query1, (self.__user_id,)).fetchall()
 
         for given in ids_and_names:
             id = given[0]
             name = given[1]
-            children_names_and_ids[id] = name
+            authored_classroom_names_and_ids[id] = name
 
-        return children_names_and_ids   
+        # Retrieve classrooms the user is joined in but not authored
+        query2 = "SELECT classroom_id FROM Users_Classrooms_Relationship WHERE user_id = ?"
+        query3 = "SELECT classroom_name FROM Classrooms WHERE classroom_id = ?"
+        classroom_ids = self.__cursor.execute(query2, (self.__user_id,)).fetchall()
+        for id in classroom_ids:
+            joined_classroom_names_and_ids[id[0]] = self.__cursor.execute(query3, (id[0],)).fetchone()[0]
 
-    def get_classrooms_info(self):
-
-        classroom_list = []
-        classroom_names_and_ids = User.get_subdirectories_info("classroom", self.__user_id)
-
-        # Loop through each classroom
-        for id in classroom_names_and_ids:
-            classroom_information = []
-            classroom_information.append(id, classroom_names_and_ids[id])
-
-            # Query the author id
-            query1 = "SELECT user_parent_id FROM Classrooms WHERE classroom_id = ?"
-            author_id = self.cursor.execute(query1, (id,)).fetchone()[0]
-
-            # Query the author info
-            query2 = "SELECT first_name, last_name, username FROM Users WHERE user_id = ?"
-            # Return type: (first_name, last_name, username)
-            author_info = self.cursor.execute(query2, (author_id,)).fetchone()
-            classroom_information.append(list(author_info))
-
-            # Query the participators' id of the given classroom
-            query3 = "SELECT user_id FROM Users_Classrooms_Relationship WHERE classroom_id = ?"
-            participator_ids = self.cursor.execute(query3, (id,)).fetchall()
-
-            # Get all participators' info of the given classroom
-            participator_list = []
-            for user_id in participator_ids:
-                query4 = "SELECT first_name, last_name, username FROM Users WHERE user_id = ?"
-                participator_info = self.cursor.execute(query4, (user_id,)).fetchone()
-                participator_list.append(list(participator_info))
-
-            classroom_information.append(participator_list)
-
-        return classroom_list
+        return [authored_classroom_names_and_ids, joined_classroom_names_and_ids]
 
     def get_first_name(self):
         return self.__first_name
