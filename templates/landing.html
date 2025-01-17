@@ -3,44 +3,89 @@
 <!-- First page that users see -->
 
 <html>
-    <head>
-        <script>
-            function display_error() {
-              current_url = new URL(window.location.href)
-              url_params = new URLSearchParams(current_url.search)
-              if (url_params.has('error')) {
-                window.alert(url_params.get('error'))
-              }
-            }
-        </script>
-    </head>
-    <body>
-        <div> Welcome to Harry's landing page </div>
-        <div> Ito ang unang page na makikita ng user na hindi pa logged in </div>
-        <div> Testing </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/harry.css" />
+    <title>Manage Landing Page</title>
+    <script>
+      function display_error() {
+        current_url = new URL(window.location.href);
+        url_params = new URLSearchParams(current_url.search);
+        if (url_params.has("error")) {
+          window.alert(url_params.get("error"));
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <div class="navbar">
+      <nav class="container">
+        <!-- Logo -->
+        <img src="img/logo.svg" alt="Logo" class="logo" />
 
-        <form action="/signup" method="post">
-            <div>
-                Sign up: 
+        <!-- Menu Item -->
+        <ul class="menu">
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+
+        <!-- Button -->
+        <div class="buttons">
+          <a href="#" class="secondary-btn">Sign In</a>
+          <a href="#" class="primary-btn">Get Started</a>
+        </div>
+
+        <!-- Hamburger Icon -->
+        <!-- <button
+            id="menu-btn"
+            class="block hamburger md:hidden focus:outline-none"
+          >
+            <span class="hamburger-top"></span>
+            <span class="hamburger-middle"></span>
+            <span class="hamburger-bottom"></span>
+          </button> -->
+
+        <!-- Mobile Menu -->
+        <!-- <div class="md:hidden">
+            <div
+              id="menu"
+              class="absolute flex-col items-center hidden self-end py-8 mt-10 space-y-6 font-bold bg-white sm:w-auto sm:self-center left-6 right-6 drop-shadow-md"
+            >
+              <a href="#">Pricing</a>
+              <a href="#">Product</a>
+              <a href="#">About Us</a>
+              <a href="#">Careers</a>
+              <a href="#">Community</a>
             </div>
-            <input name="first_name" placeholder="first_name" value="Harry">
-            <input name="last_name" placeholder="last_name" value="Emelo">
-            <input name="username" placeholder="username"   value="harryememelo">
-            <input name="password" placeholder="password" value="EME">
-            <input type="submit">
-        </form>
+          </div> -->
+      </nav>
 
-        <form action="/login" method="post">
-            <div>
-                Log in: 
-            </div>
-            <input name="username" placeholder="username"   value="harryememelo">
-            <input name="password" placeholder="password" value="EME">
-            <input type="submit">
-        </form>
+      <div>Welcome to Harry's landing page</div>
+      <div>Ito ang unang page na makikita ng user na hindi pa logged in</div>
+      <div>Testing</div>
 
-        <script>
-            display_error()
-        </script>
-    </body>
+      <form action="/signup" method="post">
+        <div>Sign up:</div>
+        <input name="first_name" placeholder="first_name" value="Harry" />
+        <input name="last_name" placeholder="last_name" value="Emelo" />
+        <input name="username" placeholder="username" value="harryememelo" />
+        <input name="password" placeholder="password" value="EME" />
+        <input type="submit" />
+      </form>
+
+      <form action="/login" method="post">
+        <div>Log in:</div>
+        <input name="username" placeholder="username" value="harryememelo" />
+        <input name="password" placeholder="password" value="EME" />
+        <input type="submit" />
+      </form>
+
+      <script>
+        display_error();
+      </script>
+    </div>
+  </body>
 </html>
