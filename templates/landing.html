@@ -2,45 +2,139 @@
 
 <!-- First page that users see -->
 
-<html>
-    <head>
-        <script>
-            function display_error() {
-              current_url = new URL(window.location.href)
-              url_params = new URLSearchParams(current_url.search)
-              if (url_params.has('error')) {
-                window.alert(url_params.get('error'))
-              }
-            }
-        </script>
-    </head>
-    <body>
-        <div> Welcome to Harry's landing page </div>
-        <div> Ito ang unang page na makikita ng user na hindi pa logged in </div>
-        <div> Testing </div>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/harry.css" />
+    <title>Manage Landing Page</title>
+    <script>
+      function display_error() {
+        current_url = new URL(window.location.href);
+        url_params = new URLSearchParams(current_url.search);
+        if (url_params.has("error")) {
+          window.alert(url_params.get("error"));
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <div class="navbar">
+      <nav class="container">
+        <!-- Logo -->
+        <img src="#" alt="Logo" class="logo" />
 
-        <form action="/signup" method="post">
-            <div>
-                Sign up: 
-            </div>
-            <input name="first_name" placeholder="first_name" value="Harry">
-            <input name="last_name" placeholder="last_name" value="Emelo">
-            <input name="username" placeholder="username"   value="harryememelo">
-            <input name="password" placeholder="password" value="EME">
-            <input type="submit">
-        </form>
+        <!-- Menu Item -->
+        <ul class="menu">
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
 
-        <form action="/login" method="post">
-            <div>
-                Log in: 
-            </div>
-            <input name="username" placeholder="username"   value="harryememelo">
-            <input name="password" placeholder="password" value="EME">
-            <input type="submit">
-        </form>
+        <!-- Button -->
+        <div class="buttons">
+          <a href="#" class="secondary-btn">Sign In</a>
+          <a href="#" class="primary-btn">Get Started</a>
+        </div>
 
-        <script>
-            display_error()
-        </script>
-    </body>
+        <!-- Hamburger Icon -->
+        <!-- <button
+          id="menu-btn"
+          class="block hamburger md:hidden focus:outline-none"
+        >
+          <span class="hamburger-top"></span>
+          <span class="hamburger-middle"></span>
+          <span class="hamburger-bottom"></span>
+        </button> -->
+
+        <!-- Mobile Menu -->
+        <!-- <div class="md:hidden">
+          <div
+            id="menu"
+          >
+            <a href="#">About Us</a>
+            <a href="#">Careers</a>
+            <a href="#">Community</a>
+          </div>
+        </div> -->
+      </nav>
+    </div>
+
+    <!-- Showcase -->
+    <section class="showcase">
+      <div class="container">
+        <h1 class="showcase-title">Lorem ipsum dolor sit amet.</h1>
+        <p class="showcase-desc">
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit totam
+          incidunt provident, earum optio dolores reiciendis veniam architecto
+          maiores a?
+        </p>
+        <div class="showcase-buttons">
+          <a href="#" class="primary-btn">Study Now</a>
+          <a href="#" class="secondary-btn">Learn More</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <!-- Quiz -->
+    <section class="quiz">
+      <div class="container">
+        <div class="quiz-text">
+          <h2 class="quiz-title">Create your own quiz</h2>
+          <p class="quiz-desc">
+            Study, memorize, and learn by inserting from your own material.
+          </p>
+        </div>
+        <div class="quiz-figure">
+          <!-- Add content here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Method -->
+    <section class="method">
+      <div class="container">
+        <div class="method-text">
+          <h2 class="method-title">Use your preferred method</h2>
+          <p class="method-desc">
+            Utilize flashcards, multiple choice, or identification questions.
+          </p>
+        </div>
+        <div class="method-figure">
+          <!-- Add content here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Share -->
+    <section class="share">
+      <div class="container">
+        <div class="share-text">
+          <h2 class="share-title">Share your materials</h2>
+          <p class="share-desc">
+            Share your created set of questions with your peers.
+          </p>
+        </div>
+        <div class="share-figure">
+          <!-- Add content here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Price Overview -->
+    <section class="price-overview">
+      <div class="container">
+        <div class="price-overview-text">
+          <h2>Unlock all features now</h2>
+          <p>Choose between our generous plans.</p>
+        </div>
+        <div class="price-overview-button">
+          <a href="#" class="secondary-btn">View our packages</a>
+        </div>
+      </div>
+    </section>
+
+  </body>
 </html>
