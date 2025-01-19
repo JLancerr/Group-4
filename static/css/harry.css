@@ -411,7 +411,8 @@ footer .container {
   justify-content: space-between;
 }
 
-footer .footer-general a:hover, footer .footer-resources a:hover {
+footer .footer-general a:hover,
+footer .footer-resources a:hover {
   color: var(--blue-vibrant);
 }
 

@@ -18,14 +18,18 @@
     background-color: #fff;
     text-align: center;
   }
-  
-.logo{
-    width: 150px; 
-    height: auto; 
-    display: block; 
-    margin: 20px auto;
 
-}
+  img{
+    max-width: 100%; 
+    height: auto; 
+    margin-bottom: 20px;
+  }
+  
+  .logo {
+    max-width: 100%; 
+    height: auto; 
+    margin-bottom: 20px;
+  }
 
   h1 {
     font-size: 24px;
@@ -69,15 +73,17 @@
   
   .submit-btn {
     padding: 10px;
-    background-color: #4CAF50;
-    color: #fff;
+    background-color: #2196F3;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    width: 100px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
   }
   
   .submit-btn:hover {
-    background-color: #45a049;
+    background-color: #0b7dda;
+    transform: scale(0.9);
   }
   
   .login-redirect {
