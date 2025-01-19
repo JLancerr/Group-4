@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up Form</title>
+  <link rel="stylesheet" href="Signup.css">
+</head>
+<body>
+  <div class="form-container">
+    <header>
+        <img src="img\logo.png" alt="Logo.png" class="logo">
+        <h1>Welcome</h1>
+    </header>
+    <form>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" placeholder="Enter Email" required>
+      <label for="password">Password:</label>
+      <div class="password-container">
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        <span class="password-toggle"></span>
+      </div>
+      <button type="submit" class="submit-btn">Log-In</button>
+      <div class="login-redirect">
+        Don't Have an account Sign up? <a href="Signup.html">Sign-Up</a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
