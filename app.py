@@ -9,23 +9,10 @@ app.secret_key = "HARRY"
 
 @app.route('/', methods=['GET', 'POST'])
 def landing():
-    # Display landing page
     return render_template('landing.html')
-
-@app.route('/home', methods=['GET', 'POST'])
-def home():
-    # Create instance of the user
-    user = User(session)
-
-    # Retrieve all classrooms the user is joined in 
-    classrooms_info = user.get_classrooms_info()
-
-    # Display home page
-    return render_template('home.html', user_data=user.get_all_attributes(), classrooms_info=classrooms_info)
 
 @app.route('/login', methods=['POST'])
 def login():
-    # Create instance of the user
     user = User(request.form)
     login_outcome = user.login()
     
@@ -41,10 +28,6 @@ def login():
 
 @app.route('/signup', methods=['POST'])
 def signup():
-    # This route doesn't display anything
-    # This is for verifying data inputted by the user during signup
-
-    # Create instance of user
     user = User(request.form)
     signup_outcome = user.signup()
 
@@ -60,49 +43,103 @@ def signup():
 
         return redirect(url_for('home'))
 
+@app.route('/home', methods=['GET', 'POST'])
+def home():
+    user = User(session)
+
+    # Retrieve all classrooms the user is joined in 
+    classrooms_info = user.get_classrooms_info()
+
+    # Display home page
+    return render_template('home.html', user_data=user.get_all_attributes(), classrooms_info=classrooms_info)
+
 @app.route('/display', methods=['POST'])
 def display():
     directory_type = request.form['directory_type']
+    children_type = children_of[f"{directory_type}"]
+    authored = request.form['authored']
 
-    if directory_type == "question":
-        pass
+    if directory_type == "classroom":
+        dir = Classroom(request.form)
+    elif directory_type == "lesson":
+        dir = Lesson(request.form)
     else:
-        # Needs directory_type and directory_id
         dir = Directory(request.form)
-        children_names_and_ids = dir.get_subdirectories_info()
+    contents = dir.get_directory_contents()
 
-        # This is volatile, remember to change it when files to render in this route are not named as the format below
-        return render_template(f'{directory_type}.html', children_names_and_ids=children_names_and_ids)
+    return render_template(f'{children_type}s.html', contents=contents, authored=authored)
 
 @app.route('/add_directory', method=["POST"])
 def add_directory():
     directory_type = request.form['directory_type']
 
-    if directory_type == "question":
-        pass
-    else:
-        # Needs directory_name and parent_id
-        dir = Directory(request.form)
-        outcome = dir.add_dir_to_database()
-
-        # Implement some sort of error handling in directory.py / add_dir_to_database
-        if outcome != "success" and False:
-            pass
+    if directory_type == "classroom":
+        user = User(session)
+        outcome = user.add_classroom(request.form['directory_name'])
+        if outcome != "success":
+            return redirect(url_for('home', error=outcome))
         else:
-            # This is volatile, remember to change it when files to render in this route are not named as the format below
-            return redirect(url_for('/display'))
-
-@app.route('/delete_directory', method=["POST"])
-def delete_directory():
-    dir = Directory(request.form)
-    outcome = dir.delete_directory()
+            return redirect(url_for('home'))
+    elif directory_type == "question":
+        dir = Question(request.form)
+    else:
+        dir = Directory(request.form)
+    outcome = dir.add_dir_to_database()
 
     # Implement some sort of error handling in directory.py / add_dir_to_database
     if outcome != "success" and False:
         pass
     else:
-        # This is volatile, remember to change it when files to render in this route are not named as the format below
-        return render_template(f'{directory_type}.html')
+        # Go back to display route
+        session['directory_type'] = parent_of[f"{directory_type}"]
+        session['directory_id'] = request.form['parent_id']
+        return redirect(url_for('/display'))
+
+@app.route('/delete_directory', method=["POST"])
+def delete_directory():
+    directory_type = request.form['directory_type']
+
+    if directory_type == "classroom":
+        user = User(session)
+        directory_id = request.form['directory_id']
+        user.delete_classroom(directory_id)
+        return redirect(url_for('home'))
+    elif directory_type == "lesson":
+        dir = Lesson(request.form)
+    elif directory_type == "question":
+        dir = Question(request.form)
+    else:
+        dir = Directory(request.form)
+        
+    dir.delete_directory()
+    session['directory_type'] = parent_of[f"{directory_type}"]
+    session['directory_id'] = request.form['parent_id']
+    return redirect(url_for('/display'))
+
+@app.route('/edit_directory', method=["POST"])
+def edit_directory():
+    pass
+
+@app.route('/join_classroom', method=["POST"])
+def join_classroom():
+    user = User(session)
+    outcome = user.join_classroom(request.form['classroom_id'])
+    if outcome != "success":
+        return redirect(url_for('home', error=outcome))
+    else:
+        return redirect(url_for('home'))
+
+@app.route('/leave_classroom', method=["POST"])
+def leave_classroom():
+    user = User(session)
+    user.leave_classroom(request.form['classroom_id'])
+    return redirect(url_for('home'))
+
+@app.route('/kick_user', method=["POST"])
+def kick_user():
+    user = User(session)
+    user.kick_user(request.form['user_id_to_kick'], request.form['classroom_id'])
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run()

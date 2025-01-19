@@ -1,5 +1,5 @@
 import sqlite3
-from directory import Directory
+from directory import *
 
 children_of = {"user" : "classroom",
                "classroom" : "subject",
@@ -51,6 +51,7 @@ class User:
         self.__user_id = data[0][3]
         return "success"
 
+    # Gets info of user's joined and authored classrooms
     def get_classrooms_info(self):
         authored_classroom_names_and_ids = {}
         joined_classroom_names_and_ids = {}
@@ -72,6 +73,69 @@ class User:
             joined_classroom_names_and_ids[id[0]] = self.__cursor.execute(query3, (id[0],)).fetchone()[0]
 
         return [authored_classroom_names_and_ids, joined_classroom_names_and_ids]
+
+    def add_classroom(self, classroom_name):
+        # Disallow multiple classrooms to have the same name and the same author
+        query = "SELECT classroom_id FROM Classrooms WHERE classroom_name = ? AND user_parent_id = ?"
+        duplicate_classrooms = self.__cursor.execute(query, (classroom_name, self.__user_id)).fetchall()
+        if len(duplicate_classrooms) > 0:
+            return "no-duplicated-classrooms"
+
+        query1 = "INSERT INTO Classrooms (classroom_name, user_parent_id) VALUES (?, ?)"
+        self.__cursor.execute(query1, (classroom_name, self.__user_id))
+
+        # If the error handling before is not implemented, this might fail
+        query2 = "SELECT classroom_id FROM Classrooms WHERE classroom_name = ? AND user_parent_id = ?"
+        classroom_id = self.__cursor.execute(query2, (classroom_name, self.__user_id)).fetchone()[0]
+
+        query3 = "INSERT INTO Users_Classrooms_Relationship (user_id, classroom_id) VALUES (?, ?)"
+        self.__cursor.execute(query3, (self.__user_id, classroom_id))
+
+        self.__sqlite_connection.commit()
+        return "success"
+    
+    def join_classroom(self, classroom_id):
+        query1 = "SELECT user_id FROM Users_Classrooms_Relationship WHERE user_id = ? AND classroom_id = ?"
+        duplicates = self.__cursor.execute(query1, (self.__user_id, classroom_id)).fetchall()
+        if len(duplicates) > 0:
+            return "already-joined-classroom"
+
+        query2 = "INSERT INTO Users_Classrooms_Relationship (user_id, classroom_id) VALUES (?, ?)"
+        self.__cursor.execute(query2, (self.__user_id, classroom_id))
+        self.__sqlite_connection.commit()
+        return "success"
+    
+    def leave_classroom(self, classroom_id):
+        # If the user leaving the classroom is the author of that classroom, delete the classroom
+        query1 = "SELECT user_parent_id FROM Classrooms WHERE classroom_id = ?"
+        user_parent_id = self.__cursor.execute(query1, (classroom_id,)).fetchone()
+
+        if user_parent_id[0] == self.__user_id:
+            self.delete_classroom(classroom_id)
+
+        query2 = "DELETE FROM Users_Classrooms_Relationship WHERE user_id = ? AND classroom_id = ?"
+        self.__cursor.execute(query2, (self.__user_id, classroom_id))
+        self.__sqlite_connection.commit()
+        return "success"
+
+    def delete_classroom(self, classroom_id):
+        classroom_info = {
+            'directory_type' : "classroom",
+            'directory_id' : classroom_id
+        }
+        classroom = Directory(classroom_info)
+        return classroom.delete_directory()
+
+    def kick_user(self, user_id_to_kick, classroom_id):
+        query = "DELETE FROM Users_Classrooms_Relationship WHERE user_id = ? AND classroom_id = ?"
+        self.__cursor.execute(query, (user_id_to_kick, classroom_id))
+        self.__sqlite_connection.commit()
+        return "success"
+
+    def rename_classroom(self, classroom_id, classroom_name):
+        query = "UPDATE Classroom SET classroom_name = ? WHERE classroom_id = ?"
+        self.__cursor(query, (classroom_id, classroom_name))
+        return "success"
 
     def get_first_name(self):
         return self.__first_name
