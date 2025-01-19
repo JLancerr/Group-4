@@ -3,6 +3,7 @@ Notes for the Frontend:
     - Use these variables with Jinja to display information coming from the backend
     - The files here will also send data back to the backend
     - NOTE THAT THE FRONTEND MUST USE THE EXACT NAMES OF EACH VARIABLE LISTED HERE 
+        - also note that baka may mali akong nalagay na names jan, if may inconsitency, pasabi nalang
 
 - home.html
     - Description of this file
@@ -19,14 +20,14 @@ Notes for the Frontend:
         }
 
         classrooms_info{ 
-            authored_classrooms{ classroom_id : classroom_name }, # Logined user is the owner of these classrooms
-            joined_classrooms{ classroom_id : classroom_name } # Doesn't contain classrooms user is authoring, they're part of authored_classrooms
+            authored_classrooms{ directory_id : classroom_name }, # Logined user is the owner of these classrooms
+            joined_classrooms{ directory_id : classroom_name } # Doesn't contain classrooms user is authoring, they're part of authored_classrooms
         }
 
     - Data that the backend expects to receive from this file:
         - To display the subjects of a clicked classroom directory
             - Send to route '/display'
-            - Method is POST request
+            - Method is GET request
             - With these data variables
                 - directory_type = "classroom" 
                 - directory_id = the id of the classroom that the user clicked on
@@ -36,13 +37,22 @@ Notes for the Frontend:
             - Send to route '/add_directory'
             - Method is POST request
             - With these data variables 
+                - directory_type
                 - directory_name = the name of the classroom that that is inputted by the user 
 
         - To join classroom
             - Route '/join_classroom'
             - POST request
             - With these data variables
-                - classroom_id = # The classroom id the user inputted
+                - directory_id = # The classroom id the user inputted
+
+        - To rename a classroom that the user authors
+            - Ipakita lang ang option kung author sila ha
+            - Send to route '/rename_classroom'
+            - Method is POST request
+            - With these data variables 
+                - directory_id = 
+                - new_classroom_name = whatever the new name of classroom that user inputted
 
         - To delete a classroom that the user authors
             - First of all, ipapakita niyo lang yung delete option kung si user ay isang author ng classroom na iyon
@@ -81,6 +91,7 @@ Notes for the Frontend:
                 - directory_type = "subject" 
                 - directory_id = the id of the subject that the user clicked on
                 - authored = 1 or 0 so that displayed lesson will have edit options
+                - parent_info = [directory_type, directory_id, directory_name]
 
         - To delete a subject
             - Again, ipakita lang ang delete option kung sila ang author
@@ -88,19 +99,29 @@ Notes for the Frontend:
             - Method is POST request
             - With these data variables 
                 - directory_id = whatever the id of that subject to delete
+                - directory_type = "subject"
+
+        - To rename a subject that the user authors
+            - Ipakita lang ang option kung author sila ha
+            - Send to route '/edit_directory'
+            - Method is POST request
+            - With these data variables 
+                - directory_type = "subject"
+                - directory_id = yung id boi
+                - new_directory_name = whatever the new name of subject that user inputted
 
         - To leave classroom
             - Route '/leave_classroom'
             - POST request
             - With these data variables
-                - classroom_id = # The classroom id the user inputted 
+                - directory_id = 
 
         - To kick a user
             - Route '/kick_user'
             - POST request
             - With these data variables
-                - user_id = # The user's id to kick
-                - classroom_id = # The classroom id the user inputted 
+                - user_id_to_kick = # The user's id to kick
+                - directory_id = # The classroom id the user inputted 
 
 - lessons.html  
     - Description of this file
@@ -109,7 +130,9 @@ Notes for the Frontend:
     - Data that the backend will be sending to this file:
         contents [ [lesson_id, lesson_name] ] # List of lesson info
 
-        authored = 1 # Ito yung magdedetermine kung magpapakita ba kayo ng edit options 
+        authored = 1 or 0 # Ito yung magdedetermine kung magpapakita ba kayo ng edit options 
+
+        - parent_info = [directory_type, directory_id, directory_name]
 
     - Data that the backend expects to receive from this file:
         - To display the answers and quizzes/flashcards of a clicked question directory
@@ -119,6 +142,14 @@ Notes for the Frontend:
                 - directory_type = "lesson" 
                 - directory_id = the id of the lesson that the user clicked on
                 - authored = 1 or 0 so that displayed questions will have edit options
+
+        - To rename a subject that the user authors
+            - Ipakita lang ang option kung author sila ha
+            - Send to route '/edit_directory'
+            - Method is POST request
+            - With these data variables 
+                - directory_id = "lesson"
+                - new_directory_name = whatever the new name of lesson that user inputted
 
         - To delete a lesson
             - Again, ipakita lang ang delete option kung sila ang author
@@ -135,7 +166,9 @@ Notes for the Frontend:
     - Data that the backend will be sending to this file:
         contents[ [question_id, question, answer] ]
 
-        authored = 1 # Ito yung magdedetermine kung magpapakita ba kayo ng edit options 
+        authored = 1 or 0 # Ito yung magdedetermine kung magpapakita ba kayo ng edit options 
+        
+        parent_info = [directory_type, directory_id, directory_name]
 
     - Data that the backend expects to receive from this file:
         - To delete a question
@@ -145,5 +178,15 @@ Notes for the Frontend:
             - With these data variables 
                 - directory_type = "question"
                 - directory_id = whatever the id of that question to delete
+        - To change question or answer  
+            - Again, ipakita lang ang delete option kung sila ang author
+            - Send to route '/edit_directory'
+            - Method is POST request
+            - With these data variables 
+                - directory_type = "question"
+                - directory_id = whatever the id of that question to change
+                - new_question = inputted by the user
+                - new_answer = inputted by the user
+                    - Note that hindi naman kaylangan maginput ni user in both new_question and new_answer, kahit isa oks lang
 
     

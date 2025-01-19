@@ -20,8 +20,12 @@ class Directory:
         self._parent_type = parent_of.get(self._directory_type)
         self._parent_id = args_dict.get('parent_id')
 
-        self._sqlite_connection = sqlite3.connect('app.db')
-        self._cursor = self._sqlite_connection.cursor()
+        if args_dict.get('connection') == None:
+            self._sqlite_connection = sqlite3.connect('app.db') 
+            self._cursor = self._sqlite_connection.cursor() 
+        else:
+            self._sqlite_connection = args_dict.get('connection')
+            self._cursor = args_dict.get('cursor')
 
     # Gets all children names and ids of a specific directory
     # This is for the purpose of displaying the sub-directories of a parent directory
@@ -63,11 +67,9 @@ class Directory:
         return "success"
 
     # Most likely works with every directory type
-    # Needs directory_id to delete
+    # Needs directory_id and directory_type to delete
     def delete_directory(self): 
-        dir_contents = self.get_directory_contents()
-        if dir_contents == None:
-            dir_contents = []
+        children_ids = self._get_children_directory_ids()
 
         current_dir_table_name = f"{self._directory_type}s".capitalize()
         current_dir_id_column_name = f"{self._directory_type}_id"
@@ -78,19 +80,50 @@ class Directory:
 
         if self._children_type == None:
             return 
+
+        for id in children_ids:
+            Directory({'directory_type' : self._children_type, 'directory_id' : id}).delete_directory()
+
+    # Edits the name
+    # Requires directory_id, directory_type, and new_directory_name
+    def edit_directory(self, new_directory_name):
+        table_name = f"{self._directory_type}s".capitalize()
+        name_column_name = f"{self._directory_type}_name"
+        id_column_name = f"{self._directory_type}_id"
+
+        query = f"UPDATE {table_name} SET {name_column_name} = ? WHERE {id_column_name} = ?"
+        self._cursor.execute(query, (new_directory_name, self._directory_id))
+        self._sqlite_connection.commit()
+
+    def _get_children_directory_ids(self):
+        if self._children_type == None:
+            return []
         
-        for content in dir_contents:
-            if self._children_type == 'lesson':
-                Lesson({'directory_type' : self._children_type, 'directory_id' : content[0]}).delete_directory()
-            elif self._children_type == 'question':
-                Question({'directory_type' : self._children_type, 'directory_id' : content[0]}).delete_directory()
-            else:
-                Directory({'directory_type' : self._children_type, 'directory_id' : content[0]}).delete_directory()
+        children_ids = []
 
+        # String variables for creating custom query
+        children_id_column_name = f"{self._children_type}_id"
+        children_table_name = f"{self._children_type}s".capitalize()
+        parent_id = f"{self._directory_type}_parent_id"
 
+        query = f"SELECT {children_id_column_name} FROM {children_table_name} WHERE {parent_id} = ?"
+        queried_ids = self._cursor.execute(query, (self._directory_id,)).fetchall()
+
+        for id in queried_ids:
+            children_ids.append(id[0])
+
+        return children_ids
+
+    def get_directory_name_from_database(self):
+        name_column_name = f"{self._directory_type}_name"
+        table_name = f"{self._directory_type}s".capitalize()
+        id_column_name = f"{self._directory_type}_id"
+        query = f"SELECT {name_column_name} FROM {table_name} WHERE {id_column_name} = ?"
+        return self._cursor.execute(query, (self._directory_id,)).fetchone()[0]
+    
     def get_directory_name(self):
         return self._directory_name
-    
+
     def get_directory_type(self):
         return self._directory_type
     
@@ -150,3 +183,12 @@ class Question(Directory):
         self._sqlite_connection.commit()
 
         return "success"
+    
+    def edit_directory(self, new_question, new_answer):
+        if new_question != None:
+            query1 = "UPDATE Questions SET question = ? WHERE question_id = ?"
+            self._cursor.execute(query1, (new_question, self._directory_id))
+        if new_answer != None:
+            query2 = "UPDATE Questions SET answer = ? WHERE question_id = ?"
+            self._cursor.execute(query2, (new_answer, self._directory_id))
+        self._sqlite_connection.commit()

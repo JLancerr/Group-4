@@ -14,8 +14,12 @@ class User:
         self.__username = args_dict.get('username')
         self.__password = args_dict.get('password')
 
-        self.__sqlite_connection = sqlite3.connect('app.db') # Connects to the database
-        self.__cursor = self.__sqlite_connection.cursor() # Creates instance of a cursor which is used for executing queries
+        if args_dict.get('connection') == None:
+            self.__sqlite_connection = sqlite3.connect('app.db') 
+            self.__cursor = self.__sqlite_connection.cursor() 
+        else:
+            self.__sqlite_connection = args_dict.get('connection')
+            self.__cursor = args_dict.get('cursor')
 
     def signup(self):
         # Check if username already exists in the database
@@ -119,9 +123,14 @@ class User:
         return "success"
 
     def delete_classroom(self, classroom_id):
+        query2 = "DELETE FROM Users_Classrooms_Relationship WHERE classroom_id = ?"
+        self.__cursor.execute(query2, (classroom_id,))
+
         classroom_info = {
             'directory_type' : "classroom",
-            'directory_id' : classroom_id
+            'directory_id' : classroom_id,
+            'connection' : self.__sqlite_connection,
+            'cursor' : self.__cursor
         }
         classroom = Directory(classroom_info)
         return classroom.delete_directory()
@@ -132,9 +141,10 @@ class User:
         self.__sqlite_connection.commit()
         return "success"
 
-    def rename_classroom(self, classroom_id, classroom_name):
-        query = "UPDATE Classroom SET classroom_name = ? WHERE classroom_id = ?"
-        self.__cursor(query, (classroom_id, classroom_name))
+    def rename_classroom(self, classroom_id, new_classroom_name):
+        query = "UPDATE Classrooms SET classroom_name = ? WHERE classroom_id = ?"
+        self.__cursor.execute(query, (new_classroom_name, classroom_id))
+        self.__sqlite_connection.commit()
         return "success"
 
     def get_first_name(self):

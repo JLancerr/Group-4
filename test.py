@@ -57,7 +57,6 @@ def show_all():
     print("Lessons: " + str(cursor.execute("SELECT * FROM Lessons").fetchall()))
     print("Questions: " + str(cursor.execute("SELECT * FROM Questions").fetchall()))
     print("Rels: " + str(cursor.execute("SELECT * FROM Users_Classrooms_Relationship").fetchall()))
-    pass
 
 def del_all():
     cursor.execute("DELETE FROM Users_Classrooms_Relationship WHERE 1")
@@ -68,8 +67,8 @@ def del_all():
 
 def check_schema():
     print(cursor.execute("PRAGMA table_info(Classrooms)").fetchall())
-"""cursor.execute("DELETE FROM Lessons WHERE 1")
-cursor.execute("DELETE FROM Questions WHERE 1")"""
+
+
 if 0:
     del_all()
 if 1:
