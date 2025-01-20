@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <script>
+            function display_error() {
+              current_url = new URL(window.location.href)
+              url_params = new URLSearchParams(current_url.search)
+              if (url_params.has('error')) {
+                window.alert(url_params.get('error'))
+              }
+            }
+        </script>
+    </head>
+    <body>
+        <!-- Data that the backend sends here -->
+        <div>
+            authored: {{authored}} 
+        </div>
+        <div>
+            Lessons list [[id, name]] : {{ contents }}
+        </div>
+        <div>
+            Subject info: {{parent_directory_name}}, {{parent_directory_type}}, {{parent_directory_id}}
+        </div>
+        <br>
+
+        <!-- Add lesson if user authors the classroom this lesson resides in -->
+        {% if authored == "1" %}
+            <form action="/add_directory" method="POST">
+                <input name="parent_id" value="{{ parent_directory_id }}" type="hidden" readonly>
+                <input name="directory_type" value="lesson" type="hidden" readonly>
+                <input name="directory_name" placeholder="lesson_name">
+                <button type="submit">Add lesson</button>
+            </form>
+        {% endif %}
+        <!-- Show all lessons -->
+        <br>
+        <div>Lessons:</div>
+        {% for lesson in contents %}
+            <form action="/display" method="GET">
+                <input name="directory_id" value="{{ lesson[0] }}" type="hidden" readonly>
+                <input name="directory_type" value="lesson" type="hidden" readonly>
+                <div>
+                    Lesson name: {{ lesson[1] }}
+                </div>
+                <button type="submit">see lessons</button>
+            </form>
+            <!-- Show lesson manipulation options only if the user is the author of this -->
+            {% if authored == "1" %}
+                <form action="/edit_directory" method="POST">
+                    <input name="parent_id" value="{{ parent_directory_id }}" type="hidden" readonly>
+                    <input name="directory_id" value="{{ lesson[0] }}" type="hidden" readonly>
+                    <input name="directory_type" value="lesson" type="hidden" readonly>
+                    <input name="new_directory_name" placeholder="rename_lesson">
+                    <button type="submit">rename</button>
+                </form>
+                <form action="/delete_directory" method="POST">
+                    <input name="parent_id" value="{{ parent_directory_id }}" type="hidden" readonly>
+                    <input name="directory_id" value="{{ lesson[0] }}" type="hidden" readonly>
+                    <input name="directory_type" value="lesson" type="hidden" readonly>
+                    <button type="submit">delete</button>
+                </form>
+            {% endif %}
+            <br>
+        {% endfor %}
+        <script>
+            display_error()
+        </script>
+    </body>
+</html>

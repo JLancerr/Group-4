@@ -43,6 +43,7 @@ class Directory:
         parent_id = f"{self._directory_type}_parent_id"
 
         query = f"SELECT {children_id_column_name}, {children_name_column_name} FROM {children_table_name} WHERE {parent_id} = ?"
+        
         ids_and_names = self._cursor.execute(query, (self._directory_id,)).fetchall()
 
         for given in ids_and_names:
@@ -121,6 +122,31 @@ class Directory:
         query = f"SELECT {name_column_name} FROM {table_name} WHERE {id_column_name} = ?"
         return self._cursor.execute(query, (self._directory_id,)).fetchone()[0]
     
+    def authorize_user(self, user_id):
+        target = "user_parent_id"
+
+        current_parent_type = self._parent_type
+        current_id = self._directory_id
+        current_dir_type = self._directory_type
+        while True:
+            parent_id_column_name = f"{current_parent_type}_parent_id"
+            dir_table_name = f"{current_dir_type}s".capitalize()
+            id_column_name = f"{current_dir_type}_id"
+            query1 = f"SELECT {parent_id_column_name} FROM {dir_table_name} WHERE {id_column_name} = ?"
+            print(query1)
+            parent_id = self._cursor.execute(query1, (current_id,)).fetchone()[0]
+            if parent_id_column_name != target:
+                current_dir_type = current_parent_type
+                current_parent_type = parent_of[f'{current_parent_type}']
+                current_id = parent_id
+            else:
+                break
+        if parent_id == user_id:
+            return "1"
+        else:
+            return "0"
+
+
     def get_directory_name(self):
         return self._directory_name
 
@@ -149,7 +175,6 @@ class Classroom(Directory):
         query1 = "SELECT user_id FROM Users_Classrooms_Relationship WHERE classroom_id = ?"
         user_id_list = self._cursor.execute(query1, (self._directory_id,)).fetchall()
         for id in user_id_list:
-            print(id)
             query2 = "SELECT first_name, last_name, username FROM Users WHERE user_id = ?"
             user_info = self._cursor.execute(query2, (id[0],)).fetchone()
             names_of_users_joined.append([ id[0], user_info[0], user_info[1], user_info[2] ])

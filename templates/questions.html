@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <script>
+            function display_error() {
+              current_url = new URL(window.location.href)
+              url_params = new URLSearchParams(current_url.search)
+              if (url_params.has('error')) {
+                window.alert(url_params.get('error'))
+              }
+            }
+        </script>
+    </head>
+    <body>
+        <!-- Data that the backend sends here -->
+        <div>
+            authored: {{authored}} 
+        </div>
+        <div>
+            Questions list [[id, question, answer]] : {{ contents }}
+        </div>
+        <div>
+            Lesson info: {{parent_directory_name}}, {{parent_directory_type}}, {{parent_directory_id}}
+        </div>
+        <br>
+
+        <!-- Add question if user authors the classroom this question resides in -->
+        {% if authored == "1" %}
+            <form action="/add_directory" method="POST">
+                <input name="parent_id" value="{{ parent_directory_id }}" type="hidden" readonly>
+                <input name="directory_type" value="question" type="hidden" readonly>
+                <input name="question" placeholder="question">
+                <input name="answer" placeholder="answer">
+                <button type="submit">Add q&a</button>
+            </form>
+        {% endif %}
+        <!-- Show all questions -->
+        <br>
+        <div>questions:</div>
+        {% for question in contents %}
+            <div>
+                question: {{ question[1] }}
+                <br>
+                answer: {{ question[2] }}
+            </div>
+            <!-- Show question manipulation options only if the user is the author of this -->
+            {% if authored == "1" %}
+                <form action="/edit_directory" method="POST">
+                    <input name="parent_id" value="{{ parent_directory_id }}" type="hidden" readonly>
+                    <input name="directory_id" value="{{ question[0] }}" type="hidden" readonly>
+                    <input name="directory_type" value="question" type="hidden" readonly>
+                    <input name="new_question" placeholder="new_question">
+                    <input name="new_answer" placeholder="new_answer">
+                    <button type="submit">edit</button>
+                </form>
+                <form action="/delete_directory" method="POST">
+                    <input name="parent_id" value="{{ parent_directory_id }}" type="hidden" readonly>
+                    <input name="directory_id" value="{{ question[0] }}" type="hidden" readonly>
+                    <input name="directory_type" value="question" type="hidden" readonly>
+                    <button type="submit">delete</button>
+                </form>
+            {% endif %}
+            <br>
+        {% endfor %}
+        <script>
+            display_error()
+        </script>
+    </body>
+</html>

@@ -31,7 +31,7 @@ query4 = '''
 CREATE TABLE Lessons (
     lesson_id INTEGER PRIMARY KEY AUTOINCREMENT, 
     lesson_name VARCHAR(40),
-    subjects_parent_id INT
+    subject_parent_id INT
 );'''
 
 query5 = '''
@@ -59,6 +59,7 @@ def show_all():
     print("Rels: " + str(cursor.execute("SELECT * FROM Users_Classrooms_Relationship").fetchall()))
 
 def del_all():
+    cursor.execute("DELETE FROM Users WHERE 1")
     cursor.execute("DELETE FROM Users_Classrooms_Relationship WHERE 1")
     cursor.execute("DELETE FROM Classrooms WHERE 1")
     cursor.execute("DELETE FROM Subjects WHERE 1")
@@ -66,14 +67,15 @@ def del_all():
     cursor.execute("DELETE FROM Questions WHERE 1")
 
 def check_schema():
-    print(cursor.execute("PRAGMA table_info(Classrooms)").fetchall())
+    print(cursor.execute("PRAGMA table_info(Lessons)").fetchall())
 
 
-if 0:
+if 0    :
     del_all()
 if 1:
     show_all()
 if 0:
     check_schema()
+
 
 sqlite_connection.commit()

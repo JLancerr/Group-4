@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<!-- First page that users see -->
+
+<html>
+    <head>
+        <script>
+            function display_error() {
+              current_url = new URL(window.location.href)
+              url_params = new URLSearchParams(current_url.search)
+              if (url_params.has('error')) {
+                window.alert(url_params.get('error'))
+              }
+            }
+        </script>
+    </head>
+    <body>
+        <div> Welcome to Harry's landing page </div>
+        <div> Ito ang unang page na makikita ng user na hindi pa logged in </div>
+        <div> Testing </div>
+
+        <form action="/signup" method="post">
+            <div>
+                Sign up: 
+            </div>
+            <input name="first_name" placeholder="first_name" value="Harry">
+            <input name="last_name" placeholder="last_name" value="Emelo">
+            <input name="username" placeholder="username"   value="harryememelo">
+            <input name="password" placeholder="password" value="EME">
+            <input type="submit">
+        </form>
+
+        <form action="/login" method="post">
+            <div>
+                Log in: 
+            </div>
+            <input name="username" placeholder="username"   value="harryememelo">
+            <input name="password" placeholder="password" value="EME">
+            <input type="submit">
+        </form>
+
+        <script>
+            display_error()
+        </script>
+    </body>
+</html>

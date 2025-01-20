@@ -13,7 +13,7 @@ user_info = {
 }
 classroom_info = {
     'directory_type' : 'classroom',
-    'directory_id' : 22
+    'directory_id' : 26
 }
 subject_info = {
     'directory_id' : 17,
@@ -32,22 +32,7 @@ ques_info = {
     'answer' : 'Inheritance is when you want a variation of an already existing class',
     'parent_id' : 18
 }
-user = User(user_info)
-"""
-user.rename_classroom(23, "LMfAO")
 
-user.add_classroom(20)
-
-
-subject = Directory(subject_info)
-subject.edit_directory("DCIT24A")
-
-
-lesson = Directory(lesson_info)
-lesson.add_dir_to_database()
-"""
-ques = Question(ques_info)
-ques.edit_directory("What is Polymorphism", "Not this one lol")
-
-
+c = Directory(classroom_info)
+print(c.get_directory_contents())
 sqlite_connection.commit()

@@ -71,10 +71,13 @@ class User:
 
         # Retrieve classrooms the user is joined in but not authored
         query2 = "SELECT classroom_id FROM Users_Classrooms_Relationship WHERE user_id = ?"
-        query3 = "SELECT classroom_name FROM Classrooms WHERE classroom_id = ?"
+        query3 = "SELECT classroom_name FROM Classrooms WHERE classroom_id = ? AND user_parent_id != ?"
         classroom_ids = self.__cursor.execute(query2, (self.__user_id,)).fetchall()
         for id in classroom_ids:
-            joined_classroom_names_and_ids[id[0]] = self.__cursor.execute(query3, (id[0],)).fetchone()[0]
+            print(id[0])
+            joined_classroom_name = self.__cursor.execute(query3, (id[0], self.__user_id)).fetchone()
+            if joined_classroom_name != None:
+                joined_classroom_names_and_ids[id[0]] = joined_classroom_name[0]
 
         return [authored_classroom_names_and_ids, joined_classroom_names_and_ids]
 
@@ -99,6 +102,12 @@ class User:
         return "success"
     
     def join_classroom(self, classroom_id):
+        query3 = "SELECT classroom_id FROM Classrooms WHERE classroom_id = ?"
+        found_classroom = self.__cursor.execute(query3, (classroom_id,)).fetchone()
+
+        if found_classroom == None:
+            return "classroom-does-not-exist"
+
         query1 = "SELECT user_id FROM Users_Classrooms_Relationship WHERE user_id = ? AND classroom_id = ?"
         duplicates = self.__cursor.execute(query1, (self.__user_id, classroom_id)).fetchall()
         if len(duplicates) > 0:
