@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-
-<!-- Page users see if they're logged in -->
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../static/css/base.css" />
-    <link rel="stylesheet" href="../static/css/home.css" />
     <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
     />
+    <link rel="stylesheet" href="../static/css/font.css" />
+    <link rel="stylesheet" href="../static/css/home.css" />
+    <script src="../static/js/script.js" defer></script>
     <title>Quizrev | Landing Page</title>
     <script>
       function display_error() {
@@ -27,51 +22,48 @@
     </script>
   </head>
   <body>
-    <!-- SIDEBAR -->
+    <!-- Sidebar -->
     <div class="sidebar close">
       <header>
         <div class="img-text">
           <span class="image">
-            <img src="logo.png" alt="logo" />
+            <img src="../static/images/QLarge.svg" alt="logo" />
           </span>
-
           <div class="text header-text">
-            <span class="name">Rev Quiz</span>
+            <h1 class="name">Quizrev</h1>
           </div>
         </div>
-
         <i class="bx bx-chevron-right toggle"></i>
       </header>
-
       <div class="menubar">
         <div class="menu">
           <ul class="links">
             <li class="navlinks">
-              <a href=""
-                ><i class="bx bx-home-smile">
-                  <span class="text nav-text">Dashboard</span>
-                </i></a
+              <a href="#"
+                ><i class="bx bx-home-smile"
+                  ><span class="text nav-text"> Dashboard</span></i
+                ></a
               >
             </li>
             <li class="navlinks">
-              <a href=""
-                ><i class="bx bx-book-alt">
-                  <span class="text nav-text">Libraries</span>
-                </i></a
+              <a href="#"
+                ><i class="bx bx-book-alt"
+                  ><span class="text nav-text"> Libraries</span></i
+                ></a
               >
             </li>
             <li class="navlinks">
-              <a href=""
-                ><i class="bx bx-purchase-tag">
-                  <span class="text nav-text">Purchase Plan</span>
-                </i></a
+              <a href="#"
+                ><i class="bx bx-purchase-tag"
+                  ><span class="text nav-text"> Plan</span></i
+                ></a
               >
             </li>
             <li class="navlinks">
-              <a href=""
-                ><i class="bx bxs-face">
-                  <span class="text nav-text">Profile</span>
-                </i></a
+              <a href="#"
+                ><i class="bx bxs-face"
+                  ><span class="text nav-text"> Profile</span></i
+                ></a
               >
             </li>
           </ul>
@@ -79,70 +71,174 @@
       </div>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <div class="main-content">
-      <!-- HEAD -->
-      <div class="head">
-        <a href="#" class="primary-btn">Upgrade: free 7-day trial</a>
-        <div class="profile"><img src="#" alt="Profile" /></div>
-      </div>
-      <div class="dashboard-navbar">
+    <!-- Main Content - Dashboard -->
+    <div class="main-content dashboard">
+      <!-- Dashboard Header -->
+      <div class="dashboard-header">
         <h1 class="dashboard-title">My Classroom</h1>
-        <div class="dashboard-options">
-          <ul>
-            <li>All</li>
-            <li>Authored</li>
-            <li>Joined</li>
-          </ul>
+        <div class="dashboard-buttons">
+          <button class="secondary-btn" id="join-class-btn">
+            Join Classroom
+          </button>
+          <button class="primary-btn" id="add-class-btn">Add Classroom</button>
         </div>
       </div>
-      <div class="grid">
-        <div class="item">Item 1</div>
-        <div class="item">Item 2</div>
-        <div class="item">Item 3</div>
-        <div class="item">Item 4</div>
-        <div class="item">Item 5</div>
-        <div class="item">Item 6</div>
-        <div class="item">Item 7</div>
-        <div class="item">Item 8</div>
-        <div class="item">Item 9</div>
-        <div class="item">Item 10</div>
+
+      <!-- Dashboard Content -->
+      <div class="dashboard-content">
+        <!-- Authored Classrooms -->
+        <div class="authored-classrooms">
+          <div class="grid">
+            <form action="/display" method="post" class="item">
+              <input type="hidden" name="directory_type" value="classroom" />
+              <input
+                type="hidden"
+                name="directory_id"
+                value="{{ classroom_id }}"
+              />
+              <input type="hidden" name="authored" value="1" />
+              <input type="submit" value="{{ classroom_name }}" class="classroom-name">
+              <button
+                type="submit"
+                formaction="/delete_directory"
+                formmethod="post"
+              >
+                Delete
+              </button>
+            </form>
+
+            <form action="/display" method="post" class="item">
+              <input type="hidden" name="directory_type" value="classroom" />
+              <input
+                type="hidden"
+                name="directory_id"
+                value="{{ classroom_id }}"
+              />
+              <input type="hidden" name="authored" value="1" />
+              <input type="submit" value="{{ classroom_name }}" class="classroom-name">
+              <button
+                type="submit"
+                formaction="/delete_directory"
+                formmethod="post"
+              >
+                Delete
+              </button>
+            </form>
+
+            <form action="/display" method="post" class="item">
+              <input type="hidden" name="directory_type" value="classroom" />
+              <input
+                type="hidden"
+                name="directory_id"
+                value="{{ classroom_id }}"
+              />
+              <input type="hidden" name="authored" value="1" />
+              <input type="submit" value="{{ classroom_name }}" class="classroom-name">
+              <button
+                type="submit"
+                formaction="/delete_directory"
+                formmethod="post"
+              >
+                Delete
+              </button>
+            </form>
+
+            <form action="/display" method="post" class="item">
+              <input type="hidden" name="directory_type" value="classroom" />
+              <input
+                type="hidden"
+                name="directory_id"
+                value="{{ classroom_id }}"
+              />
+              <input type="hidden" name="authored" value="1" />
+              <input type="submit" value="{{ classroom_name }}" class="classroom-name">
+              <button
+                type="submit"
+                formaction="/delete_directory"
+                formmethod="post"
+              >
+                Delete
+              </button>
+            </form>
+
+            <form action="/display" method="post" class="item">
+              <input type="hidden" name="directory_type" value="classroom" />
+              <input
+                type="hidden"
+                name="directory_id"
+                value="{{ classroom_id }}"
+              />
+              <input type="hidden" name="authored" value="1" />
+              <input type="submit" value="{{ classroom_name }}" class="classroom-name">
+              <button
+                type="submit"
+                formaction="/delete_directory"
+                formmethod="post"
+              >
+                Delete
+              </button>
+            </form>
+
+            <!-- {% for classroom_id, classroom_name in
+            classrooms_info.authored_classrooms.items() %}
+            <form action="/display" method="post" class="item">
+              <input type="hidden" name="directory_type" value="classroom" />
+              <input
+                type="hidden"
+                name="directory_id"
+                value="{{ classroom_id }}"
+              />
+              <input type="hidden" name="authored" value="1" />
+              <input type="submit" value="{{ classroom_name }}" />
+              <button
+                type="submit"
+                formaction="/delete_directory"
+                formmethod="post"
+              >
+                Delete
+              </button>
+            </form>
+            {% endfor %} -->
+          </div>
+        </div>
+
+        <!-- Joined Classrooms -->
+        <div class="joined-classrooms">
+          <div class="grid">
+            <!-- {% for classroom_id, classroom_name in
+            classrooms_info.joined_classrooms.items() %}
+            <form action="/display" method="post" class="item">
+              <input type="hidden" name="directory_type" value="classroom" />
+              <input type="hidden" name="directory_id" value="{{ classroom_id }}" />
+              <input type="hidden" name="authored" value="0" />
+              <input type="submit" value="{{ classroom_name }}" />
+            </form>
+            {% endfor %} -->
+          </div>
+        </div>
       </div>
-
-      <div>Welcome to Harry's home page</div>
-    <div>Ito ang page na makikita kapag nag login ang user</div>
-
-    <form action="/" method="get">
-      <button type="submit">Log out</button>
-    </form>
-
-    <br />
-    <div>Join class</div>
-    <form action="/join_classroom" method="post">
-      <input name="classroom_id" placeholder="classroom_id" />
-      <input type="submit" />
-    </form>
-
-    <div>Create class</div>
-    <form action="/create_classroom" method="post">
-      <input name="classroom_name" placeholder="classroom_name" />
-      <input type="submit" />
-    </form>
-
-    <div>Classes joined:</div>
-    <div>
-      {% for classroom_id in joined_classrooms %}
-      <div>{{ classroom_id }} - {{ joined_classrooms[classroom_id] }}</div>
-      {% endfor %}
     </div>
 
-    <br />
-    <div>Displayed info of users using Jinja</div>
-    <div>
-      {% for data in user_data %}
-      <div>{{ data }} - {{ user_data[data] }}</div>
-      {% endfor %}
+    <!-- Join Classroom Modal -->
+    <div id="join-class-modal" class="modal">
+      <div class="modal-content">
+        <span class="modal-close" id="close-join-class">&times;</span>
+        <form action="/join_classroom" method="post">
+          <input name="classroom_id" placeholder="Enter Classroom ID" />
+          <button type="submit" class="btn">Join</button>
+        </form>
+      </div>
     </div>
+
+    <!-- Add Classroom Modal -->
+    <div id="add-class-modal" class="modal">
+      <div class="modal-content">
+        <span class="modal-close" id="close-add-class">&times;</span>
+        <form action="/add_directory" method="post">
+          <input name="directory_name" placeholder="Enter Classroom Name" />
+          <button type="submit" class="btn">Add</button>
+        </form>
+      </div>
     </div>
 
     <script>
