@@ -93,3 +93,66 @@ body {
 .button button:hover {
   background-color: #0056b3;
 }
+
+.alert {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.alert-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+}
+
+.alert h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.alert p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.alert-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.alert-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.retry-btn {
+  background-color: #ffc107;
+  color: white;
+}
+
+.retry-btn:hover {
+  background-color: #e0a800;
+}
+
+.finish-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.finish-btn:hover {
+  background-color: #218838;
+}
