@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcard Terms and Definition</title>
+    <link rel="stylesheet" href="flashcard.css">
+</head>
+
+<body>
+    
+    
+    <div class="container">
+        <h1>Terms and Definition</h1>
+
+        <div class="form-group">
+            <label for="term">Term:</label>
+            <input type="text" id="term" placeholder="Enter term">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" rows="3" placeholder="Enter description"></textarea>
+        </div>
+
+        <div class="buttons">
+            <button class="add">Add Flashcard</button>
+            <button class="create-deck">Create Deck and Practice It</button>
+        </div>
+
+        <div class="flashcards" id="flashcards"></div>
+
+    </div>
+
+
+</body>
+
+
+
+    <script>
+        const termInput = document.getElementById('term');
+        const descriptionInput = document.getElementById('description');
+        const flashcardsContainer = document.getElementById('flashcards');
+        const addButton = document.querySelector('.add');
+        const createDeckButton = document.querySelector('.create-deck');
+
+        const flashcards = [];
+
+        function renderFlashcards() {
+            flashcardsContainer.innerHTML = '';
+            flashcards.forEach((flashcard, index) => {
+                const card = document.createElement('div');
+                card.className = 'flashcard';
+                card.innerHTML = `
+                    <strong>${flashcard.term}</strong>
+                    <p>${flashcard.description}</p>
+                    <div class="actions">
+                        <button class="edit" onclick="editFlashcard(${index})">Edit</button>
+                        <button class="delete" onclick="deleteFlashcard(${index})">Delete</button>
+                    </div>
+                    `;
+                    flashcardsContainer.appendChild(card);
+            });
+        }
+
+        function addFlashcard() {
+            const term = termInput.value.trim();
+            const description = descriptionInput.value.trim();
+
+            if (term && description) {
+                flashcards.push({ term, description });
+                renderFlashcards();
+                termInput.value = '';
+                descriptionInput.value = '';
+            } else {
+                alert('Please fill in both fields.');
+            }
+        }
+
+        function editFlashcard(index) {
+            const flashcard = flashcards[index];
+            termInput.value = flashcard.term;
+            descriptionInput.value = flashcard.description;
+            deleteFlashcard(index);
+        }
+
+        function deleteFlashcard(index) {
+            flashcards.splice(index, 1);
+            renderFlashcards();
+        }
+
+        function createDeckAndPractice() {
+            if (flashcards.length === 0) {
+                alert('Add some flashcards to create a deck.');
+            } else {
+                alert('Deck created! Time to practice your flashcards.');
+            }
+        }
+
+        addButton.addEventListener('click', addFlashcard);
+        createDeckButton.addEventListener('click', createDeckAndPractice);
+
+    </script>
+
+</html>
