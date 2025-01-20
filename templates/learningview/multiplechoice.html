@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multiple Choice</title>
+  <link rel="stylesheet" href="multiplechoice.css">
+</head>
+<body>
+  <div class="navbar"></div>
+  <div class="container">
+    <div class="question">
+      <h3>1. Question Placeholder</h3>
+      <div class="options">
+        <label><input type="radio" name="q1"> Option 1</label>
+        <label><input type="radio" name="q1"> Option 2</label>
+        <label><input type="radio" name="q1"> Option 3</label>
+        <label><input type="radio" name="q1"> Option 4</label>
+      </div>
+    </div>
+    <div class="question">
+      <h3>2. Question Placeholder</h3>
+      <div class="options">
+        <label><input type="radio" name="q2"> Option 1</label>
+        <label><input type="radio" name="q2"> Option 2</label>
+        <label><input type="radio" name="q2"> Option 3</label>
+        <label><input type="radio" name="q2"> Option 4</label>
+      </div>
+    </div>
+    <div class="question">
+      <h3>3. Question Placeholder</h3>
+      <div class="options">
+        <label><input type="radio" name="q3"> Option 1</label>
+        <label><input type="radio" name="q3"> Option 2</label>
+        <label><input type="radio" name="q3"> Option 3</label>
+        <label><input type="radio" name="q3"> Option 4</label>
+      </div>
+    </div>
+    <button class="complete-btn" onclick="completeQuiz()">Complete Quiz</button>
+  </div>
+
+  <div class="alert" id="resultalert">
+    <div class="alert-content">
+      <h2>Quiz Complete!</h2>
+      <p id="scoreMessage">Your score: 0/3</p>
+      <div class="alert-buttons">
+        <button class="retry-btn" onclick="retryQuiz()">Retry</button>
+        <button class="finish-btn" onclick="finishQuiz()">Finish</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function completeQuiz() {
+      let score = 0;
+      const totalQuestions = 3;
+      const answers = {
+        q1: "Option 1",
+        q2: "Option 2",
+        q3: "Option 3"
+      };
+
+      for (let i = 1; i <= totalQuestions; i++) {
+        const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
+        if (selectedOption && selectedOption.parentElement.textContent.trim() === answers[`q${i}`]) {
+          score++;
+        }
+      }
+
+      document.getElementById("scoreMessage").textContent = `Your score: ${score}/${totalQuestions}`;
+      document.getElementById("resultalert").style.display = "flex";
+    }
+
+    function retryQuiz() {
+      const selectedOptions = document.querySelectorAll("input[type='radio']");
+      selectedOptions.forEach(option => option.checked = false);
+      document.getElementById("resultalert").style.display = "none";
+    }
+
+    function finishQuiz() {
+      window.location.href = "thankyou.html";
+    }
+  </script>
+</body>
+</html>
