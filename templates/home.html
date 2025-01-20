@@ -2,20 +2,68 @@
 
 <!-- Page users see if they're logged in -->
 
-<html>
+<html lang="en">
   <head>
-    <link rel="stylesheet" href="landing.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/base.css" />
+    <link rel="stylesheet" href="../static/css/home.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Quizrev | Landing Page</title>
     <script>
       function display_error() {
-        current_url = new URL(window.location.href)
-        url_params = new URLSearchParams(current_url.search)
-        if (url_params.has('error')) {
-          window.alert(url_params.get('error'))
+        current_url = new URL(window.location.href);
+        url_params = new URLSearchParams(current_url.search);
+        if (url_params.has("error")) {
+          window.alert(url_params.get("error"));
         }
       }
-  </script>
+    </script>
   </head>
   <body>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      
+      <!-- Insert contents -->
+    </aside>
+
+    <!-- MAIN  -->
+    <section class="main">
+      <!-- HEAD -->
+      <div class="head">
+        <a href="#" class="primary-btn">Upgrade: free 7-day trial</a>
+        <div class="profile"><img src="#" alt="Profile" /></div>
+      </div>
+      <div class="dashboard-navbar">
+        <h1 class="dashboard-title">My Classroom</h1>
+        <div class="dashboard-options">
+          <ul>
+            <li>All</li>
+            <li>Authored</li>
+            <li>Joined</li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="item">Item 1</div>
+        <div class="item">Item 2</div>
+        <div class="item">Item 3</div>
+        <div class="item">Item 4</div>
+        <div class="item">Item 5</div>
+        <div class="item">Item 6</div>
+        <div class="item">Item 7</div>
+        <div class="item">Item 8</div>
+        <div class="item">Item 9</div>
+        <div class="item">Item 10</div>
+      </div>
+    </section>
+    
     <div>Welcome to Harry's home page</div>
     <div>Ito ang page na makikita kapag nag login ang user</div>
 
@@ -39,7 +87,7 @@
     <div>Classes joined:</div>
     <div>
       {% for classroom_id in joined_classrooms %}
-        <div> {{ classroom_id }} - {{ joined_classrooms[classroom_id] }} </div>
+      <div>{{ classroom_id }} - {{ joined_classrooms[classroom_id] }}</div>
       {% endfor %}
     </div>
 
@@ -51,7 +99,7 @@
       {% endfor %}
     </div>
     <script>
-      display_error()
-  </script>
+      display_error();
+    </script>
   </body>
 </html>
