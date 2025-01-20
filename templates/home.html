@@ -27,78 +27,123 @@
     </script>
   </head>
   <body>
-    <section class="home">
-      <!-- SIDEBAR -->
-      <aside class="sidebar">
-        <!-- Insert contents -->
-      </aside>
+    <!-- SIDEBAR -->
+    <div class="sidebar close">
+      <header>
+        <div class="img-text">
+          <span class="image">
+            <img src="logo.png" alt="logo" />
+          </span>
 
-      <!-- MAIN  -->
-      <section class="main">
-        <!-- HEAD -->
-        <div class="head">
-          <a href="#" class="primary-btn">Upgrade: free 7-day trial</a>
-          <div class="profile"><img src="#" alt="Profile" /></div>
-        </div>
-        <div class="dashboard-navbar">
-          <h1 class="dashboard-title">My Classroom</h1>
-          <div class="dashboard-options">
-            <ul>
-              <li>All</li>
-              <li>Authored</li>
-              <li>Joined</li>
-            </ul>
+          <div class="text header-text">
+            <span class="name">Rev Quiz</span>
           </div>
         </div>
-        <div class="grid">
-          <div class="item">Item 1</div>
-          <div class="item">Item 2</div>
-          <div class="item">Item 3</div>
-          <div class="item">Item 4</div>
-          <div class="item">Item 5</div>
-          <div class="item">Item 6</div>
-          <div class="item">Item 7</div>
-          <div class="item">Item 8</div>
-          <div class="item">Item 9</div>
-          <div class="item">Item 10</div>
+
+        <i class="bx bx-chevron-right toggle"></i>
+      </header>
+
+      <div class="menubar">
+        <div class="menu">
+          <ul class="links">
+            <li class="navlinks">
+              <a href=""
+                ><i class="bx bx-home-smile">
+                  <span class="text nav-text">Dashboard</span>
+                </i></a
+              >
+            </li>
+            <li class="navlinks">
+              <a href=""
+                ><i class="bx bx-book-alt">
+                  <span class="text nav-text">Libraries</span>
+                </i></a
+              >
+            </li>
+            <li class="navlinks">
+              <a href=""
+                ><i class="bx bx-purchase-tag">
+                  <span class="text nav-text">Purchase Plan</span>
+                </i></a
+              >
+            </li>
+            <li class="navlinks">
+              <a href=""
+                ><i class="bx bxs-face">
+                  <span class="text nav-text">Profile</span>
+                </i></a
+              >
+            </li>
+          </ul>
         </div>
-      </section>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <!-- HEAD -->
+      <div class="head">
+        <a href="#" class="primary-btn">Upgrade: free 7-day trial</a>
+        <div class="profile"><img src="#" alt="Profile" /></div>
+      </div>
+      <div class="dashboard-navbar">
+        <h1 class="dashboard-title">My Classroom</h1>
+        <div class="dashboard-options">
+          <ul>
+            <li>All</li>
+            <li>Authored</li>
+            <li>Joined</li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="item">Item 1</div>
+        <div class="item">Item 2</div>
+        <div class="item">Item 3</div>
+        <div class="item">Item 4</div>
+        <div class="item">Item 5</div>
+        <div class="item">Item 6</div>
+        <div class="item">Item 7</div>
+        <div class="item">Item 8</div>
+        <div class="item">Item 9</div>
+        <div class="item">Item 10</div>
+      </div>
 
       <div>Welcome to Harry's home page</div>
-      <div>Ito ang page na makikita kapag nag login ang user</div>
+    <div>Ito ang page na makikita kapag nag login ang user</div>
 
-      <form action="/" method="get">
-        <button type="submit">Log out</button>
-      </form>
+    <form action="/" method="get">
+      <button type="submit">Log out</button>
+    </form>
 
-      <br />
-      <div>Join class</div>
-      <form action="/join_classroom" method="post">
-        <input name="classroom_id" placeholder="classroom_id" />
-        <input type="submit" />
-      </form>
+    <br />
+    <div>Join class</div>
+    <form action="/join_classroom" method="post">
+      <input name="classroom_id" placeholder="classroom_id" />
+      <input type="submit" />
+    </form>
 
-      <div>Create class</div>
-      <form action="/create_classroom" method="post">
-        <input name="classroom_name" placeholder="classroom_name" />
-        <input type="submit" />
-      </form>
+    <div>Create class</div>
+    <form action="/create_classroom" method="post">
+      <input name="classroom_name" placeholder="classroom_name" />
+      <input type="submit" />
+    </form>
 
-      <div>Classes joined:</div>
-      <div>
-        {% for classroom_id in joined_classrooms %}
-        <div>{{ classroom_id }} - {{ joined_classrooms[classroom_id] }}</div>
-        {% endfor %}
-      </div>
+    <div>Classes joined:</div>
+    <div>
+      {% for classroom_id in joined_classrooms %}
+      <div>{{ classroom_id }} - {{ joined_classrooms[classroom_id] }}</div>
+      {% endfor %}
+    </div>
 
-      <br />
-      <div>Displayed info of users using Jinja</div>
-      <div>
-        {% for data in user_data %}
-        <div>{{ data }} - {{ user_data[data] }}</div>
-        {% endfor %}
-      </div>
-    </section>
+    <br />
+    <div>Displayed info of users using Jinja</div>
+    <div>
+      {% for data in user_data %}
+      <div>{{ data }} - {{ user_data[data] }}</div>
+      {% endfor %}
+    </div>
+    </div>
 
     <script>
       display_error();
