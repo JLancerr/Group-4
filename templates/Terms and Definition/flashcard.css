@@ -235,7 +235,7 @@ h1 {
     color: white;
 }
 
-/* Animations */
+/* Animation */
 @keyframes fadeIn {
     from {
         opacity: 0;
