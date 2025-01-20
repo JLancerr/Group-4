@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="flashcard.css">
+  <title>FlashCard</title>
+</head>
+<body>
+  <div class="navbar"></div>
+  <div class="flashcard-container">
+    <div class="flashcard" id="flashcard">
+      <div class="question">
+        Question Placeholder
+        <div class="click-message">Click to flip the card</div>
+      </div>
+      <div class="answer">
+        Answer Placeholder
+        <div class="click-message">Click to flip the card</div>
+      </div>
+    </div>
+    <div class="button">
+      <button id="prevBtn">Previous</button>
+      <button id="nextBtn">Next</button>
+    </div>
+  </div>
+
+  <script>
+    const flashcard = document.getElementById('flashcard');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    let currentIndex = 0;
+
+    const flashcards = [
+      { question: 'Question 1', answer: 'Answer 1' },
+      { question: 'Question 2', answer: 'Answer 2' },
+      { question: 'Question 3', answer: 'Answer 3' }
+    ];
+
+    function updateFlashcard() {
+      flashcard.classList.remove('flipped');
+      document.querySelector('.question').firstChild.textContent = flashcards[currentIndex].question;
+      document.querySelector('.answer').firstChild.textContent = flashcards[currentIndex].answer;
+    }
+
+    flashcard.addEventListener('click', () => {
+      flashcard.classList.toggle('flipped');
+    });
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + flashcards.length) % flashcards.length;
+      updateFlashcard();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % flashcards.length;
+      updateFlashcard();
+    });
+
+    updateFlashcard();
+  </script>
+</body>
+</html>
