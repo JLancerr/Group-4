@@ -131,7 +131,7 @@ li {
   transition: width 0.3s ease;
 }
 
-.sidebar.close i {
+.sidebar.close i.toggle {
   transform: rotate(180deg);
 }
 
