@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/font.css">
+    <link rel="stylesheet" href="../static/css/dashboard.css">
+    <script src="../static/js/script.js" defer></script>
+    <title>Quizrev | Subjects</title>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar close">
+      <header>
+        <div class="img-text">
+          <span class="image">
+            <img src="../static/images/QLarge.svg" alt="logo">
+          </span>
+          <div class="text header-text">
+            <h1 class="name">Quizrev</h1>
+          </div>
+        </div>
+        <i class="bx bx-chevron-left toggle"></i>
+      </header>
+      <div class="menubar">
+        <div class="menu">
+          <ul class="links">
+            <li class="navlinks">
+              <a href="#"><i class="bx bx-home-smile"><span class="text nav-text"> Dashboard</span></i></a>
+            </li>
+            <li class="navlinks">
+              <a href="#"><i class="bx bx-book-alt"><span class="text nav-text"> Libraries</span></i></a>
+            </li>
+            <li class="navlinks">
+              <a href="#"><i class="bx bx-purchase-tag"><span class="text nav-text"> Plan</span></i></a>
+            </li>
+            <li class="navlinks">
+              <a href="#"><i class="bx bxs-face"><span class="text nav-text"> Profile</span></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content - Subjects -->
+    <div class="main-content dashboard">
+      <!-- Dashboard Header -->
+      <div class="dashboard-header">
+        <h1 class="dashboard-title">{{ classroom_name }}</h1>
+        <div class="dashboard-buttons">
+          <!-- {% if authored == 1 %} -->
+          <button class="primary-btn" id="add-subject-btn">Add Subject</button>
+          <!-- {% endif %} -->
+          <button class="secondary-btn" id="leave-class-btn">Leave Classroom</button>
+        </div>
+      </div>
+
+      <span class="line"></span>
+
+      <!-- Dashboard Content -->
+      <div class="dashboard-content">
+        <!-- Subjects -->
+        <div class="subjects">
+          <h3>Subjects</h3>
+          <div class="grid">
+            <!-- {% for subject_id, subject_name in contents %} -->
+            <form action="/display" method="post" class="item">
+              <input type="hidden" name="directory_type" value="subject">
+              <input type="hidden" name="directory_id" value="{{ subject_id }}">
+              <input type="hidden" name="authored" value="{{ authored }}">
+              <input type="submit" value="{{ subject_name }}" class="classroom-name">
+              <!-- {% if authored == 1 %} -->
+              <button type="button" class="delete-icon" data-subject-id="{{ subject_id }}">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+              <!-- {% endif %} -->
+            </form>
+            <!-- {% endfor %} -->
+          </div>
+        </div>
+
+        <!-- Students Joined -->
+        <div class="students-joined">
+          <h3>Students</h3>
+          <ul class="student-list">
+            <!-- {% for user in users_joined %} -->
+            <div class="student-item">
+              <div class="student-info">
+                <p><!-- {{ user.firstname }} {{ user.lastname }} -->Harry Emelo</p>
+                <p><!-- {{ user.username }} -->hrrymllo</p>
+                <p><!-- {{ 'Author' if user.role == 'author' else 'Member' }} -->Member</p>
+                <!-- {% if authored == 1 %} -->
+                <button type="button" class="kick-btn" data-user-id="{{ user.id }}">
+                  <i class="fa-solid fa-user-slash"></i>
+                </button>
+              </div>
+              <!-- {% endif %} -->
+            </div>
+            <!-- {% endfor %} -->
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Subject Modal -->
+    <div id="add-subject-modal" class="modal">
+      <div class="modal-content">
+        <h3>Add Subject</h3>
+        <span class="modal-close" id="close-add-subject">&times;</span>
+        <form action="/add_directory" method="post">
+          <input name="directory_name" placeholder="Enter Subject Name">
+          <button type="submit" class="primary-btn">Add</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Delete Subject Modal -->
+    <div id="delete-subject-modal" class="modal">
+      <div class="modal-content modal-centered">
+        <h3>Delete Subject</h3>
+        <span class="modal-close" id="close-delete-subject">&times;</span>
+        <form id="delete-subject-form" action="/delete_directory" method="post">
+          <input type="hidden" name="directory_id" id="delete-subject-id">
+          <p>Are you sure you want to delete this subject?</p>
+          <button type="submit" class="delete-btn">Delete</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Leave Classroom Modal -->
+    <div id="leave-class-modal" class="modal">
+      <div class="modal-content modal-centered">
+        <h3>Leave Classroom</h3>
+        <span class="modal-close" id="close-leave-class">&times;</span>
+        <form action="/leave_classroom" method="post">
+          <input type="hidden" name="classroom_id" value="{{ classroom_id }}">
+          <p>Are you sure you want to leave this classroom?</p>
+          <button type="submit" class="delete-btn">Leave</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Kick User Modal -->
+    <div id="kick-user-modal" class="modal">
+      <div class="modal-content modal-centered">
+        <h3>Kick User</h3>
+        <span class="modal-close" id="close-kick-user">&times;</span>
+        <form action="/kick_user" method="post">
+          <input type="hidden" name="user_id" id="kick-user-id">
+          <input type="hidden" name="classroom_id" value="{{ classroom_id }}">
+          <p>Are you sure you want to kick this user?</p>
+          <button type="submit" class="delete-btn">Kick</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      display_error();
+    </script>
+</body>
+</html>
