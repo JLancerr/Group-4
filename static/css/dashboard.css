@@ -240,7 +240,7 @@ li {
   margin-top: 30px;
 }
 
-.authored-classrooms, .joined-classrooms, .subjects {
+.authored-classrooms, .joined-classrooms, .subjects, .lessons {
   margin-bottom: 50px;
 }
 
@@ -404,14 +404,16 @@ li {
 }
 
 .kick-btn {
-  background-color: #dc3545;
+  background-color: var(--red-normal);
   color: #fff;
   border: none;
   padding: 5px 10px;
   border-radius: 4px;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 .kick-btn:hover {
-  background-color: #c82333;
+  background-color: var(--red-dark);
+  transform: scale(0.95);
 }

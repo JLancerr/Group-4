@@ -43,6 +43,10 @@ setupModal('delete-subject-modal', null, 'close-delete-subject');
 setupModal('leave-class-modal', 'leave-class-btn', 'close-leave-class');
 setupModal('kick-user-modal', null, 'close-kick-user');
 
+// Setup modals for lessons.html
+setupModal('add-lesson-modal', 'add-lesson-btn', 'close-add-lesson');
+setupModal('delete-lesson-modal', null, 'close-delete-lesson');
+
 // Delete button functionality for home.html
 document.querySelectorAll('.delete-icon').forEach(button => {
   button.addEventListener('click', function() {
@@ -64,6 +68,17 @@ document.querySelectorAll('.delete-icon').forEach(button => {
     deleteSubjectModal.style.display = 'block';
   });
 });
+
+// Delete button functionality for lessons.html
+document.querySelectorAll('.delete-icon').forEach(button => {
+    button.addEventListener('click', function() {
+      const lessonId = this.getAttribute('data-lesson-id');
+      const deleteLessonId = document.getElementById('delete-lesson-id');
+      deleteLessonId.value = lessonId;
+      const deleteLessonModal = document.getElementById('delete-lesson-modal');
+      deleteLessonModal.style.display = 'block';
+    });
+  });
 
 // Kick button functionality for subjects.html
 document.querySelectorAll('.kick-btn').forEach(button => {
