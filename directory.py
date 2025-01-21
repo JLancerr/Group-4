@@ -146,7 +146,6 @@ class Directory:
         else:
             return "0"
 
-
     def get_directory_name(self):
         return self._directory_name
 

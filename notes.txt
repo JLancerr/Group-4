@@ -31,7 +31,6 @@ Notes for the Frontend:
             - With these data variables
                 - directory_type = "classroom" 
                 - directory_id = the id of the classroom that the user clicked on
-                - authored = 1 or 0 so that displayed Subjects will have edit options, 1 is True, 0 is False
         
         - To add a new classroom
             - Send to route '/add_directory'
@@ -91,7 +90,6 @@ Notes for the Frontend:
             - With these data variables
                 - directory_type = "subject" 
                 - directory_id = the id of the subject that the user clicked on
-                - authored = 1 or 0 so that displayed lesson will have edit options
 
         - To add a new subject
             - Send to route '/add_directory'
@@ -149,7 +147,6 @@ Notes for the Frontend:
             - With these data variables
                 - directory_type = "lesson" 
                 - directory_id = the id of the lesson that the user clicked on
-                - authored = 1 or 0 so that displayed questions will have edit options
 
         - To add a new lesson
             - Send to route '/add_directory'
@@ -205,4 +202,7 @@ Notes for the Frontend:
                 - new_answer = inputted by the user
                     - Note that hindi naman kaylangan maginput ni user in both new_question and new_answer, kahit isa oks lang
 
+        - To go to a flashcard, multiple choice, or identification page
+            - Send to route '/quiz'
+            - 
     
