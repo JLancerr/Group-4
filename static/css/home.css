@@ -8,7 +8,7 @@
   --gray-normal: #d7d7d7;
   --gray-transparent: #e5e5e5c8;
   --green-success: #5cb85c;
-  --red-error: #d9534f;
+  --red-error: #cd4541;
   --sidebar-color: #f4f4f4;
 }
 
@@ -261,14 +261,19 @@ li {
 .item .classroom-name:hover {
   color: var(--blue-primary);
 }
+
 .item button {
   position: absolute;
   top: 20px;
   right: 20px;
+  background-color: transparent;
+  color: var(--blue-dark);
+  border: 0;
+  outline: 0;
 }
 
 .item button:hover {
-  background-color: #c82333;
+  color: var(--red-error);
 }
 
 /* Modal Styles */
@@ -291,7 +296,7 @@ li {
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
-  max-width: 500px;
+  max-width: 700px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -309,6 +314,7 @@ li {
   flex: 5;
 }
 
+
 .modal-content form .primary-btn {
   flex: 1;
   padding: 5px 10px;
@@ -317,7 +323,7 @@ li {
 
 .modal-content form .primary-btn:hover {
   background-color: var(--blue-secondary);
-  transform: scale(1);
+  transform: none;
 }
 
 .modal-close {
@@ -334,4 +340,13 @@ li {
   color: var(--blue-dark);
   text-decoration: none;
   cursor: pointer;
+}
+
+#delete-class-modal .modal-content form p {
+  font-size: 1rem;
+  max-width: 80%;
+}
+
+#delete-class-modal .modal-content form .primary-btn:hover {
+  background-color: var(--red-error);
 }

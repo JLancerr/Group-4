@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
@@ -106,11 +113,11 @@
                 class="classroom-name"
               />
               <button
-                type="submit"
-                formaction="/delete_directory"
-                formmethod="post"
+                type="button"
+                class="delete-btn"
+                data-classroom-id="{{ classroom_id }}"
               >
-                Delete
+                <i class="fa-solid fa-trash"></i>
               </button>
             </form>
 
@@ -128,11 +135,11 @@
                 class="classroom-name"
               />
               <button
-                type="submit"
-                formaction="/delete_directory"
-                formmethod="post"
+                type="button"
+                class="delete-btn"
+                data-classroom-id="{{ classroom_id }}"
               >
-                Delete
+                <i class="fa-solid fa-trash"></i>
               </button>
             </form>
 
@@ -150,11 +157,11 @@
                 class="classroom-name"
               />
               <button
-                type="submit"
-                formaction="/delete_directory"
-                formmethod="post"
+                type="button"
+                class="delete-btn"
+                data-classroom-id="{{ classroom_id }}"
               >
-                Delete
+                <i class="fa-solid fa-trash"></i>
               </button>
             </form>
 
@@ -172,11 +179,11 @@
                 class="classroom-name"
               />
               <button
-                type="submit"
-                formaction="/delete_directory"
-                formmethod="post"
+                type="button"
+                class="delete-btn"
+                data-classroom-id="{{ classroom_id }}"
               >
-                Delete
+                <i class="fa-solid fa-trash"></i>
               </button>
             </form>
 
@@ -220,13 +227,6 @@
                 value="{{ classroom_name }}"
                 class="classroom-name"
               />
-              <button
-                type="submit"
-                formaction="/delete_directory"
-                formmethod="post"
-              >
-                Delete
-              </button>
             </form>
             <!-- {% for classroom_id, classroom_name in
             classrooms_info.joined_classrooms.items() %}
@@ -262,6 +262,19 @@
         <form action="/add_directory" method="post">
           <input name="directory_name" placeholder="Enter Classroom Name" />
           <button type="submit" class="primary-btn">Add</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Delete Classroom Modal -->
+    <div id="delete-class-modal" class="modal">
+      <div class="modal-content">
+        <h3>Delete Classroom</h3>
+        <span class="modal-close" id="close-delete-class">&times;</span>
+        <form id="delete-class-form" action="/delete_directory" method="post">
+          <input type="hidden" name="directory_id" id="delete-class-id" />
+          <p>Are you sure you want to delete this classroom? All subjects, lessons, and quizzes would be removed.</p>
+          <button type="submit" class="primary-btn">Delete</button>
         </form>
       </div>
     </div>
