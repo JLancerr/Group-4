@@ -104,36 +104,36 @@ li {
   justify-content: space-between;
 }
 
-.navbar .container .logo {
+.navbar .logo {
   display: flex;
   align-items: center;
   justify-content: left;
 }
 
-.navbar .container .logo img {
+.navbar .logo img {
   max-width: 4rem;
   margin-right: 7px;
 }
 
-.navbar .container .logo h1 {
+.navbar .logo h1 {
   margin: 0;
   font-size: 1.7rem;
 }
 
-.navbar nav .menu {
+.navbar .menu {
   display: flex;
   gap: 30px;
 }
 
-.navbar nav .menu li a {
+.navbar .menu li a {
   transition: 0.3s;
 }
 
-.navbar nav .menu li a:hover {
+.navbar .menu li a:hover {
   color: var(--blue-vibrant);
 }
 
-.navbar nav .buttons {
+.navbar .buttons {
   display: flex;
   gap: 7px;
 }
@@ -161,17 +161,17 @@ li {
   font-size: 1.2rem;
 }
 
-.showcase .showcase-buttons {
+.showcase-buttons {
   display: flex;
   gap: 10px;
 }
 
-.showcase .showcase-buttons .primary-btn {
+.showcase-buttons .primary-btn {
   padding: 10px 20px;
   font-size: 1rem;
 }
 
-.showcase .showcase-buttons .secondary-btn {
+.showcase-buttons .secondary-btn {
   padding: 10px 20px;
   font-size: 1rem;
 }
@@ -196,29 +196,29 @@ li {
   flex-direction: row-reverse;
 }
 
-.quiz .quiz-text,
-.method .method-text,
-.share .share-text {
+.quiz-text,
+.method-text,
+.share-text {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
 }
 
-.quiz .quiz-text h1,
-.method .method-text h1,
-.share .share-text h1 {
+.quiz-text h1,
+.method-text h1,
+.share-text h1 {
   font-size: 2rem;
 }
 
-.method .method-text {
+.method-text {
   align-items: flex-end;
   text-align: right;
 }
 
-.quiz .quiz-figure,
-.method .method-figure,
-.share .share-figure {
+.quiz-figure,
+.method-figure,
+.share-figure {
   width: 45%;
   height: 80%;
   border-radius: 2rem;
@@ -240,24 +240,23 @@ li {
   justify-content: center;
 }
 
-.price-overview .price-overview-text {
+.price-overview-text {
   text-align: center;
 }
 
-.price-overview .price-overview-text h2 {
+.price-overview-text h2 {
   font-size: 2.5rem;
   margin: 0;
 }
 
-.price-overview .price-overview-text p {
+.price-overview-text p {
   font-size: 1.2rem;
 }
 
-.price-overview .price-overview-button {
+.price-overview-button {
   margin-top: 30px;
 }
-
-.price-overview .price-overview-button .secondary-btn {
+.price-overview-button .secondary-btn {
   display: block;
   background-color: transparent;
   padding: 10px 100px;
@@ -266,7 +265,7 @@ li {
   border: 1px solid var(--blue-dark);
 }
 
-.price-overview .price-overview-button .secondary-btn:hover {
+.price-overview-button .secondary-btn:hover {
   color: var(--blue-primary);
   border: 1px solid var(--blue-primary);
   transform: scaleX(1.05);
@@ -284,24 +283,24 @@ footer .container {
   justify-content: space-between;
 }
 
-footer .footer-general a:hover,
-footer .footer-resources a:hover {
+.footer-general a:hover,
+.footer-resources a:hover {
   color: var(--blue-vibrant);
 }
 
-footer .footer-social p {
+.footer-social p {
   font-weight: 500;
 }
 
-footer .footer-social .footer-icons {
+.footer-social .footer-icons {
   display: flex;
   gap: 10px;
 }
 
-footer .footer-social .footer-icons a {
+.footer-social .footer-icons a {
   transition: 0.3s;
 }
 
-footer .footer-social .footer-icons a:hover {
+.footer-social .footer-icons a:hover {
   transform: scale(0.92);
 }

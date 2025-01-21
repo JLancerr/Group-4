@@ -108,6 +108,7 @@ li {
   padding: 20px 14px;
   background: var(--sidebar-color);
   transition: width 0.3s ease;
+  z-index: 10;
 }
 
 .sidebar.close {
@@ -207,31 +208,36 @@ li {
   gap: 10px;
 }
 
-.btn {
-  padding: 5px 10px;
-  border: none;
-  background-color: #007bff;
-  color: #fff;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.btn:hover {
-  background-color: #0056b3;
+.dashboard .line {
+  position: absolute;
+  top: 120px;
+  left: 0px;
+  height: 2px;
+  width: 100%;
+  background-color: var(--gray-normal);
 }
 
 /* Dashboard Contents - Authored and Joined Classroom */
+.dashboard-content {
+  margin-top: 30px;
+}
+
+.authored-classrooms, .joined-clsasrooms {
+  margin-bottom: 50px;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px;
+  margin-top: 20px;
 }
 
 .item {
   position: relative;
   height: 200px;
   background-color: #fff;
-  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2);
   border-radius: 30px;
   display: flex;
   flex-direction: column;
@@ -261,33 +267,6 @@ li {
   right: 20px;
 }
 
-/* .item input[type="submit"] {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  width: 100%;
-  text-align: center;
-}
-
-.item input[type="submit"]:hover {
-  background-color: #0056b3;
-} */
-
-/* .item button {
-  background-color: #dc3545;
-  color: #fff;
-  border: none;
-  padding: 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  width: 100%;
-  text-align: center;
-  margin-top: 10px;
-} */
-
 .item button:hover {
   background-color: #c82333;
 }
@@ -296,7 +275,7 @@ li {
 .modal {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   left: 0;
   top: 0;
   width: 100%;
@@ -306,6 +285,7 @@ li {
 }
 
 .modal-content {
+  position: relative;
   background-color: #fff;
   margin: 15% auto;
   padding: 20px;
@@ -316,16 +296,42 @@ li {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.modal-content form {
+  display: flex;
+  gap: 10px;
+}
+
+.modal-content form input {
+  outline: 0;
+  border: 1px solid var(--gray-normal);
+  padding: 5px 7px;
+  font-size: 1rem;
+  flex: 5;
+}
+
+.modal-content form .primary-btn {
+  flex: 1;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+.modal-content form .primary-btn:hover {
+  background-color: var(--blue-secondary);
+  transform: scale(1);
+}
+
 .modal-close {
+  position: absolute;
+  top: 5px;
+  right: 15px;
   color: #aaa;
-  float: right;
   font-size: 28px;
   font-weight: bold;
 }
 
 .modal-close:hover,
 .modal-close:focus {
-  color: #000;
+  color: var(--blue-dark);
   text-decoration: none;
   cursor: pointer;
 }

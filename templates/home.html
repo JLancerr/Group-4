@@ -84,10 +84,13 @@
         </div>
       </div>
 
+      <span class="line"></span>
+
       <!-- Dashboard Content -->
       <div class="dashboard-content">
         <!-- Authored Classrooms -->
         <div class="authored-classrooms">
+          <h3>Authored Classrooms</h3>
           <div class="grid">
             <form action="/display" method="post" class="item">
               <input type="hidden" name="directory_type" value="classroom" />
@@ -97,7 +100,11 @@
                 value="{{ classroom_id }}"
               />
               <input type="hidden" name="authored" value="1" />
-              <input type="submit" value="{{ classroom_name }}" class="classroom-name">
+              <input
+                type="submit"
+                value="{{ classroom_name }}"
+                class="classroom-name"
+              />
               <button
                 type="submit"
                 formaction="/delete_directory"
@@ -115,7 +122,11 @@
                 value="{{ classroom_id }}"
               />
               <input type="hidden" name="authored" value="1" />
-              <input type="submit" value="{{ classroom_name }}" class="classroom-name">
+              <input
+                type="submit"
+                value="{{ classroom_name }}"
+                class="classroom-name"
+              />
               <button
                 type="submit"
                 formaction="/delete_directory"
@@ -133,7 +144,11 @@
                 value="{{ classroom_id }}"
               />
               <input type="hidden" name="authored" value="1" />
-              <input type="submit" value="{{ classroom_name }}" class="classroom-name">
+              <input
+                type="submit"
+                value="{{ classroom_name }}"
+                class="classroom-name"
+              />
               <button
                 type="submit"
                 formaction="/delete_directory"
@@ -151,25 +166,11 @@
                 value="{{ classroom_id }}"
               />
               <input type="hidden" name="authored" value="1" />
-              <input type="submit" value="{{ classroom_name }}" class="classroom-name">
-              <button
-                type="submit"
-                formaction="/delete_directory"
-                formmethod="post"
-              >
-                Delete
-              </button>
-            </form>
-
-            <form action="/display" method="post" class="item">
-              <input type="hidden" name="directory_type" value="classroom" />
               <input
-                type="hidden"
-                name="directory_id"
-                value="{{ classroom_id }}"
+                type="submit"
+                value="{{ classroom_name }}"
+                class="classroom-name"
               />
-              <input type="hidden" name="authored" value="1" />
-              <input type="submit" value="{{ classroom_name }}" class="classroom-name">
               <button
                 type="submit"
                 formaction="/delete_directory"
@@ -204,7 +205,29 @@
 
         <!-- Joined Classrooms -->
         <div class="joined-classrooms">
+          <h3>Joined Classrooms</h3>
           <div class="grid">
+            <form action="/display" method="post" class="item">
+              <input type="hidden" name="directory_type" value="classroom" />
+              <input
+                type="hidden"
+                name="directory_id"
+                value="{{ classroom_id }}"
+              />
+              <input type="hidden" name="authored" value="0" />
+              <input
+                type="submit"
+                value="{{ classroom_name }}"
+                class="classroom-name"
+              />
+              <button
+                type="submit"
+                formaction="/delete_directory"
+                formmethod="post"
+              >
+                Delete
+              </button>
+            </form>
             <!-- {% for classroom_id, classroom_name in
             classrooms_info.joined_classrooms.items() %}
             <form action="/display" method="post" class="item">
@@ -222,10 +245,11 @@
     <!-- Join Classroom Modal -->
     <div id="join-class-modal" class="modal">
       <div class="modal-content">
+        <h3>Join Classroom</h3>
         <span class="modal-close" id="close-join-class">&times;</span>
         <form action="/join_classroom" method="post">
           <input name="classroom_id" placeholder="Enter Classroom ID" />
-          <button type="submit" class="btn">Join</button>
+          <button type="submit" class="primary-btn">Join</button>
         </form>
       </div>
     </div>
@@ -233,10 +257,11 @@
     <!-- Add Classroom Modal -->
     <div id="add-class-modal" class="modal">
       <div class="modal-content">
+        <h3>Add Classroom</h3>
         <span class="modal-close" id="close-add-class">&times;</span>
         <form action="/add_directory" method="post">
           <input name="directory_name" placeholder="Enter Classroom Name" />
-          <button type="submit" class="btn">Add</button>
+          <button type="submit" class="primary-btn">Add</button>
         </form>
       </div>
     </div>
