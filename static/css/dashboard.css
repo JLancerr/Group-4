@@ -8,7 +8,8 @@
   --gray-normal: #d7d7d7;
   --gray-transparent: #e5e5e5c8;
   --green-success: #5cb85c;
-  --red-error: #cd4541;
+  --red-normal: #cd4541;
+  --red-dark: #b4302b;
   --sidebar-color: #f4f4f4;
 }
 
@@ -97,6 +98,19 @@ li {
   transform: scale(0.95);
 }
 
+.delete-btn {
+  background-color: var(--red-normal);
+  border: 2px solid var(--red-dark);
+  border-radius: 12px;
+  color: #f2f2f2;
+  padding: 8px 15px;
+  transition: 0.3s;
+}
+
+.delete-btn:hover {
+  background-color: var(--red-dark);
+}
+
 /* HOME */
 /* SIDEBAR */
 .sidebar {
@@ -115,6 +129,10 @@ li {
   width: 78px;
   padding: 20px 14px;
   transition: width 0.3s ease;
+}
+
+.sidebar.close i {
+  transform: rotate(180deg);
 }
 
 .sidebar.close .text {
@@ -222,7 +240,7 @@ li {
   margin-top: 30px;
 }
 
-.authored-classrooms, .joined-clsasrooms {
+.authored-classrooms, .joined-classrooms, .subjects {
   margin-bottom: 50px;
 }
 
@@ -273,7 +291,7 @@ li {
 }
 
 .item button:hover {
-  color: var(--red-error);
+  color: var(--red-normal);
 }
 
 /* Modal Styles */
@@ -296,13 +314,28 @@ li {
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
-  max-width: 700px;
+  max-width: 500px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.modal-centered {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  max-height: 60%;
+}
+
+.modal-content h3 {
+  margin-bottom: 20px;
 }
 
 .modal-content form {
   display: flex;
+  flex-direction: column;
   gap: 10px;
 }
 
@@ -313,7 +346,6 @@ li {
   font-size: 1rem;
   flex: 5;
 }
-
 
 .modal-content form .primary-btn {
   flex: 1;
@@ -342,11 +374,44 @@ li {
   cursor: pointer;
 }
 
-#delete-class-modal .modal-content form p {
-  font-size: 1rem;
-  max-width: 80%;
+/* Students List Styles */
+.students-joined {
+  margin-top: 20px;
 }
 
-#delete-class-modal .modal-content form .primary-btn:hover {
-  background-color: var(--red-error);
+.student-list {
+  list-style: none;
+  padding: 0;
+}
+
+.student-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.student-info {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.student-info p {
+  margin: 0;
+  padding: 0 10px;
+}
+
+.kick-btn {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.kick-btn:hover {
+  background-color: #c82333;
 }

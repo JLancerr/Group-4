@@ -1,61 +1,77 @@
 // Sidebar functionality
 const body = document.querySelector('body');
 const sidebar = body.querySelector('.sidebar');
-const toggle = body.querySelector('.bx.bx-chevron-right.toggle');
+const toggle = body.querySelector('.bx.bx-chevron-left.toggle');
 
 toggle.addEventListener("click", () => {
   sidebar.classList.toggle('close');
 });
 
 // Modal functionality
-var joinClassModal = document.getElementById('join-class-modal');
-var addClassModal = document.getElementById('add-class-modal');
-var deleteClassModal = document.getElementById('delete-class-modal');
-var joinClassBtn = document.getElementById('join-class-btn');
-var addClassBtn = document.getElementById('add-class-btn');
-var closeJoinClass = document.getElementById('close-join-class');
-var closeAddClass = document.getElementById('close-add-class');
-var closeDeleteClass = document.getElementById('close-delete-class');
-var deleteClassForm = document.getElementById('delete-class-form');
-var deleteClassId = document.getElementById('delete-class-id');
+function setupModal(modalId, openBtnId, closeBtnId) {
+  const modal = document.getElementById(modalId);
+  const openBtn = document.getElementById(openBtnId);
+  const closeBtn = document.getElementById(closeBtnId);
 
-joinClassBtn.onclick = function() {
-    joinClassModal.style.display = 'block';
-}
-
-addClassBtn.onclick = function() {
-    addClassModal.style.display = 'block';
-}
-
-closeJoinClass.onclick = function() {
-    joinClassModal.style.display = 'none';
-}
-
-closeAddClass.onclick = function() {
-    addClassModal.style.display = 'none';
-}
-
-closeDeleteClass.onclick = function() {
-    deleteClassModal.style.display = 'none';
-}
-
-window.onclick = function(event) {
-    if (event.target == joinClassModal) {
-        joinClassModal.style.display = 'none';
+  if (openBtn) {
+    openBtn.onclick = function() {
+      modal.style.display = 'block';
     }
-    if (event.target == addClassModal) {
-        addClassModal.style.display = 'none';
+  }
+
+  if (closeBtn) {
+    closeBtn.onclick = function() {
+      modal.style.display = 'none';
     }
-    if (event.target == deleteClassModal) {
-        deleteClassModal.style.display = 'none';
+  }
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = 'none';
     }
+  }
 }
 
-// Delete button functionality
-document.querySelectorAll('.delete-btn').forEach(button => {
-    button.addEventListener('click', function() {
-        var classroomId = this.getAttribute('data-classroom-id');
-        deleteClassId.value = classroomId;
-        deleteClassModal.style.display = 'block';
-    });
+// Setup modals for home.html
+setupModal('join-class-modal', 'join-class-btn', 'close-join-class');
+setupModal('add-class-modal', 'add-class-btn', 'close-add-class');
+setupModal('delete-class-modal', null, 'close-delete-class');
+
+// Setup modals for subjects.html
+setupModal('add-subject-modal', 'add-subject-btn', 'close-add-subject');
+setupModal('delete-subject-modal', null, 'close-delete-subject');
+setupModal('leave-class-modal', 'leave-class-btn', 'close-leave-class');
+setupModal('kick-user-modal', null, 'close-kick-user');
+
+// Delete button functionality for home.html
+document.querySelectorAll('.delete-icon').forEach(button => {
+  button.addEventListener('click', function() {
+    const classroomId = this.getAttribute('data-classroom-id');
+    const deleteClassId = document.getElementById('delete-class-id');
+    deleteClassId.value = classroomId;
+    const deleteClassModal = document.getElementById('delete-class-modal');
+    deleteClassModal.style.display = 'block';
+  });
+});
+
+// Delete button functionality for subjects.html
+document.querySelectorAll('.delete-icon').forEach(button => {
+  button.addEventListener('click', function() {
+    const subjectId = this.getAttribute('data-subject-id');
+    const deleteSubjectId = document.getElementById('delete-subject-id');
+    deleteSubjectId.value = subjectId;
+    const deleteSubjectModal = document.getElementById('delete-subject-modal');
+    deleteSubjectModal.style.display = 'block';
+  });
+});
+
+// Kick button functionality for subjects.html
+document.querySelectorAll('.kick-btn').forEach(button => {
+  button.addEventListener('click', function() {
+    const userId = this.getAttribute('data-user-id');
+    const kickUserId = document.getElementById('kick-user-id');
+    kickUserId.value = userId;
+    const kickUserModal = document.getElementById('kick-user-modal');
+    kickUserModal.style.display = 'block';
+  });
 });
