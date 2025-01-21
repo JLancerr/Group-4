@@ -36,26 +36,44 @@
     font-size: 14px;
   }
 
-  .dob-container {
+  .name-container {
     display: flex;
     gap: 10px;
     justify-content: space-between;
+    margin-bottom: 10px; 
   }
   
-  select, input {
-    width: 100%;
+  #first-name, #last-name {
+    flex: 1;
+    padding: 8px;
+    margin-right: 10px; 
+  }
+  
+  #last-name {
+    margin-right: 0;
+  }
+  
+  input {
     padding: 8px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    box-sizing: border-box; 
   }
 
   input :active{
     opacity: 1;
   }
   
+  .password-container input {
+    width: 100%; 
+    text-align: left;
+  }
+
   .password-container {
-    position: relative;
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-start; 
   }
   
   .password-toggle {
