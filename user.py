@@ -30,7 +30,7 @@ class User:
             return "username-already-exists"
         # If username does not exist in the database, insert user's info into the Users table
         else:
-            self.__cursor.execute("INSERT INTO Users (first_name, last_name, username, password, membership_type) VALUES (?, ?, ?, ?);", 
+            self.__cursor.execute("INSERT INTO Users (first_name, last_name, username, password, membership_type) VALUES (?, ?, ?, ?, ?);", 
                            (self.__first_name, self.__last_name, self.__username, self.__password, 'free'))
             
             self.__user_id = self.__cursor.execute("SELECT user_id FROM Users WHERE username = ?", (self.__username,)).fetchone()[0]
@@ -77,9 +77,10 @@ class User:
         for id in classroom_ids:
             print(id[0])
             joined_classroom_name = self.__cursor.execute(query3, (id[0], self.__user_id)).fetchone()
+            print(joined_classroom_name)
             if joined_classroom_name != None:
                 joined_classroom_names_and_ids[id[0]] = joined_classroom_name[0]
-
+        print([authored_classroom_names_and_ids, joined_classroom_names_and_ids])
         return [authored_classroom_names_and_ids, joined_classroom_names_and_ids]
 
     def add_classroom(self, classroom_name):

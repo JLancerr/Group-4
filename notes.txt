@@ -20,8 +20,8 @@ Notes for the Frontend:
         }
 
         classrooms_info[
-            authored_classrooms{ directory_id : classroom_name }, # Logined user is the owner of these classrooms
-            joined_classrooms{ directory_id : classroom_name } # Doesn't contain classrooms user is authoring, they're part of authored_classrooms
+            { directory_id : classroom_name }, # Logined user is the owner of these classrooms
+            { directory_id : classroom_name } # Doesn't contain classrooms user is authoring, they're part of authored_classrooms
         ]
 
     - Data that the backend expects to receive from this file:

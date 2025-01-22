@@ -11,13 +11,17 @@ app.secret_key = "HARRY"
 def landing():
     return render_template('landing.html')
 
-@app.route('/login', methods=['POST'])
-def login():
+@app.route('/<page_name>')
+def render_page(page_name):
+    return render_template(f'{page_name}.html')
+
+@app.route('/attempt_login', methods=['POST'])
+def attempt_login():
     user = User(request.form)
     login_outcome = user.login()
     
     if login_outcome != "success":
-        return redirect(url_for('landing', error=login_outcome))
+        return render_template('login.html', error=login_outcome)
     else:
         # Put all user attributes to the session
         user_attributes = user.get_all_attributes()
@@ -26,14 +30,14 @@ def login():
 
         return redirect(url_for('home'))
 
-@app.route('/signup', methods=['POST'])
-def signup():
+@app.route('/attempt_signup', methods=['POST'])
+def attempt_signup():
     user = User(request.form)
     signup_outcome = user.signup()
 
     if signup_outcome != "success":
         # Direct user back to the login page
-        return redirect(url_for('landing', error=signup_outcome))
+        return render_template('signup.html', error=signup_outcome)
     else:
         # Put all user attributes to the session
         user_attributes = user.get_all_attributes()

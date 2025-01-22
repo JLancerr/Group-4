@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up Form</title>
-  <link rel="stylesheet" href="Signup.css">
+  <title>Sign In Form</title>
+  <link rel="stylesheet" href="../static/css/login.css">
 </head>
 <body>
+  {{ error }}
   <div class="form-container">
     <header>
         <div class="logo">
@@ -14,9 +15,9 @@
         </div>
         <h1>Welcome</h1>
     </header>
-    <form>
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" placeholder="Enter Email" required>
+    <form action="/attempt_login" method="POST">
+      <label for="email">Username:</label>
+      <input id="email" name="username" placeholder="Enter Username" required>
       <label for="password">Password:</label>
       <div class="password-container">
         <input type="password" id="password" name="password" placeholder="Enter your password" required>
@@ -24,9 +25,12 @@
       </div>
       <button type="submit" class="submit-btn">Log-In</button>
       <div class="login-redirect">
-        Don't Have an account Sign up? <a href="Signup.html">Sign-Up</a>
+        Don't Have an account Sign up? <a href="signup">Sign-Up</a>
       </div>
     </form>
   </div>
+  <script>
+    display_error() 
+  </script>
 </body>
 </html>

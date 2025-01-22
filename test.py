@@ -73,9 +73,8 @@ def del_all():
 def check_schema():
     print(cursor.execute("PRAGMA table_info(Users)").fetchall())
 
-user = User({'user_id' : 12})
-user.upgrade_plan('option_2')
-
+# cursor.execute("INSERT INTO Classrooms (classroom_name) VALUES ('DISCRETE')")
+# cursor.execute("UPDATE Classrooms SET user_parent_id = 12 WHERE classroom_id = 31")
 if 0:
     del_all()
 if 1:
