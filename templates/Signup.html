@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up Form</title>
-  <link rel="stylesheet" href="../static/css/signup.css">
+  <title>QuizRev | Sign Up</title>
+  <link rel="stylesheet" href="../static/css/font.css">
+  <link rel="stylesheet" href="../static/css/styles.css">
   <script>
     function display_error() {
       current_url = new URL(window.location.href);
@@ -17,32 +18,38 @@
 </head>
 <body>
   {{ error }}
-  <div class="form-container">
-    <h1>Sign Up</h1>
-    <form action="/attempt_signup" method="POST">
-      <label for="first-name">First Name:</label>
-      <input type="text" id="first-name" name="first_name" placeholder="Enter First Name" required>
-
-      <label for="last-name">Last Name:</label>
-      <input type="text" id="last-name" name="last_name" placeholder="Enter Last Name" required>
-      <!--
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" placeholder="REMOVE PALA TO WALA TAYONG EMAIL EMAIL NAKALIMUTAN KO IIMPLEMENT HAHA" required>
-      -->
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" placeholder="Username" required>
-
-      <label for="password">Password:</label>
-      <div class="password-container">
-        <input type="password" id="password" name="password" placeholder="Enter your password" required>
-        <span class="password-toggle"></span>
+  <section class="sign-page">
+    <div class="form-container">
+      <div class="logo">
+        <a href="index.html">
+          <img src="../static/images/QRevLarge.svg" alt="QRev" />
+        </a>
       </div>
-      <button type="submit" class="submit-btn" href = "#landing_page">Sign Up</button>
-      <div class="login-redirect">
-        Already have an account? <a href="login.html">Log In</a>
-      </div>
-    </form>
-  </div>
+      <h1>Sign Up</h1>
+      <form action="/attempt_signup" method="POST">
+        <label for="first-name">First Name:</label>
+        <input type="text" id="first-name" name="first_name" placeholder="Enter First Name" required>
+
+        <label for="last-name">Last Name:</label>
+        <input type="text" id="last-name" name="last_name" placeholder="Enter Last Name" required>
+        
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" placeholder="Username" required>
+
+        <label for="password">Password:</label>
+        <div class="password-container">
+          <input type="password" id="password" name="password" placeholder="Enter your password" required>
+          <span class="password-toggle"></span>
+        </div>
+
+        <button type="submit" class="submit-btn" href = "#landing_page">Sign Up</button>
+        <div class="redirect">
+          Already have an account? <a href="login.html">Log In</a>
+        </div>
+      </form>
+    </div>
+  </section>
+
   <script>
     display_error() 
   </script>

@@ -1,102 +1,166 @@
+/* BASE STYLES */
+:root {
+  --blue-primary: #082a78;
+  --blue-secondary: #05205f;
+  --blue-dark: #03143b;
+  --blue-light: #f1f8ff;
+  --blue-vibrant: #2f5bdf;
+  --gray-normal: #d7d7d7;
+  --gray-transparent: #e5e5e5c8;
+  --green-success: #5cb85c;
+  --red-error: #d9534f;
+}
 
-  
-  body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  .form-container {
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    background-color: #fff;
-    text-align: center;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", "sans-serif";
+  scroll-behavior: smooth;
+}
 
-  img{
-    max-width: 100%; 
-    height: auto; 
-    margin-bottom: 20px;
-  }
-  
-  .logo {
-    max-width: 100%; 
-    height: auto; 
-    margin-bottom: 20px;
-  }
+body {
+  background: #fff;
+  color: var(--blue-dark);
+  font-size: 15px;
+  line-height: 1.5;
+}
 
-  h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  label {
-    margin-top: 10px;
-    margin-bottom: 5px;
-    text-align: left;
-    font-size: 14px;
-  }
-  
-  select, input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-  }
+h2 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
 
-  
-  .password-container {
-    position: relative;
-  }
-  
-  .password-toggle {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-  }
+h3 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
 
-  
-  .submit-btn {
-    padding: 10px;
-    background-color: #2196F3;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100px;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-  }
-  
-  .submit-btn:hover {
-    background-color: #0b7dda;
-    transform: scale(0.9);
-  }
-  
-  .login-redirect {
-    margin-top: 15px;
-    font-size: 14px;
-  }
-  
-  .login-redirect a {
-    color: #4285F4;
-    text-decoration: none;
-  }
-  
-  .login-redirect a:hover {
-    text-decoration: underline;
-  }
-  
+p {
+  font-size: 1.06rem;
+  margin-bottom: 10px;
+}
+
+a {
+  color: var(--blue-dark);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+li {
+  list-style-type: none;
+}
+
+/* Utilities */
+.container {
+  height: 100%;
+  width: 90%;
+  margin: 0 auto;
+  padding: 0 4rem;
+  display: flex;
+}
+
+/* LOGIN AND SIGNUP */
+.sign-page {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 450px;
+  padding: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.form-container .logo {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.form-container .logo img {
+  max-width: 100px;
+  height: auto;
+}
+
+.form-container h1 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container form label {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.form-container form input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-container form input:focus {
+  outline: none;
+  border: 1px solid var(--blue-dark);
+}
+
+.form-container form .password-container {
+  position: relative;
+}
+
+.form-container form .password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.form-container form .submit-btn {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: var(--blue-primary);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  color: #fff;
+  font-size: 1rem;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.form-container form .submit-btn:hover {
+  background-color: var(--blue-secondary);
+}
+
+.redirect {
+  margin-top: 15px;
+  font-size: 1rem;
+}
+
+.redirect a {
+  color: var(--blue-primary);
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.redirect a:hover {
+  color: var(--blue-vibrant);
+}

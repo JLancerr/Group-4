@@ -1,36 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign In Form</title>
-  <link rel="stylesheet" href="../static/css/login.css">
-</head>
-<body>
-  {{ error }}
-  <div class="form-container">
-    <header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuizRev | Log In</title>
+    <link rel="stylesheet" href="../static/css/font.css" />
+    <link rel="stylesheet" href="../static/css/styles.css" />
+  </head>
+  <body>
+    {{ error }}
+    <!-- Log In -->
+    <section class="sign-page">
+      <div class="form-container">
         <div class="logo">
-            <img src="" alt="Logo.png" class="logo">
+          <a href="index.html">
+            <img src="../static/images/QRevLarge.svg" alt="QRev" />
+          </a>
         </div>
         <h1>Welcome</h1>
-    </header>
-    <form action="/attempt_login" method="POST">
-      <label for="email">Username:</label>
-      <input id="email" name="username" placeholder="Enter Username" required>
-      <label for="password">Password:</label>
-      <div class="password-container">
-        <input type="password" id="password" name="password" placeholder="Enter your password" required>
-        <span class="password-toggle"></span>
+        <form action="/attempt_login" method="POST">
+          <label for="email">Username:</label>
+          <input
+            id="email"
+            name="username"
+            placeholder="Enter Username"
+            required
+          />
+          <label for="password">Password:</label>
+          <div class="password-container">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              required
+            />
+            <span class="password-toggle"></span>
+          </div>
+          <button type="submit" class="submit-btn">Log-In</button>
+          <div class="redirect">
+            Don't have an account? <a href="signup">Sign Up</a>
+          </div>
+        </form>
       </div>
-      <button type="submit" class="submit-btn">Log-In</button>
-      <div class="login-redirect">
-        Don't Have an account Sign up? <a href="signup">Sign-Up</a>
-      </div>
-    </form>
-  </div>
-  <script>
-    display_error() 
-  </script>
-</body>
+    </section>
+    <script>
+      display_error();
+    </script>
+  </body>
 </html>
