@@ -9,7 +9,7 @@
 <body>
   <div class="navbar"></div>
   <div class="container">
-    <div class="question">
+    <div class="question active">
       <h3>1. Question Placeholder</h3>
       <div class="options">
         <label><input type="radio" name="q1"> Option 1</label>
@@ -36,7 +36,11 @@
         <label><input type="radio" name="q3"> Option 4</label>
       </div>
     </div>
-    <button class="complete-btn" onclick="completeQuiz()">Complete Quiz</button>
+    <div class="nav-btns">
+      <button class="prev-btn" onclick="navigate(-1)" style="display:none;">Previous</button>
+      <button class="complete-btn" onclick="completeQuiz()" style="display:none;">Complete</button>
+      <button class="next-btn" onclick="navigate(1)">Next</button>
+    </div>
   </div>
 
   <div class="alert" id="resultalert">
@@ -51,6 +55,35 @@
   </div>
 
   <script>
+    let currentQuestion = 0;
+    const questions = document.querySelectorAll('.question');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const completeBtn = document.querySelector('.complete-btn');
+    const container = document.querySelector('.container');
+
+    function navigate(direction) {
+      questions[currentQuestion].classList.remove('active');
+      currentQuestion += direction;
+      questions[currentQuestion].classList.add('active');
+
+      if (currentQuestion === questions.length - 1) {
+        nextBtn.style.display = 'none';
+        completeBtn.style.display = 'inline-block';
+      } else {
+        nextBtn.style.display = 'inline-block';
+        completeBtn.style.display = 'none';
+      }
+
+      if (currentQuestion === 0) {
+        prevBtn.style.display = 'none';
+      } else {
+        prevBtn.style.display = 'inline-block';
+      }
+
+      container.classList.add('expanded');
+    }
+
     function completeQuiz() {
       let score = 0;
       const totalQuestions = 3;
@@ -75,6 +108,12 @@
       const selectedOptions = document.querySelectorAll("input[type='radio']");
       selectedOptions.forEach(option => option.checked = false);
       document.getElementById("resultalert").style.display = "none";
+      currentQuestion = 0;
+      questions[0].classList.add('active');
+      prevBtn.style.display = 'none';
+      nextBtn.style.display = 'inline-block';
+      completeBtn.style.display = 'none';
+      container.classList.remove('expanded');
     }
 
     function finishQuiz() {
