@@ -72,10 +72,12 @@ def display():
         dir = Directory(args_dict)
     contents = dir.get_directory_contents()
     # Authorization
-    authored = dir.authorize_user(session['user_id'])
-    directory_to_render = children_of[directory_type]
+    user = User(session)
+    authored = dir.authorize_user(user.get_user_id)
+    directory_to_render = f"{children_of[directory_type]}s"
     parent_directory_name = dir.get_directory_name_from_database()
-    return render_template(f'{directory_to_render}s.html', contents=contents, authored=authored, parent_directory_name=parent_directory_name, parent_directory_type=directory_type, parent_directory_id=directory_id)
+    return render_template(f'{directory_to_render}.html', user_data=user.get_all_attributes(), contents=contents, authored=authored, 
+                           parent_directory_name=parent_directory_name, parent_directory_type=directory_type, parent_directory_id=directory_id)
 
 @app.route('/add_directory', methods=["POST"])
 def add_directory():
@@ -141,6 +143,22 @@ def edit_directory():
     previous_dir_id = request.form['parent_id']
     return redirect(url_for('display', directory_id=previous_dir_id, directory_type=previous_dir_type))
 
+# Requires user_id_to_kick, directory_id
+@app.route('/kick_user', methods=["POST"])
+def kick_user():
+    directory_id = request.form['directory_id']
+    user = User(session)
+    user.kick_user(request.form['user_id_to_kick'], directory_id)
+    return redirect(url_for('display'))
+
+# Requires directory_id
+@app.route('/leave_classroom', methods=["POST"])
+def leave_classroom():
+    directory_id = request.form['directory_id']
+    user = User(session)
+    user.leave_classroom(directory_id)
+    return redirect(url_for('display'))
+
 # Requires directory_id
 @app.route('/join_classroom', methods=["POST"])
 def join_classroom():
@@ -153,22 +171,23 @@ def join_classroom():
         return redirect(url_for('home', error=outcome))
     else:
         return redirect(url_for('home'))
-
-# Requires directory_id
-@app.route('/leave_classroom', methods=["POST"])
-def leave_classroom():
-    directory_id = request.form['directory_id']
+    
+@app.route('/edit_profile', methods=['POST'])
+def edit_profile():
+    new_value = request.form['new_value']
     user = User(session)
-    user.leave_classroom(directory_id)
-    return redirect(url_for('display'))
+    outcome = user.upgrade_plan(new_value)
+    if outcome != "success":
+        return redirect(url_for('home', error=outcome))
+    else:
+        return redirect(url_for('home'))
 
-# Requires user_id_to_kick, directory_id
-@app.route('/kick_user', methods=["POST"])
-def kick_user():
-    directory_id = request.form['directory_id']
+# Requires user_id, duration_option ('option_1' for 12 months, 'option_2' for 6 months)
+@app.route('/upgrade_plan', methods=['POST'])
+def upgrade_plan():
+    duration_option = request.form['duration_option']
     user = User(session)
-    user.kick_user(request.form['user_id_to_kick'], directory_id)
-    return redirect(url_for('display'))
+    user.upgrade_plan(duration_option)
 
 if __name__ == '__main__':
     app.run()

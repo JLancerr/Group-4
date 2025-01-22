@@ -71,6 +71,14 @@ Notes for the Frontend:
         - Dito na rin ididisplay lahat ng users na nakajoin sa classroom
     
     - Data that the backend will be sending to these files:
+        user_data{
+            'user_id': user_id, 
+            'first_name': first_name, 
+            'last_name':  last_name, 
+            'username':  username, 
+            'password':  password
+        } # Data of the user logged in
+
         users_joined [
             user_info{
                 "firstname" : value,
@@ -82,6 +90,10 @@ Notes for the Frontend:
         contents [ [subject_id , subject_name] ] # List of all subject info
 
         authored = 1 or 0 # Ito yung magdedetermine kung magpapakita ba kayo ng edit options 
+
+        parent_directory_type
+        parent_directory_id
+        parent_directory_name
 
     - Data that the backend expects to receive from this file:
         - To display the lessons of a clicked lesson directory
@@ -138,7 +150,9 @@ Notes for the Frontend:
 
         authored = 1 or 0 # Ito yung magdedetermine kung magpapakita ba kayo ng edit options 
 
-        - parent_info = [directory_type, directory_id, directory_name]
+        parent_directory_type
+        parent_directory_id
+        parent_directory_name
 
     - Data that the backend expects to receive from this file:
         - To display the answers and quizzes/flashcards of a clicked question directory
@@ -177,11 +191,20 @@ Notes for the Frontend:
         - Lagayan ng mga flashcards and quizzes
 
     - Data that the backend will be sending to this file:
+        user_data{
+            'user_id': user_id, 
+            'first_name': first_name, 
+            'last_name':  last_name, 
+            'username':  username, 
+            'password':  password
+        }
         contents[ [question_id, question, answer] ]
 
         authored = 1 or 0 # Ito yung magdedetermine kung magpapakita ba kayo ng edit options 
-        
-        parent_info = [directory_type, directory_id, directory_name]
+
+        parent_directory_type
+        parent_directory_id
+        parent_directory_name
 
     - Data that the backend expects to receive from this file:
         - To delete a question

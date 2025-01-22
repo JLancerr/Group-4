@@ -1,5 +1,6 @@
 import sqlite3
 from directory import *
+from datetime import date, timedelta
 
 children_of = {"user" : "classroom",
                "classroom" : "subject",
@@ -29,8 +30,8 @@ class User:
             return "username-already-exists"
         # If username does not exist in the database, insert user's info into the Users table
         else:
-            self.__cursor.execute("INSERT INTO Users (first_name, last_name, username, password) VALUES (?, ?, ?, ?);", 
-                           (self.__first_name, self.__last_name, self.__username, self.__password))
+            self.__cursor.execute("INSERT INTO Users (first_name, last_name, username, password, membership_type) VALUES (?, ?, ?, ?);", 
+                           (self.__first_name, self.__last_name, self.__username, self.__password, 'free'))
             
             self.__user_id = self.__cursor.execute("SELECT user_id FROM Users WHERE username = ?", (self.__username,)).fetchone()[0]
             self.__sqlite_connection.commit()
@@ -155,6 +156,32 @@ class User:
         self.__cursor.execute(query, (new_classroom_name, classroom_id))
         self.__sqlite_connection.commit()
         return "success"
+
+    def edit_profile(self, column_to_update, new_value):
+        if column_to_update == 'username':
+            usernames = self.__cursor.execute('SELECT username FROM Users WHERE username = ?;', (new_value,)).fetchall()
+            if len(usernames) > 0:
+                return "username-already-exists"
+            
+        query1 = f"UPDATE Users SET {column_to_update} = ? WHERE user_id = ?"
+        self.__cursor.execute(query1, (new_value, self.__user_id))
+        self.__sqlite_connection.commit()
+        return "success"
+
+    def upgrade_plan(self, duration_option):
+        options = {
+            'option_1' : 365,
+            'option_2' : 182
+        }
+        query1 = "SELECT membership_type, expiration_date FROM Users WHERE user_id = ?"
+        membership_info = self.__cursor.execute(query1, (self.__user_id,)).fetchone()
+        if membership_info[0] == 'free':
+            membership_expiration_date = str(date.today() + timedelta(days = options[f'{duration_option}']))
+        else:
+            membership_expiration_date = str(date.fromisoformat(membership_info[1]) + timedelta(days = options[f'{duration_option}']))
+        query2 = "UPDATE Users SET membership_type = 'pro', expiration_date = ? WHERE user_id = ?"
+        self.__cursor.execute(query2, (membership_expiration_date, self.__user_id))
+        self.__sqlite_connection.commit()
 
     def get_first_name(self):
         return self.__first_name
