@@ -16,6 +16,9 @@
     --success-color: #5cb85c;
     --error-color: #d9534f;
     --body-color: #FFF;
+    --blue-secondary: #05205f;
+    --red-normal: #cd4541;
+    --red-dark: #b4302b;
 }
 
 * {
@@ -150,13 +153,15 @@ a {
     align-items: flex-start;
     flex-wrap: wrap;
     width: 100%;
+    padding: 5px;
+    gap: 20px; /* Add space between flashcards */
 }
 
 .flashcard {
     background-color: #fff;
     border-radius: 10px;
-    width: 150px;
-    margin: 10px;
+    width: 300px; 
+    height: 200px; 
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -171,10 +176,36 @@ a {
 .flashcard__content {
     display: flex;
     flex-direction: column;
+    position: relative;
+    height: 100%; 
 }
 
+.flashcard__actions {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+}
 
+.edit-icn, .delete-icn {
+    text-decoration: none;
+    color: var(--dark-color);
+    padding: 0;
+    transition: 0.3s;
+    border: none;
+    background-color: transparent;
+    font-size: 1.2rem; 
+}
 
+.edit-icn:hover {
+    color: var(--blue-secondary);
+}
+
+.delete-icn:hover {
+    color: var(--red-dark);
+}
 
 /* Buttons */
 #action-buttons {
@@ -184,22 +215,41 @@ a {
 }
 
 button {
-    background-color: var(--primary-color);
-    border: none;
-    color: #fff;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
- .delete-btn:hover {
-    background-color: #f31b1b;
+.primary-btn {
+    background-color: var(--dark-color);
+    border: 2px solid var(--blue-dark);
+    border-radius: 12px;
+    color: #f2f2f2;
+    padding: 8px 15px;
+    transition: 0.3s;
 }
 
-button:hover {
-    background-color: #3967f1;
+.primary-btn:hover {
+    background-color: var(--blue-secondary);
+    transform: scale(0.95);
+}
+
+.delete-icn {
+    text-decoration: none;
+    color: var(--dark-color);
+    padding: 8px 15px;
+    transition: 0.3s;
+    border: none;
+    background-color: transparent;
+}
+
+.delete-icn:hover {
+    color: var(--red-dark);
+}
+
+.edit-icn:hover{
+    color: var(--red-dark);
 }
 
 #search-container {

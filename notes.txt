@@ -20,8 +20,8 @@ Notes for the Frontend:
         }
 
         classrooms_info[
-            { directory_id : classroom_name }, # Logined user is the owner of these classrooms
-            { directory_id : classroom_name } # Doesn't contain classrooms user is authoring, they're part of authored_classrooms
+            { directory_id : classroom_name }, # Classroom list that logined user authors
+            { directory_id : classroom_name } # Doesn't contain classrooms user is authoring, they're part of the previous dict
         ]
 
     - Data that the backend expects to receive from this file:
@@ -80,7 +80,7 @@ Notes for the Frontend:
         } # Data of the user logged in
 
         users_joined [
-            user_info{
+            {
                 "firstname" : value,
                 "lastname" : value,
                 "username" : value

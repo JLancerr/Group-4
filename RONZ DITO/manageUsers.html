@@ -2,233 +2,74 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="manageUser.css">
     <title>Admin Dashboard</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f9f9f9;
-            color: #333;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 2em;
-            color: #333;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-            table-layout: fixed;
-        }
-
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: center;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        th {
-            background-color: #f4f4f4;
-            transition: background-color 0.3s;
-        }
-
-        th:hover {
-            background-color: #ddd;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
-            transition: background-color 0.3s;
-        }
-
-        .search-bar {
-            margin-bottom: 20px;
-            margin-left: 10px;
-        }
-
-        .search-bar input {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 200px;
-        }
-
-        .search-bar button {
-            padding: 10px;
-            border: 1px solid #ccc;
-            background-color: #f4f4f4;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .search-bar button:hover {
-            background-color: #ddd;
-            transform: scale(1.05);
-        }
-
-        .pagination {
-            margin: 20px 0;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .pagination button {
-            padding: 5px 10px;
-            border: 1px solid #ccc;
-            background-color: #f4f4f4;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-
-        .pagination button:hover {
-            background-color: #ddd;
-            transform: scale(1.1);
-        }
-
-        .pagination button[style*="font-weight: bold"] {
-            background-color: #333;
-            color: #fff;
-        }
-
-        button.action-btn {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            display: inline-block;
-        }
-
-        button.action-btn:hover {
-            background-color: #0056b3;
-            transform: scale(1.1);
-        }
-
-        button.delete-btn {
-            background-color: #dc3545;
-        }
-
-        button.delete-btn:hover {
-            background-color: #a71d2a;
-        }
-
-        /* Modal style for the Edit form */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-
-        .modal.show {
-            display: flex;
-            opacity: 1;
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            width: 400px;
-            animation: modalFadeIn 0.5s ease-out;
-        }
-
-        @keyframes modalFadeIn {
-            0% {
-                transform: scale(0.8);
-                opacity: 0;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .modal h2 {
-            text-align: center;
-        }
-
-        .modal input, .modal select {
-            width: 95%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            transition: border-color 0.3s ease;
-        }
-
-        .modal select {
-            width: 101%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            transition: border-color 0.3s ease;
-        }
-
-        .modal input:focus, .modal select:focus {
-            border-color: #007bff;
-        }
-
-        .modal button {
-            width: 48%;
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            margin: 10px 1%;
-        }
-
-
-        .modal button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
-
-        .modal button.cancel-btn {
-            background-color: #dc3545;
-        }
-
-        .modal button.cancel-btn:hover {
-            background-color: #a71d2a;
-        }
-    </style>
+    
 </head>
 <body>
-    <h1>ADMIN DASHBOARD</h1>
+    <!-- Navbar -->
+    <div class="navbar">
+      <nav class="container">
+        <!-- Logo -->
+        <a href="landing.html"
+          ><div class="logo">
+            <img src="../static/images/QLarge.svg" alt="Logo" />
+            <h1>Quizrev</h1>
+          </div>
+        </a>
+
+        <!-- Menu Item -->
+        <ul class="menu">
+          <li><a href="#">ADMIN DASHBOARD</a></li>
+          
+        </ul>
+
+        <!-- Button -->
+        <div class="buttons">
+           
+            <a href="#" class="primary-btn">Logout</a>
+           
+        </div>
+      </nav>
+      
+    </div>
+    
+    <div class="top">
+            <div class="users">
+                <h1>TOTAL USERS</h1>
+                <div class="pic">
+                    <div class="left"><i class='bx bxs-user'></i></div>
+                    <div class="right"><h5>{total_users}</h5></div>
+                </div>
+            </div>  
+                
+            <div class="subscribe"><h1>TOTAL SUBSCRIPTION</h1>
+                <div class="pic">
+                    <div class="left"><i class='bx bxs-user'></i></div>
+                    <div class="right"><h5>{total_subscription}</h5></div>
+                </div></div>
+            <div class="earning"><h1>TOTAL EARNINGS</h1>
+                <div class="pic">
+                    <i class='bx bx-money' ></i>
+                    <div class="right"><h5>{total_earnings}</h5></div>
+                </div></div>
+        
+    </div>
+
 
     <div class="search-bar">
         <input type="text" id="search" placeholder="Search users...">
-        <button onclick="searchUsers()">Search</button>
+        <button class = "primary-btn" id="primary-btn" onclick="searchUsers()">Search</button>
     </div>
 
     <table>
         <thead>
             <tr>
-                <th style="width: 22%;">USERNAME</th>
+                <th style="width: 15%;">USERNAME</th>
+                <th style="width: 15%;">NAME</th>
                 <th style="width: 22%;">EMAIL</th>
                 <th style="width: 15%;">ROLE</th>
                 <th style="width: 15%;">SUBSCRIPTION STATUS</th>
@@ -252,6 +93,7 @@
             <h2>EDIT USER</h2>
             <form id="editForm" onsubmit="saveUserChanges(event)">
                 <input type="text" id="editUsername" placeholder="Username" required>
+                <input type="text" id="editName" placeholder="Name" required>
                 <input type="email" id="editEmail" placeholder="Email" required>
                 
                 <!-- Role Dropdown -->
@@ -287,9 +129,10 @@
         const originalUsers = Array.from({ length: 50 }, (_, i) => ({
             id: i + 1,
             username: `User${i + 1}`,
+            name: `Name${i + 1}`,
             email: `user${i + 1}@example.com`,
-            role: i % 2 === 0 ? 'admin' : 'user',
-            subscriptionStatus: i % 3 === 0 ? 'inactive' : 'active',
+            role: i % 2 === 0 ? 'ADMIN' : 'USER',
+            subscriptionStatus: i % 3 === 0 ? 'INACTIVE' : 'ACTIVE',
             startDate: `2023-01-${String(i % 28 + 1).padStart(2, '0')}`,
             endDate: `2024-01-${String(i % 28 + 1).padStart(2, '0')}`
         }));
@@ -312,9 +155,10 @@
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${user.username}</td>
+                    <td>${user.name}</td>
                     <td>${user.email}</td>
-                    <td>${user.role}</td>
-                    <td>${user.subscriptionStatus}</td>
+                    <td data-role="${user.role}">${user.role}</td>
+                    <td subscribe = "${user.subscriptionStatus}">${user.subscriptionStatus}</td>
                     <td>${user.startDate}</td>
                     <td>${user.endDate}</td>
                     <td>
@@ -354,6 +198,7 @@
             } else {
                 users = originalUsers.filter(user =>
                     user.username.toLowerCase().includes(query) ||
+                    user.name.toLowerCase().includes(query) ||
                     user.email.toLowerCase().includes(query)
                 );
             }
@@ -366,6 +211,7 @@
             const user = users[index];
             currentUserIndex = index;
             document.getElementById('editUsername').value = user.username;
+            document.getElementById('editName').value = user.name;
             document.getElementById('editEmail').value = user.email;
             document.getElementById('editRole').value = user.role;
             document.getElementById('editSubscriptionStatus').value = user.subscriptionStatus;
@@ -386,6 +232,7 @@
 
             const updatedUser = {
                 username: document.getElementById('editUsername').value,
+                name: document.getElementById('editName').value,
                 email: document.getElementById('editEmail').value,
                 role: document.getElementById('editRole').value,
                 subscriptionStatus: document.getElementById('editSubscriptionStatus').value,
