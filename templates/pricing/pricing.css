@@ -694,16 +694,70 @@ li {
 
 /* CURVE */
 .section {
-    background-color: #007BFF;
+    background-color: #007BFF; /* Blue background */
     color: white;
     text-align: center;
     padding: 50px 20px;
-    border-radius: 0 0 100% 100% / 70%; /* Creates a more pronounced curved bottom */
+    border-radius: 0 0 100% 100% / 30%; /* Creates a more pronounced curved bottom */
+    position: relative;
+    overflow: hidden;
 }
 
 .section h1 {
-    font-size: 2rem;
-    margin-bottom: 30px;
+    font-size: 2.5rem;
+    margin: 0;
+    position: relative;
+    z-index: 2;
+    animation: fadeIn 2s ease-in-out;
+    opacity: 1; /* Ensure text is visible initially */
+}
+
+/* Adding floating design elements */
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    animation: float 6s ease-in-out infinite;
+}
+
+.circle.small {
+    width: 50px;
+    height: 50px;
+    bottom: 10%;
+    left: 20%;
+}
+
+.circle.medium {
+    width: 100px;
+    height: 100px;
+    top: 20%;
+    right: 15%;
+}
+
+.circle.large {
+    width: 150px;
+    height: 150px;
+    top: 10%;
+    left: 10%;
+}
+
+/* Animations */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 

@@ -176,7 +176,11 @@
 
     <!-- CURVE DIV -->
     <div class="section">
-        <h1>Whatever work you do, you can do it in QuizRev!</h1>
+        <h1>Whatever work you do, you can do it in QuizRev</h1>
+        <!-- Floating design elements -->
+        <div class="circle small"></div>
+        <div class="circle medium"></div>
+        <div class="circle large"></div>
     </div>
 
 
@@ -279,21 +283,6 @@
         });
 
         faqItems.forEach(item => observer.observe(item));
-
-
-
-
-        // CHAT WIDGET
-        const chatIcon = document.getElementById('chatIcon');
-        const chatPopup = document.getElementById('chatPopup');
-
-        chatIcon.addEventListener('click', () => {
-            if (chatPopup.classList.contains('show')) {
-                chatPopup.classList.remove('show');
-            } else {
-                chatPopup.classList.add('show');
-            }
-        });
 
     </script>
 
