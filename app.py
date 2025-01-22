@@ -1,6 +1,7 @@
 from flask import Flask, render_template, session, request, redirect, url_for
 from user import *
 from directory import *
+import sqlite3
 
 app = Flask(__name__)
 
@@ -77,8 +78,7 @@ def display():
     contents = dir.get_directory_contents()
 
     # Get all necessary data for the page to utilize
-    if session == None:
-        print('true')
+
     user = User(session)
     user_data = user.get_all_attributes()
     authored = dir.authorize_user(user.get_user_id())
@@ -89,6 +89,19 @@ def display():
     directory_to_render = f"{children_of[directory_type]}s"
     return render_template(f'{directory_to_render}.html', user_data=user_data, contents=contents, authored=authored, 
                            parent_directory_name=parent_directory_name, parent_directory_type=directory_type, parent_directory_id=directory_id)
+
+@app.route('/quiz', methods=["GET"])
+def quiz():
+    quiz_type = request.args['quiz_type']
+    lesson_id = request.args['parent_id']
+    args_dict = {
+        'directory_type' : 'lesson',
+        'directory_id' : lesson_id
+    }
+    lesson = Lesson(args_dict)
+    contents = lesson.get_directory_contents()
+    
+    return render_template(f'{quiz_type}.html', contents=contents)
 
 @app.route('/add_directory', methods=["POST"])
 def add_directory():
@@ -196,6 +209,22 @@ def edit_profile():
         return redirect(url_for('home', error=outcome))
     else:
         return redirect(url_for('home'))
+    
+@app.route('/admin', methods=['GET'])
+def admin():
+    sqlite_connection = sqlite3.connect('app.db') 
+    cursor = sqlite_connection.cursor() 
+    all_users = cursor.execute("SELECT * FROM Users").fetchall()
+    list_users = []
+    i = 0
+    for one_user in all_users:
+        converted = list(one_user)
+        converted.append(i)
+        if converted[6] == None:
+            converted[6] = 'null'
+        list_users.append(converted)
+        i += 1
+    return render_template('admin.html', all_users=list_users)
 
 # Requires user_id, duration_option ('option_1' for 12 months, 'option_2' for 6 months)
 @app.route('/upgrade_plan', methods=['POST'])
@@ -203,6 +232,7 @@ def upgrade_plan():
     duration_option = request.form['duration_option']
     user = User(session)
     user.upgrade_plan(duration_option)
+
 
 if __name__ == '__main__':
     app.run()

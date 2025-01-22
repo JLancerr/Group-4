@@ -5,7 +5,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="manageUser.css">
+    <link rel="stylesheet" href="../static/css/admin.css">
     <title>Admin Dashboard</title>
     
 </head>
@@ -123,21 +123,47 @@
             </form>
         </div>
     </div>
+    <!-- 
+        user_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+        first_name VARCHAR(20),
+        last_name VARCHAR(20),
+        username VARCHAR(20),
+        password VARCHAR(20),
+        membership_type VARCHAR(20),
+        expiration_date DATE
+    -->
+    <div>
+        {% for user in all_users %}
+            <div id="{{ user[7] }}">{{user}}</div>
+        {% endfor %}
+    </div>
 
-    <script>
+    <script >
         // FAKE USERS / ALISIN NALANG PAG ICONNECT NA SA DATA BASE
-        const originalUsers = Array.from({ length: 50 }, (_, i) => ({
-            id: i + 1,
-            username: `User${i + 1}`,
-            name: `Name${i + 1}`,
-            email: `user${i + 1}@example.com`,
-            role: i % 2 === 0 ? 'ADMIN' : 'USER',
-            subscriptionStatus: i % 3 === 0 ? 'INACTIVE' : 'ACTIVE',
-            startDate: `2023-01-${String(i % 28 + 1).padStart(2, '0')}`,
-            endDate: `2024-01-${String(i % 28 + 1).padStart(2, '0')}`
-        }));
+        // const originalUsers = Array.from({ length: 50 }, (_, i) => ({
+        //     id: i + 1,
+        //     username: `User${i + 1}`,
+        //     name: `Name${i + 1}`,
+        //     email: `user${i + 1}@example.com`,
+        //     role: i % 2 === 0 ? 'ADMIN' : 'USER',
+        //     subscriptionStatus: i % 3 === 0 ? 'INACTIVE' : 'ACTIVE',
+        //     startDate: `2023-01-${String(i % 28 + 1).padStart(2, '0')}`,
+        //     endDate: `2024-01-${String(i % 28 + 1).padStart(2, '0')}`
+        // }));
 
-        let users = [...originalUsers]; // Start with all users
+        let users = []; 
+        let i = 0
+        while (true) {
+            let b = document.getElementById(i)
+            if (b == null) {
+                break
+            }
+            str_array = b.innerHTML.replace(/'/g, '"');
+            let arr = JSON.parse(str_array)
+            console.log(arr)
+            users.push(arr)
+            i += 1
+        }
         let currentPage = 1;
         const rowsPerPage = 10;
         let currentUserIndex = null; // Store the index of the user being edited
@@ -150,17 +176,16 @@
             const start = (currentPage - 1) * rowsPerPage;
             const end = start + rowsPerPage;
             const currentUsers = users.slice(start, end);
-
+            // <td>${user.email}</td>
+            // <td>${user.startDate}</td>
             currentUsers.forEach((user, index) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${user.username}</td>
-                    <td>${user.name}</td>
-                    <td>${user.email}</td>
+                    <td>${user[3]}</td>
+                    <td>${user[1].concat(" ", user[2])}</td>
                     <td data-role="${user.role}">${user.role}</td>
-                    <td subscribe = "${user.subscriptionStatus}">${user.subscriptionStatus}</td>
-                    <td>${user.startDate}</td>
-                    <td>${user.endDate}</td>
+                    <td subscribe = "${user[5]}">${user[5]}"</td>
+                    <td>${user[6]}"</td>
                     <td>
                         <button class="action-btn" onclick="editUser(${start + index})">Edit</button>
                         <button class="action-btn delete-btn" onclick="deleteUser(${start + index})">Delete</button>
