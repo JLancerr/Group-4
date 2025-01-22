@@ -50,7 +50,7 @@
       <div class="dashboard-header">
         <h1 class="dashboard-title">{{ subject_name }}</h1>
         <div class="dashboard-buttons">
-          {% if authored == 1 %}
+          {% if authored == "1" %}
             <button class="primary-btn" id="add-lesson-btn">Add Lesson</button>
           {% endif %}
         </div>
@@ -70,7 +70,7 @@
                 <input type="hidden" name="directory_type" value="lesson">
                 <input type="hidden" name="directory_id" value="{{ lesson_info[0] }}">
                 <input type="submit" value="{{ lesson_info[1] }}" class="classroom-name">
-                {% if authored == 1 %}
+                {% if authored == "1" %}
                   <button type="button" class="delete-icon" data-lesson-id="{{ lesson_info[0] }}">
                     <i class="fa-solid fa-trash"></i>
                   </button>
@@ -102,6 +102,7 @@
         <h3>Delete Lesson</h3>
         <span class="modal-close" id="close-delete-lesson">&times;</span>
         <form id="delete-lesson-form" action="/delete_directory" method="post">
+          <input type="hidden" name="parent_id" value="{{ parent_directory_id }}">
           <input type="hidden" name="directory_id" id="delete-lesson-id">
           <input type="hidden" name="directory_type" value="lesson">
           <p>Are you sure you want to delete this lesson?</p>

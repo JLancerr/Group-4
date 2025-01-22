@@ -209,6 +209,7 @@ Notes for the Frontend:
             - With these data variables 
                 - directory_type = "question"
                 - directory_id = whatever the id of that question to delete
+                - parent_id = {{ parent_directory_id }}
         - To change question or answer  
             - Again, ipakita lang ang delete option kung sila ang author
             - Send to route '/edit_directory'
@@ -219,8 +220,17 @@ Notes for the Frontend:
                 - new_question = inputted by the user
                 - new_answer = inputted by the user
                     - Note that hindi naman kaylangan maginput ni user in both new_question and new_answer, kahit isa oks lang
+                - parent_id = {{ parent_directory_id }}
 
         - To go to a flashcard, multiple choice, or identification page
             - Send to route '/quiz'
-            - 
-    
+            - Method is GET request
+            - With these data variables
+                - parent_id = {{ parent_directory_id }}
+                - quiz_type = 'flashcard' or 'identification' or 'multiple_choice'
+
+- flashcard.html or identifaction.html or multiplechoice.html
+    - Data that the backend will be sending to this file:
+        contents[ [question_id, question, answer] ]
+
+GOODLUCK HARRY! 

@@ -409,11 +409,11 @@ td[data-role="USER"]::before {
     background-color: #007bff; 
 }
 
-td[subscribe="INACTIVE"], td[subscribe="ACTIVE"] {
+td[subscribe="free"], td[subscribe="pro"] {
     position: relative;
 }
 
-td[subscribe="INACTIVE"]::before, td[subscribe="ACTIVE"]::before {
+td[subscribe="free"]::before, td[subscribe="pro"]::before {
     content: attr(subscribe);
     position: absolute;
     top: 50%;
@@ -425,11 +425,11 @@ td[subscribe="INACTIVE"]::before, td[subscribe="ACTIVE"]::before {
     font-weight: bold;
 }
 
-td[subscribe="INACTIVE"]::before {
+td[subscribe="free"]::before {
     background-color: #dc3545; 
 }
 
-td[subscribe="ACTIVE"]::before {
+td[subscribe="pro"]::before {
     background-color: var(--blue-vibrant); 
 }
 
