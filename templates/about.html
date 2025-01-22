@@ -23,9 +23,9 @@
 
             <!-- Menu Item -->
             <ul class="menu">
+                <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="#">Pricing</a></li>
-                <li><a href="#">Contact</a></li>
             </ul>
 
             <!-- Button -->
@@ -109,9 +109,13 @@
                 </div>
                 <div class="contact-form">
                     <form action="">
-                        <input type="text" placeholder="Name">
-                        <input type="email" placeholder="Email">
-                        <textarea name="message" cols="30" rows="10" placeholder="Message"></textarea>
+                        <div class="input-50">
+                            <input type="text" placeholder="Name">
+                            <input type="email" placeholder="Email">
+                        </div>
+                        <div class="input-100">
+                            <textarea name="message" placeholder="Message"></textarea>
+                        </div>
                         <button>Submit</button>
                     </form>
                 </div>
@@ -156,16 +160,35 @@
     </footer>
 
     <script>
-        ScrollReveal({
-            reset: true,
-            distance: '100px',
-            duration: 2500,
-            delay: 400
-        });
-        ScrollReveal().reveal('.about-content',{origin: 'top'},{delay: 500} );
-        ScrollReveal().reveal('.team-members', {delay: 400});
-        ScrollReveal().reveal('.contact-content', {delay: 50});
-       
+        // Function to run the animation
+        function runAnimation() {
+            ScrollReveal({
+                reset: false,
+                distance: '100px',
+                duration: 2500,
+                delay: 400
+            });
+            ScrollReveal().reveal('.about-content', { delay: 200 });
+            ScrollReveal().reveal('.team-members', { delay: 200 });
+            ScrollReveal().reveal('.contact-content', { delay: 50 });
+        }
+    
+        // Check if the user has visited the page before
+        if (!localStorage.getItem('visited')) {
+            // Set the flag in localStorage
+            localStorage.setItem('visited', 'true');
+    
+            // Add scroll event listener to run the animation on first scroll
+            window.addEventListener('scroll', function onScroll() {
+                runAnimation();
+                // Remove the event listener after running the animation
+                window.removeEventListener('scroll', onScroll);
+            });
+        } else {
+            // Run the animation immediately if the user has visited before
+            runAnimation();
+        }
+    
         // Smooth scroll effect for Contact Us button
         document.querySelector('#contactUs').addEventListener('click', function(e) {
             e.preventDefault();
