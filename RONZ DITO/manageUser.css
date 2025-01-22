@@ -1,0 +1,454 @@
+/* BASE STYLES */
+:root {
+    --blue-primary: #082a78;
+    --blue-secondary: #05205f;
+    --blue-dark: #03143b;
+    --blue-light: #f1f8ff;
+    --blue-vibrant: #2f5bdf;
+    --gray-normal: #d7d7d7;
+    --gray-transparent: #e5e5e5c8;
+    --green-success: #5cb85c;
+    --red-error: #d9534f;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", "sans-serif";
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    background: #fff;
+    color: var(--blue-dark);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+  }
+  
+  h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+  }
+  
+  p {
+    font-size: 1.06rem;
+    margin-bottom: 10px;
+  }
+  
+  a {
+    color: var(--blue-dark);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  
+  li {
+    list-style-type: none;
+  }
+  
+  /* Utilities */
+  .container {
+    height: 100%;
+    width: 90%;
+    margin: 0 auto;
+    padding: 0 4rem;
+    display: flex;
+  }
+  
+  .primary-btn {
+    background-color: var(--blue-primary);
+    border: 2px solid var(--blue-dark);
+    border-radius: 12px;
+    color: #f2f2f2;
+    padding: 8px 15px;
+    transition: 0.3s;
+  }
+  
+  .primary-btn:hover {
+    background-color: var(--blue-secondary);
+    transform: scale(0.95);
+  }
+  
+  .secondary-btn {
+    background-color: #fff;
+    border: 2px solid var(--gray-normal);
+    border-radius: 12px;
+    color: var(--dark-color);
+    padding: 8px 15px;
+    transition: 0.3s;
+  }
+  
+  .secondary-btn:hover {
+    background-color: #f5f5f5;
+    transform: scale(0.95);
+  }
+  
+  /* NAVIGATION BAR */
+  .navbar {
+    position: sticky;
+    top: 0;
+    height: 80px;
+    background-color: #fff;
+    border-bottom: 1px solid var(--gray-light);
+    width: 100%;
+    z-index: 1000;
+  }
+  
+  .navbar .container {
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .navbar .logo {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+  }
+  
+  .navbar .logo img {
+    max-width: 4rem;
+    margin-right: 7px;
+  }
+  
+  .navbar .logo h1 {
+    margin: 0;
+    font-size: 1.7rem;
+  }
+  
+  .navbar .menu {
+    display: flex;
+    gap: 30px;
+  }
+  
+  .navbar .menu li a {
+    transition: 0.3s;
+  }
+  
+  .navbar .menu li a:hover {
+    color: var(--blue-vibrant);
+  }
+  
+  .navbar .buttons {
+    display: flex;
+    gap: 7px;
+  }
+
+.top {
+    display: flex;
+    justify-content: center; /* Center the elements horizontally */
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 50px;
+    gap: 20px; /* Add space between the elements */
+}
+
+.users, .subscribe, .earning {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center the content within each element */
+    align-items: center;
+    box-shadow: #0056b3;
+    padding: 50px;
+    width: 500px; 
+    height: 200px;
+    box-shadow: 5px 4px 8px rgba(26, 25, 25, 0.1);
+    border-radius: 20px; 
+}
+
+
+
+.pic {
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-between;
+    align-items: space-between;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2em;
+    color: #333;
+}
+
+table {
+    width: 100%; /* Reduce the table width */
+    max-width: 1700px; /* Set a smaller maximum width */
+    margin: 0 auto 20px auto; /* Center the table and add bottom margin */
+    padding: 0 20px; /* Add padding on each side */
+    border-collapse: collapse;
+    table-layout: fixed;
+    border-radius: 10px 10px 0 0; /* Round top-left and top-right corners */
+    overflow: hidden; /* Ensure rounded corners */
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
+th {
+    background-color: #f4f4f4;
+    transition: background-color 0.3s;
+}
+
+th:hover {
+    background-color: #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+    transition: background-color 0.3s;
+}
+
+.search-bar {
+    margin-bottom: 20px;
+    margin-left: 10px;
+}
+
+.search-bar input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.search-bar button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f4f4f4;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-bar button:hover {
+    background-color: #ddd;
+    transform: scale(1.05);
+}
+
+.pagination {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.pagination button {
+    padding: 10px 20px; 
+    border: none; 
+    background-color: var(--blue-primary); 
+    color: white; 
+    border-radius: 5px; 
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin: 0 5px; 
+}
+
+.pagination button:hover {
+    background-color: var(--blue-secondary); 
+    transform: scale(1.05); 
+}
+
+.pagination button[style*="font-weight: bold"] {
+    background-color: #333;
+    color: #fff;
+}
+
+button.action-btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    display: inline-block;
+}
+
+button.action-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
+
+button.delete-btn {
+    background-color: #dc3545;
+}
+
+button.delete-btn:hover {
+    background-color: #a71d2a;
+}
+
+/* Modal style for the Edit form */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    animation: modalFadeIn 0.5s ease-out;
+}
+
+@keyframes modalFadeIn {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal h2 {
+    text-align: center;
+}
+
+.modal input, .modal select {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+.modal select {
+    width: 101%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+.modal input:focus, .modal select:focus {
+    border-color: #007bff;
+}
+
+.modal button {
+    width: 48%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin: 10px 1%;
+}
+
+
+.modal button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.modal button.cancel-btn {
+    background-color: #dc3545;
+}
+
+.modal button.cancel-btn:hover {
+    background-color: #a71d2a;
+}
+
+
+
+td[data-role="ADMIN"], td[data-role="USER"] {
+    position: relative;
+}
+
+td[data-role="ADMIN"]::before, td[data-role="USER"]::before {
+    content: attr(data-role);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 5px 10px;
+    border-radius: 15px; 
+    color: #fff;
+    font-weight: bold;
+}
+
+td[data-role="ADMIN"]::before {
+    background-color: #28a745; 
+}
+
+td[data-role="USER"]::before {
+    background-color: #007bff; 
+}
+
+td[subscribe="INACTIVE"], td[subscribe="ACTIVE"] {
+    position: relative;
+}
+
+td[subscribe="INACTIVE"]::before, td[subscribe="ACTIVE"]::before {
+    content: attr(subscribe);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 5px 10px;
+    border-radius: 15px; 
+    color: #fff;
+    font-weight: bold;
+}
+
+td[subscribe="INACTIVE"]::before {
+    background-color: #dc3545; 
+}
+
+td[subscribe="ACTIVE"]::before {
+    background-color: var(--blue-vibrant); 
+}
+
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    gap: 10px;
+}
+
+#primary-btn {
+    background-color: var(--blue-primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
