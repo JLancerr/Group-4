@@ -608,6 +608,73 @@ li {
 
 
 
+  /* DISCOVER TITLES */
+
+.top-title {
+    text-align: center;
+    font-size: 3.5em;
+    margin-bottom: 20px;
+    background: linear-gradient(120deg, #333333, #0066ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 50px;
+    margin: auto;
+    max-width: 1200px;
+}
+
+.feature {
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.feature svg {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 15px;
+    fill: #007BFF;
+}
+
+.feature:hover svg {
+    fill: #85D7F5;
+}
+
+
+.feature h2 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    color: #444;
+}
+
+.feature p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #666;
+}
+
+
+
+
+
+
+
 
 
 
