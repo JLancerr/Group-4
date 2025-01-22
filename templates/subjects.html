@@ -50,9 +50,9 @@
       <div class="dashboard-header">
         <h1 class="dashboard-title">{{ classroom_name }}</h1>
         <div class="dashboard-buttons">
-          <!-- {% if authored == 1 %} -->
-          <button class="primary-btn" id="add-subject-btn">Add Subject</button>
-          <!-- {% endif %} -->
+          {% if authored == "1" %}
+            <button class="primary-btn" id="add-subject-btn">Add Subject</button>
+          {% endif %}
           <button class="secondary-btn" id="leave-class-btn">Leave Classroom</button>
         </div>
       </div>
@@ -65,19 +65,19 @@
         <div class="subjects">
           <h3>Subjects</h3>
           <div class="grid">
-            <!-- {% for subject_id, subject_name in contents %} -->
-            <form action="/display" method="post" class="item">
-              <input type="hidden" name="directory_type" value="subject">
-              <input type="hidden" name="directory_id" value="{{ subject_id }}">
-              <input type="hidden" name="authored" value="{{ authored }}">
-              <input type="submit" value="{{ subject_name }}" class="classroom-name">
-              <!-- {% if authored == 1 %} -->
-              <button type="button" class="delete-icon" data-subject-id="{{ subject_id }}">
-                <i class="fa-solid fa-trash"></i>
-              </button>
-              <!-- {% endif %} -->
-            </form>
-            <!-- {% endfor %} -->
+            <!-- subject[subject_id, subject_name] -->
+            {% for subject_info in contents[0] %}
+              <form action="/display" method="get" class="item">
+                <input type="hidden" name="directory_type" value="subject">
+                <input type="hidden" name="directory_id" value="{{ subject_info[0] }}">
+                <input type="submit" value="{{ subject_info[1] }}" class="classroom-name">
+                {% if authored == "1" %}
+                  <button type="button" class="delete-icon" data-subject-id="{{ subject_info[0] }}">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                {% endif %}
+              </form>
+            {% endfor %}
           </div>
         </div>
 
@@ -85,20 +85,21 @@
         <div class="students-joined">
           <h3>Students</h3>
           <ul class="student-list">
-            <!-- {% for user in users_joined %} -->
-            <div class="student-item">
-              <div class="student-info">
-                <p><!-- {{ user.firstname }} {{ user.lastname }} -->Harry Emelo</p>
-                <p><!-- {{ user.username }} -->hrrymllo</p>
-                <p><!-- {{ 'Author' if user.role == 'author' else 'Member' }} -->Member</p>
-                <!-- {% if authored == 1 %} -->
-                <button type="button" class="kick-btn" data-user-id="{{ user.id }}">
-                  <i class="fa-solid fa-user-slash"></i>
-                </button>
+            <!-- user[id, first_name, last_name, is_author] -->
+            {% for user in contents[1] %}
+              <div class="student-item">
+                <div class="student-info">
+                  <p>{{ user[1] }} {{ user[2] }}</p>
+                  <p>{{ user[3] }}</p>
+                  <p>{{ 'Author' if user[4] else 'Member' }}</p>
+                  {% if authored == "1" and not user[4] %}
+                    <button type="button" class="kick-btn" data-user-id="{{ user[0] }}">
+                      <i class="fa-solid fa-user-slash"></i>
+                    </button>
+                  {% endif %}
+                </div>
               </div>
-              <!-- {% endif %} -->
-            </div>
-            <!-- {% endfor %} -->
+            {% endfor %}
           </ul>
         </div>
       </div>
@@ -110,6 +111,8 @@
         <h3>Add Subject</h3>
         <span class="modal-close" id="close-add-subject">&times;</span>
         <form action="/add_directory" method="post">
+          <input type="hidden" name="parent_id" value="{{ parent_directory_id }}">
+          <input type="hidden" name="directory_type" value="subject">
           <input name="directory_name" placeholder="Enter Subject Name">
           <button type="submit" class="primary-btn">Add</button>
         </form>
@@ -122,6 +125,8 @@
         <h3>Delete Subject</h3>
         <span class="modal-close" id="close-delete-subject">&times;</span>
         <form id="delete-subject-form" action="/delete_directory" method="post">
+          <input type="hidden" name="parent_id" value="{{ parent_directory_id }}">
+          <input type="hidden" name="directory_type" value="subject">
           <input type="hidden" name="directory_id" id="delete-subject-id">
           <p>Are you sure you want to delete this subject?</p>
           <button type="submit" class="delete-btn">Delete</button>
@@ -135,7 +140,7 @@
         <h3>Leave Classroom</h3>
         <span class="modal-close" id="close-leave-class">&times;</span>
         <form action="/leave_classroom" method="post">
-          <input type="hidden" name="classroom_id" value="{{ classroom_id }}">
+          <input type="hidden" name="directory_id" value="{{ parent_directory_id }}">
           <p>Are you sure you want to leave this classroom?</p>
           <button type="submit" class="delete-btn">Leave</button>
         </form>
@@ -148,16 +153,12 @@
         <h3>Kick User</h3>
         <span class="modal-close" id="close-kick-user">&times;</span>
         <form action="/kick_user" method="post">
-          <input type="hidden" name="user_id" id="kick-user-id">
-          <input type="hidden" name="classroom_id" value="{{ classroom_id }}">
+          <input type="hidden" name="user_id_to_kick" id="kick-user-id">
+          <input type="hidden" name="directory_id" value="{{ parent_directory_id }}">
           <p>Are you sure you want to kick this user?</p>
           <button type="submit" class="delete-btn">Kick</button>
         </form>
       </div>
     </div>
-
-    <script>
-      display_error();
-    </script>
 </body>
 </html>

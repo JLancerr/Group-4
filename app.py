@@ -56,7 +56,7 @@ def home():
     # Display home page
     return render_template('home.html', user_data=user.get_all_attributes(), classrooms_info=classrooms_info)
 
-# Requires directory_type, directory_id, and authored
+# Requires directory_type, directory_id
 # Note that any other routes that tries to redirect to /display will need to provide a directory_type
 @app.route('/display', methods=['GET'])
 def display():
@@ -77,9 +77,12 @@ def display():
     contents = dir.get_directory_contents()
 
     # Get all necessary data for the page to utilize
+    if session == None:
+        print('true')
     user = User(session)
     user_data = user.get_all_attributes()
-    authored = dir.authorize_user(user.get_user_id)
+    authored = dir.authorize_user(user.get_user_id())
+    print(authored)
     parent_directory_name = dir.get_directory_name_from_database()
 
     # Determine page to render
@@ -157,7 +160,10 @@ def kick_user():
     directory_id = request.form['directory_id']
     user = User(session)
     user.kick_user(request.form['user_id_to_kick'], directory_id)
-    return redirect(url_for('display'))
+
+    previous_dir_type = "classroom"
+    previous_dir_id = directory_id
+    return redirect(url_for('display', directory_id=previous_dir_id, directory_type=previous_dir_type))
 
 # Requires directory_id
 @app.route('/leave_classroom', methods=["POST"])
@@ -165,7 +171,8 @@ def leave_classroom():
     directory_id = request.form['directory_id']
     user = User(session)
     user.leave_classroom(directory_id)
-    return redirect(url_for('display'))
+    
+    return redirect(url_for('home'))
 
 # Requires directory_id
 @app.route('/join_classroom', methods=["POST"])

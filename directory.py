@@ -172,14 +172,21 @@ class Classroom(Directory):
         subjects_names_and_ids = super().get_directory_contents()
         names_of_users_joined = []
 
+        query3 = "SELECT user_parent_id FROM Classrooms WHERE classroom_id = ?"
+        user_parent_id = self._cursor.execute(query3, (self._directory_id,)).fetchone()[0]
+
         query1 = "SELECT user_id FROM Users_Classrooms_Relationship WHERE classroom_id = ?"
         user_id_list = self._cursor.execute(query1, (self._directory_id,)).fetchall()
+        is_author = False
         for id in user_id_list:
+            if id[0] == user_parent_id:
+                is_author = True
             query2 = "SELECT first_name, last_name, username FROM Users WHERE user_id = ?"
             user_info = self._cursor.execute(query2, (id[0],)).fetchone()
-            names_of_users_joined.append([ id[0], user_info[0], user_info[1], user_info[2] ])
+            names_of_users_joined.append([ id[0], user_info[0], user_info[1], user_info[2], is_author])
+            is_author = False
 
-        return [ subjects_names_and_ids, names_of_users_joined ]
+        return [ subjects_names_and_ids, names_of_users_joined]
 
 # This Lesson variant of Directory exist cuz the child of Lessons is Questions which has an extra column, which is answer, that queries do not account for in the Parent class
 class Lesson(Directory):

@@ -79,15 +79,10 @@ Notes for the Frontend:
             'password':  password
         } # Data of the user logged in
 
-        users_joined [
-            {
-                "firstname" : value,
-                "lastname" : value,
-                "username" : value
-            }
-        ]
-
-        contents [ [subject_id , subject_name] ] # List of all subject info
+        contents[ 
+                subjects_names_and_ids[ [subject_id, subject_name] ], 
+                names_of_users_joined[ [id, first_name, last_name, username, is_author(True or False)] ],
+                ]
 
         authored = 1 or 0 # Ito yung magdedetermine kung magpapakita ba kayo ng edit options 
 
@@ -139,7 +134,7 @@ Notes for the Frontend:
             - POST request
             - With these data variables
                 - user_id_to_kick = # The user's id to kick
-                - directory_id = # The classroom id the user inputted 
+                - directory_id = 
 
 - lessons.html  
     - Description of this file
