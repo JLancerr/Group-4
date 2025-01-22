@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+
+<!-- First page that users see -->
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/font.css">
+    <link rel="stylesheet" href="../static/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Landing | QuizRev</title>
+    <script>
+      function display_error() {
+        current_url = new URL(window.location.href);
+        url_params = new URLSearchParams(current_url.search);
+        if (url_params.has("error")) {
+          window.alert(url_params.get("error"));
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <div class="navbar">
+      <nav class="container">
+        <!-- Logo -->
+        <a href="landing.html"
+          ><div class="logo">
+            <img src="../static/images/QLarge.svg" alt="Logo" />
+            <h1>QuizRev</h1>
+          </div>
+        </a>
+
+        <!-- Menu Item -->
+        <ul class="menu">
+          <li><a href="#">About</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+
+        <!-- Button -->
+        <div class="buttons">
+          <a href="#" class="secondary-btn">Sign In</a>
+          <a href="#" class="primary-btn">Get Started</a>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Showcase -->
+    <section class="showcase">
+      <div class="container">
+        <h1>Lorem ipsum dolor sit amet.</h1>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit totam
+          incidunt provident, earum optio dolores reiciendis veniam architecto
+          maiores a?
+        </p>
+        <div class="showcase-buttons">
+          <a href="#" class="primary-btn">Study Now</a>
+          <a href="#" class="secondary-btn">Learn More</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <!-- Quiz -->
+    <section class="quiz">
+      <div class="container">
+        <div class="quiz-text">
+          <h2>Create your own quiz</h2>
+          <p>Study, memorize, and learn by inserting from your own material.</p>
+        </div>
+        <div class="quiz-figure">
+          <!-- Add content here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Method -->
+    <section class="method">
+      <div class="container">
+        <div class="method-text">
+          <h2>Use your preferred method</h2>
+          <p>
+            Utilize flashcards, multiple choice, or identification questions.
+          </p>
+        </div>
+        <div class="method-figure">
+          <!-- Add content here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Share -->
+    <section class="share">
+      <div class="container">
+        <div class="share-text">
+          <h2>Share your materials</h2>
+          <p>Share your created set of questions with your peers.</p>
+        </div>
+        <div class="share-figure">
+          <!-- Add content here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Price Overview -->
+    <section class="price-overview">
+      <div class="container">
+        <div class="price-overview-text">
+          <h2>Unlock all features now</h2>
+          <p>Choose between our generous plans.</p>
+        </div>
+        <div class="price-overview-button">
+          <a href="#" class="secondary-btn">View our packages</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="footer-logo">
+          <h1>Quizrev</h1>
+          <p></p>
+          <p>Copyright &copy; 2025</p>
+        </div>
+        <div class="footer-general">
+          <ul>
+            <li><h3>General</h3></li>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Pricing</a></li>
+          </ul>
+        </div>
+        <div class="footer-resources">
+          <ul>
+            <li><h3>Resources</h3></li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-social">
+          <p>Follow us on:</p>
+          <div class="footer-icons">
+            <a href="#"><i class="fab fa-github fa-2x"></i></a>
+            <a href="#"><i class="fab fa-facebook fa-2x"></i></a>
+            <a href="#"><i class="fab fa-instagram fa-2x"></i></a>
+            <a href="#"><i class="fa-brands fa-x-twitter fa-2x"></i></a>
+            <a href="#"><i class="fa-brands fa-discord fa-2x"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
