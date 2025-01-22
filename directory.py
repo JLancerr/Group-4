@@ -67,7 +67,7 @@ class Directory:
 
         return "success"
 
-    # Most likely works with every directory type
+    # Works with every directory type
     # Needs directory_id and directory_type to delete
     def delete_directory(self): 
         children_ids = self._get_children_directory_ids()
@@ -85,7 +85,7 @@ class Directory:
         for id in children_ids:
             Directory({'directory_type' : self._children_type, 'directory_id' : id}).delete_directory()
 
-    # Edits the name
+    # Edits the name of the given directory type
     # Requires directory_id, directory_type, and new_directory_name
     def edit_directory(self, new_directory_name):
         table_name = f"{self._directory_type}s".capitalize()
@@ -122,6 +122,7 @@ class Directory:
         query = f"SELECT {name_column_name} FROM {table_name} WHERE {id_column_name} = ?"
         return self._cursor.execute(query, (self._directory_id,)).fetchone()[0]
     
+    # Requires user_id, directory_type
     def authorize_user(self, user_id):
         target = "user_parent_id"
 
@@ -196,10 +197,6 @@ class Question(Directory):
         self._answer = args_dict.get('answer')
         super().__init__(args_dict)
 
-    # This disables this inherited method because Questions does not have any children directories to display
-    def get_directory_contents(self):
-        return None
-
     # Requires question, answer, parent_id
     def add_dir_to_database(self):
         query = "INSERT INTO Questions (question, answer, lesson_parent_id) VALUES (?, ?, ?)"
@@ -216,3 +213,7 @@ class Question(Directory):
             query2 = "UPDATE Questions SET answer = ? WHERE question_id = ?"
             self._cursor.execute(query2, (new_answer, self._directory_id))
         self._sqlite_connection.commit()
+
+    # This disables this inherited method because Questions does not have any children directories to display
+    def get_directory_contents(self):
+        return None

@@ -75,12 +75,16 @@ def display():
     else:
         dir = Directory(args_dict)
     contents = dir.get_directory_contents()
-    # Authorization
+
+    # Get all necessary data for the page to utilize
     user = User(session)
+    user_data = user.get_all_attributes()
     authored = dir.authorize_user(user.get_user_id)
-    directory_to_render = f"{children_of[directory_type]}s"
     parent_directory_name = dir.get_directory_name_from_database()
-    return render_template(f'{directory_to_render}.html', user_data=user.get_all_attributes(), contents=contents, authored=authored, 
+
+    # Determine page to render
+    directory_to_render = f"{children_of[directory_type]}s"
+    return render_template(f'{directory_to_render}.html', user_data=user_data, contents=contents, authored=authored, 
                            parent_directory_name=parent_directory_name, parent_directory_type=directory_type, parent_directory_id=directory_id)
 
 @app.route('/add_directory', methods=["POST"])
