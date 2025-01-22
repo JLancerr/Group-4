@@ -197,13 +197,17 @@
                 value="{{ classroom_id }}"
               />
               <input type="hidden" name="authored" value="1" />
-              <input type="submit" value="{{ classroom_name }}" />
-              <button
+              <input
                 type="submit"
-                formaction="/delete_directory"
-                formmethod="post"
+                value="{{ classroom_name }}"
+                class="classroom-name"
+              />
+              <button
+                type="button"
+                class="delete-icon"
+                data-classroom-id="{{ classroom_id }}"
               >
-                Delete
+                <i class="fa-solid fa-trash"></i>
               </button>
             </form>
             {% endfor %} -->
@@ -232,9 +236,17 @@
             classrooms_info.joined_classrooms.items() %}
             <form action="/display" method="post" class="item">
               <input type="hidden" name="directory_type" value="classroom" />
-              <input type="hidden" name="directory_id" value="{{ classroom_id }}" />
+              <input
+                type="hidden"
+                name="directory_id"
+                value="{{ classroom_id }}"
+              />
               <input type="hidden" name="authored" value="0" />
-              <input type="submit" value="{{ classroom_name }}" />
+              <input
+                type="submit"
+                value="{{ classroom_name }}"
+                class="classroom-name"
+              />
             </form>
             {% endfor %} -->
           </div>
