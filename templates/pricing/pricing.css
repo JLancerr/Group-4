@@ -392,16 +392,6 @@ li {
 
 
 
-
-
-
-
-
-
-
-
-
-
   /* MIDDLE CONTAINER */
 .middle-container {
     max-width: 1200px;
@@ -702,65 +692,6 @@ li {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-/* FEATURES - QUIZ, METHOD, SHARE*/
-.quiz,
-.method{
-    height: 60vh;
-    padding: 0 3rem;
-}
-
-.quiz .container,
-.method .container{
-    align-items: center;
-    justify-content: space-between;
-    text-align: center;
-}
-
-.method .container {
-    flex-direction: row-reverse;
-}
-
-.quiz .quiz-text,
-.method .method-text {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-}
-
-.quiz .quiz-text h1,
-.method .method-text h1{
-    font-size: 2rem;
-}
-
-.method .method-text {
-    align-items: flex-end;
-    text-align: right;
-}
-
-.quiz .quiz-figure,
-.method .method-figure{
-    width: 45%;
-    height: 80%;
-    border-radius: 2rem;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-}
-
-
-
-
 /* CURVE */
 .section {
     background-color: #007BFF;
@@ -774,12 +705,6 @@ li {
     font-size: 2rem;
     margin-bottom: 30px;
 }
-
-
-
-
-
-
 
 
 
