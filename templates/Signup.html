@@ -4,21 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up Form</title>
-  <link rel="stylesheet" href="Signup.css">
+  <link rel="stylesheet" href="../static/css/signup.css">
+  <script>
+    function display_error() {
+      current_url = new URL(window.location.href);
+      url_params = new URLSearchParams(current_url.search);
+      if (url_params.has("error")) {
+        window.alert(url_params.get("error"));
+      }
+    }
+  </script>
 </head>
 <body>
+  {{ error }}
   <div class="form-container">
     <h1>Sign Up</h1>
-    <form>
+    <form action="/attempt_signup" method="POST">
       <label for="first-name">First Name:</label>
-      <input type="text" id="first-name" name="first-name" placeholder="Enter First Name" required>
+      <input type="text" id="first-name" name="first_name" placeholder="Enter First Name" required>
 
       <label for="last-name">Last Name:</label>
-      <input type="text" id="last-name" name="last-name" placeholder="Enter Last Name" required>
-
+      <input type="text" id="last-name" name="last_name" placeholder="Enter Last Name" required>
+      <!--
       <label for="email">Email:</label>
-      <input type="email" id="email" name="email" placeholder="Enter Email" required>
-
+      <input type="email" id="email" name="email" placeholder="REMOVE PALA TO WALA TAYONG EMAIL EMAIL NAKALIMUTAN KO IIMPLEMENT HAHA" required>
+      -->
       <label for="username">Username:</label>
       <input type="text" id="username" name="username" placeholder="Username" required>
 
@@ -29,9 +39,12 @@
       </div>
       <button type="submit" class="submit-btn" href = "#landing_page">Sign Up</button>
       <div class="login-redirect">
-        Already have an account? <a href="Login.html">Log In</a>
+        Already have an account? <a href="login.html">Log In</a>
       </div>
     </form>
   </div>
+  <script>
+    display_error() 
+  </script>
 </body>
 </html>

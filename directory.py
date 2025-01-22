@@ -67,7 +67,7 @@ class Directory:
 
         return "success"
 
-    # Most likely works with every directory type
+    # Works with every directory type
     # Needs directory_id and directory_type to delete
     def delete_directory(self): 
         children_ids = self._get_children_directory_ids()
@@ -85,7 +85,7 @@ class Directory:
         for id in children_ids:
             Directory({'directory_type' : self._children_type, 'directory_id' : id}).delete_directory()
 
-    # Edits the name
+    # Edits the name of the given directory type
     # Requires directory_id, directory_type, and new_directory_name
     def edit_directory(self, new_directory_name):
         table_name = f"{self._directory_type}s".capitalize()
@@ -122,6 +122,7 @@ class Directory:
         query = f"SELECT {name_column_name} FROM {table_name} WHERE {id_column_name} = ?"
         return self._cursor.execute(query, (self._directory_id,)).fetchone()[0]
     
+    # Requires user_id, directory_type
     def authorize_user(self, user_id):
         target = "user_parent_id"
 
@@ -171,14 +172,21 @@ class Classroom(Directory):
         subjects_names_and_ids = super().get_directory_contents()
         names_of_users_joined = []
 
+        query3 = "SELECT user_parent_id FROM Classrooms WHERE classroom_id = ?"
+        user_parent_id = self._cursor.execute(query3, (self._directory_id,)).fetchone()[0]
+
         query1 = "SELECT user_id FROM Users_Classrooms_Relationship WHERE classroom_id = ?"
         user_id_list = self._cursor.execute(query1, (self._directory_id,)).fetchall()
+        is_author = False
         for id in user_id_list:
+            if id[0] == user_parent_id:
+                is_author = True
             query2 = "SELECT first_name, last_name, username FROM Users WHERE user_id = ?"
             user_info = self._cursor.execute(query2, (id[0],)).fetchone()
-            names_of_users_joined.append([ id[0], user_info[0], user_info[1], user_info[2] ])
+            names_of_users_joined.append([ id[0], user_info[0], user_info[1], user_info[2], is_author])
+            is_author = False
 
-        return [ subjects_names_and_ids, names_of_users_joined ]
+        return [ subjects_names_and_ids, names_of_users_joined]
 
 # This Lesson variant of Directory exist cuz the child of Lessons is Questions which has an extra column, which is answer, that queries do not account for in the Parent class
 class Lesson(Directory):
@@ -196,10 +204,6 @@ class Question(Directory):
         self._answer = args_dict.get('answer')
         super().__init__(args_dict)
 
-    # This disables this inherited method because Questions does not have any children directories to display
-    def get_directory_contents(self):
-        return None
-
     # Requires question, answer, parent_id
     def add_dir_to_database(self):
         query = "INSERT INTO Questions (question, answer, lesson_parent_id) VALUES (?, ?, ?)"
@@ -216,3 +220,7 @@ class Question(Directory):
             query2 = "UPDATE Questions SET answer = ? WHERE question_id = ?"
             self._cursor.execute(query2, (new_answer, self._directory_id))
         self._sqlite_connection.commit()
+
+    # This disables this inherited method because Questions does not have any children directories to display
+    def get_directory_contents(self):
+        return None

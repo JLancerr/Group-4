@@ -16,15 +16,6 @@
       referrerpolicy="no-referrer"
     />
     <title>Quizrev | Landing Page</title>
-    <script>
-      function display_error() {
-        current_url = new URL(window.location.href);
-        url_params = new URLSearchParams(current_url.search);
-        if (url_params.has("error")) {
-          window.alert(url_params.get("error"));
-        }
-      }
-    </script>
   </head>
   <body>
     <!-- Navbar -->
@@ -47,8 +38,8 @@
 
         <!-- Button -->
         <div class="buttons">
-          <a href="#" class="secondary-btn">Sign In</a>
-          <a href="#" class="primary-btn">Get Started</a>
+          <a href="login" class="secondary-btn">Sign In</a>
+          <a href="signup" class="primary-btn">Get Started</a>
         </div>
       </nav>
     </div>

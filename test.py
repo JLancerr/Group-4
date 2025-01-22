@@ -1,4 +1,6 @@
 import sqlite3
+import datetime
+from user import User
 
 sqlite_connection = sqlite3.connect('app.db')
 cursor = sqlite_connection.cursor()
@@ -10,7 +12,9 @@ CREATE TABLE Users (
     first_name VARCHAR(20),
     last_name VARCHAR(20),
     username VARCHAR(20),
-    password VARCHAR(20)
+    password VARCHAR(20),
+    membership_type VARCHAR(20),
+    expiration_date DATE
 );'''
 
 query2 = '''
@@ -67,15 +71,18 @@ def del_all():
     cursor.execute("DELETE FROM Questions WHERE 1")
 
 def check_schema():
-    print(cursor.execute("PRAGMA table_info(Lessons)").fetchall())
+    print(cursor.execute("PRAGMA table_info(Users)").fetchall())
 
-
-if 0    :
+# cursor.execute("INSERT INTO Classrooms (classroom_name) VALUES ('DISCRETE')")
+# cursor.execute("UPDATE Classrooms SET user_parent_id = 12 WHERE classroom_id = 31")
+if 0:
     del_all()
 if 1:
     show_all()
 if 0:
     check_schema()
 
+
+# cursor.execute("UPDATE Users SET membership_type = 'pro', expiration_date = '2026-12-31' WHERE 1")
 
 sqlite_connection.commit()

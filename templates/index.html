@@ -15,7 +15,8 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <title>Landing | QuizRev</title>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <title>QuizRev | Home</title>
     <script>
       function display_error() {
         current_url = new URL(window.location.href);
@@ -40,9 +41,9 @@
 
         <!-- Menu Item -->
         <ul class="menu">
-          <li><a href="#">About</a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
           <li><a href="#">Pricing</a></li>
-          <li><a href="#">Contact</a></li>
         </ul>
 
         <!-- Button -->
@@ -71,7 +72,7 @@
 
     <!-- Features -->
     <!-- Quiz -->
-    <section class="quiz">
+    <section class="quiz feature-1">
       <div class="container">
         <div class="quiz-text">
           <h2>Create your own quiz</h2>
@@ -84,7 +85,7 @@
     </section>
 
     <!-- Method -->
-    <section class="method">
+    <section class="method feature-2">
       <div class="container">
         <div class="method-text">
           <h2>Use your preferred method</h2>
@@ -99,7 +100,7 @@
     </section>
 
     <!-- Share -->
-    <section class="share">
+    <section class="share feature-3">
       <div class="container">
         <div class="share-text">
           <h2>Share your materials</h2>
@@ -160,5 +161,45 @@
         </div>
       </div>
     </footer>
+
+    <!-- Animation -->
+    <script>
+      function display_error() {
+        current_url = new URL(window.location.href);
+        url_params = new URLSearchParams(current_url.search);
+        if (url_params.has("error")) {
+          window.alert(url_params.get("error"));
+        }
+      }
+
+      // Function to run the animation
+      function runAnimation() {
+        ScrollReveal({
+          reset: false,
+          distance: '100px',
+          duration: 2500,
+          delay: 400
+        });
+        ScrollReveal().reveal('.feature-1', { origin: 'right', delay: 500 });
+        ScrollReveal().reveal('.feature-2', { origin: 'left', delay: 600 });
+        ScrollReveal().reveal('.feature-3', { origin: 'right', delay: 700 });
+      }
+
+      // Check if the user has visited the page before
+      if (!localStorage.getItem('visited')) {
+        // Set the flag in localStorage
+        localStorage.setItem('visited', 'true');
+
+        // Add scroll event listener to run the animation on first scroll
+        window.addEventListener('scroll', function onScroll() {
+          runAnimation();
+          // Remove the event listener after running the animation
+          window.removeEventListener('scroll', onScroll);
+        });
+      } else {
+        // Run the animation immediately if the user has visited before
+        runAnimation();
+      }
+    </script>
   </body>
 </html>

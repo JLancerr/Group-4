@@ -50,9 +50,9 @@
       <div class="dashboard-header">
         <h1 class="dashboard-title">{{ subject_name }}</h1>
         <div class="dashboard-buttons">
-          <!-- {% if authored == 1 %} -->
-          <button class="primary-btn" id="add-lesson-btn">Add Lesson</button>
-          <!-- {% endif %} -->
+          {% if authored == 1 %}
+            <button class="primary-btn" id="add-lesson-btn">Add Lesson</button>
+          {% endif %}
         </div>
       </div>
 
@@ -64,19 +64,19 @@
         <div class="lessons">
           <h3>Lessons</h3>
           <div class="grid">
-            <!-- {% for lesson_id, lesson_name in contents %} -->
-            <form action="/display" method="post" class="item">
-              <input type="hidden" name="directory_type" value="lesson">
-              <input type="hidden" name="directory_id" value="{{ lesson_id }}">
-              <input type="hidden" name="authored" value="{{ authored }}">
-              <input type="submit" value="{{ lesson_name }}" class="classroom-name">
-              <!-- {% if authored == 1 %} -->
-              <button type="button" class="delete-icon" data-lesson-id="{{ lesson_id }}">
-                <i class="fa-solid fa-trash"></i>
-              </button>
-              <!-- {% endif %} -->
-            </form>
-            <!-- {% endfor %} -->
+            <!-- lesson[lesson_id, lesson_name] -->
+            {% for lesson_info in contents %}
+              <form action="/display" method="get" class="item">
+                <input type="hidden" name="directory_type" value="lesson">
+                <input type="hidden" name="directory_id" value="{{ lesson_info[0] }}">
+                <input type="submit" value="{{ lesson_info[1] }}" class="classroom-name">
+                {% if authored == 1 %}
+                  <button type="button" class="delete-icon" data-lesson-id="{{ lesson_info[0] }}">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                {% endif %}
+              </form>
+            {% endfor %}
           </div>
         </div>
       </div>
@@ -88,6 +88,8 @@
         <h3>Add Lesson</h3>
         <span class="modal-close" id="close-add-lesson">&times;</span>
         <form action="/add_directory" method="post">
+          <input type="hidden" name="parent_id" value="{{ parent_directory_id }}">
+          <input type="hidden" name="directory_type" value="lesson">
           <input name="directory_name" placeholder="Enter Lesson Name">
           <button type="submit" class="primary-btn">Add</button>
         </form>
@@ -107,9 +109,5 @@
         </form>
       </div>
     </div>
-
-    <script>
-      display_error();
-    </script>
 </body>
 </html>
