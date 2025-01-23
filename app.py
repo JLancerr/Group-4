@@ -159,7 +159,8 @@ def add_directory():
         previous_dir_id = request.form['parent_id']
         if outcome != 'success':
             return redirect(url_for('display', directory_id=previous_dir_id, directory_type=previous_dir_type, error=outcome))
-        
+    previous_dir_type = parent_of[f'{directory_type}']
+    previous_dir_id = request.form['parent_id']
     return redirect(url_for('display', directory_id=previous_dir_id, directory_type=previous_dir_type))
 
 # Requires directory_id, directory_type

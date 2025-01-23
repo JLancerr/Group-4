@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="../static/css/boxicons.min.css">
         <link rel="stylesheet" href="../static/css/font.css" />
         <link rel="stylesheet" href="../static/css/dashboard.css" />
-        <script src="../static/js/script.js" defer></script>
+        <!-- <script src="../static/js/script.js" defer></script> -->
         <title>Quizrev | Home</title>
       </head>
       <body>
@@ -90,7 +90,7 @@
                         <div class="form-actions">
                             <button type="button" class="edit-btn" onclick="openEditModal()">Edit</button>
                         </div>
-                        <input type="hidden" id="editUsername" name="previous_page" value="profile" required>
+                        <input type="hidden" name="previous_page" value="profile" required>
                     </form>
                 </div>
             </section>
@@ -125,10 +125,11 @@
                             <input type="date" id="editExpirationDate" name="expiration_date" required>
                         </div> -->
                         <div class="form-actions">
-                            <button type="submit">Save Changes</button>
+                            <button type="submit" onclick="submitForm()">Save Changes</button>
                             <button type="button" class="cancel-btn" onclick="closeEditModal()">Cancel</button>
                         </div>
-                        <input type="hidden" id="editUsername" name="previous_page" value="profile" required>
+                        <input type="hidden" name="user_id" value="{{ user.user_id }}" required>
+                        <input type="hidden" name="previous_page" value="profile" required>
                     </form>
                 </div>
             </div>
@@ -243,6 +244,10 @@
                     event.preventDefault();
                     // Implement save logic here
                     closeEditModal();
+                }
+
+                function submitForm(event) {
+                    document.getElementById('editForm').submit()
                 }
             </script>
         </body>
