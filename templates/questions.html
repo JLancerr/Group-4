@@ -79,7 +79,9 @@
         </div>
         <div class="dashboard-buttons">
           <button class="primary-btn" id="study-btn">Study</button>
+          {% if authored == "1" %}
           <button class="primary-btn" id="add-card-btn">Add Card</button>
+          {% endif %}
         </div>
       </div>
 
@@ -94,7 +96,7 @@
             <div class="flashcard__back">
               <p>{{ question[2] }}</p>
             </div>
-            {% if authored == 1 %}
+            {% if authored == "1" %}
             <div class="flashcard__actions">
               <button
                 type="button"
@@ -115,6 +117,53 @@
           </div>
         </div>
         {% endfor %}
+      </div>
+    </div>
+
+    <!-- Add Question Modal -->
+    <div id="add-question-modal" class="modal">
+      <div class="modal-content">
+        <h3>Add Question</h3>
+        <span class="modal-close" id="close-add-question">&times;</span>
+        <form id="add-question-form" action="/add_directory" method="post">
+          <input type="hidden" name="directory_type" value="question" />
+          <input
+            type="hidden"
+            name="directory_id"
+            {% for x in contents %}
+            value="{{ x[0] }}"
+            {% endfor %} />
+          <input
+            type="hidden"
+            name="parent_id"
+            value="{{ parent_directory_id }}"
+          />
+          <input name="question" placeholder="Enter Question" required />
+          <input name="answer" placeholder="Enter Answer" required />
+          <button type="submit" class="primary-btn">Add</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Edit Question Modal -->
+    <div id="edit-question-modal" class="modal">
+      <div class="modal-content">
+        <h3>Edit Question</h3>
+        <span class="modal-close" id="close-edit-question">&times;</span>
+        <form id="edit-question-form" action="/edit_directory" method="post">
+          <input type="hidden" name="directory_type" value="question" />
+          <input type="hidden" name="directory_id" id="edit-question-id" {% for x in contents %}
+            value="{{ x[0] }}"
+            {% endfor %} />
+          <input
+            type="hidden"
+            name="parent_id"
+            value="{{ parent_directory_id }}"
+          />
+          <input name="new_question" placeholder="Enter New Question" />
+          <input name="new_answer" placeholder="Enter New Answer" />
+          <button type="submit" class="primary-btn">Save</button>
+        </form>
       </div>
     </div>
 
@@ -141,33 +190,13 @@
       </div>
     </div>
 
-    <!-- Edit Question Modal -->
-    <div id="edit-question-modal" class="modal">
-      <div class="modal-content">
-        <h3>Edit Question</h3>
-        <span class="modal-close" id="close-edit-question">&times;</span>
-        <form id="edit-question-form" action="/edit_directory" method="post">
-          <input type="hidden" name="directory_type" value="question" />
-          <input type="hidden" name="directory_id" id="edit-question-id" />
-          <input
-            type="hidden"
-            name="parent_id"
-            value="{{ parent_directory_id }}"
-          />
-          <input name="new_question" placeholder="Enter New Question" />
-          <input name="new_answer" placeholder="Enter New Answer" />
-          <button type="submit" class="primary-btn">Save</button>
-        </form>
-      </div>
-    </div>
-
     <!-- Study Mode Popup -->
     <div class="popup-overlay" id="popupOverlay">
       <div class="popup">
         <h2>Select Study Mode</h2>
         <div class="options">
           <!-- Flashcards -->
-          <form action="/quiz" method="get">
+          <form action="/quiz" method="get" class="flashcard-item">
             <input
               type="hidden"
               name="parent_id"

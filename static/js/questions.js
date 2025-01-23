@@ -34,6 +34,7 @@ function setupModal(modalId, openBtnId, closeBtnId) {
 // Setup modals for questions.html
 setupModal("edit-question-modal", null, "close-edit-question");
 setupModal("delete-question-modal", null, "close-delete-question");
+setupModal("add-question-modal", "add-card-btn", "close-add-question");
 
 // Delete button functionality for questions.html
 document.querySelectorAll(".delete-icon").forEach((button) => {
@@ -62,6 +63,10 @@ document.getElementById("close-edit-question").addEventListener("click", () => {
 
 document.getElementById("close-delete-question").addEventListener("click", () => {
   document.getElementById("delete-question-modal").style.display = "none";
+});
+
+document.getElementById("close-add-question").addEventListener("click", () => {
+  document.getElementById("add-question-modal").style.display = "none";
 });
 
 // Get elements from the DOM
