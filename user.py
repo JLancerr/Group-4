@@ -75,12 +75,10 @@ class User:
         query3 = "SELECT classroom_name FROM Classrooms WHERE classroom_id = ? AND user_parent_id != ?"
         classroom_ids = self.__cursor.execute(query2, (self.__user_id,)).fetchall()
         for id in classroom_ids:
-            print(id[0])
             joined_classroom_name = self.__cursor.execute(query3, (id[0], self.__user_id)).fetchone()
-            print(joined_classroom_name)
             if joined_classroom_name != None:
                 joined_classroom_names_and_ids[id[0]] = joined_classroom_name[0]
-        print([authored_classroom_names_and_ids, joined_classroom_names_and_ids])
+
         return [authored_classroom_names_and_ids, joined_classroom_names_and_ids]
 
     def add_classroom(self, classroom_name):
@@ -132,19 +130,6 @@ class User:
         self.__cursor.execute(query2, (self.__user_id, classroom_id))
         self.__sqlite_connection.commit()
         return "success"
-
-    def delete_classroom(self, classroom_id):
-        query2 = "DELETE FROM Users_Classrooms_Relationship WHERE classroom_id = ?"
-        self.__cursor.execute(query2, (classroom_id,))
-
-        classroom_info = {
-            'directory_type' : "classroom",
-            'directory_id' : classroom_id,
-            'connection' : self.__sqlite_connection,
-            'cursor' : self.__cursor
-        }
-        classroom = Directory(classroom_info)
-        return classroom.delete_directory()
 
     def kick_user(self, user_id_to_kick, classroom_id):
         query = "DELETE FROM Users_Classrooms_Relationship WHERE user_id = ? AND classroom_id = ?"

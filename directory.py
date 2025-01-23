@@ -188,6 +188,11 @@ class Classroom(Directory):
 
         return [ subjects_names_and_ids, names_of_users_joined]
 
+    def delete_directory(self):
+        query2 = "DELETE FROM Users_Classrooms_Relationship WHERE classroom_id = ?"
+        self._cursor.execute(query2, (self._directory_id,))
+        super().delete_directory()
+
 # This Lesson variant of Directory exist cuz the child of Lessons is Questions which has an extra column, which is answer, that queries do not account for in the Parent class
 class Lesson(Directory):
     def get_directory_contents(self):
@@ -197,9 +202,6 @@ class Lesson(Directory):
         for row in questions_list:
             questions_info.append([ row[0], row[1], row[2] ])
         return questions_info
-    
-    def multiple_choice(self):
-        pass
 
 class Question(Directory):
     def __init__(self, args_dict):

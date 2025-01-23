@@ -20,25 +20,36 @@ def favicon():
 def render_page(page_name):
     return render_template(f'{page_name}.html')
 
+@app.route('/login')
+def login():
+    error = request.args.get('error')
+    if error == None:
+        return render_template('login.html', error=error)
+    return render_template('login.html')
+
 @app.route('/attempt_login', methods=['POST'])
 def attempt_login():
     user = User(request.form)
     login_outcome = user.login()
     
     if login_outcome != "success":
-        return render_template('login.html', error=login_outcome)
+        return redirect(url_for('login', error=login_outcome))
     else:
         # Login as admin if username is admin
-        username = user.get_username()
-        if username == 'admin':
+        if user.get_username() == 'admin':
             return redirect(url_for('admin'))
         
         # Put all user attributes to the session
-        user_attributes = user.get_all_attributes()
-        for key in user_attributes:
-            session[f'{key}'] = user_attributes[f'{key}']
+        session.update(user.get_all_attributes())
 
         return redirect(url_for('home'))
+
+@app.route('/signup')
+def signup():
+    error = request.args.get('error')
+    if error == None:
+        return render_template('signup.html', error=error)
+    return render_template('signup.html')
 
 @app.route('/attempt_signup', methods=['POST'])
 def attempt_signup():
@@ -47,15 +58,17 @@ def attempt_signup():
 
     if signup_outcome != "success":
         # Direct user back to the login page
-        return render_template('signup.html', error=signup_outcome)
+        return redirect(url_for('signup', error=signup_outcome))
     else:
         # Put all user attributes to the session
-        user_attributes = user.get_all_attributes()
-
-        for key in user_attributes:
-            session[f'{key}'] = user_attributes[f'{key}']
+        session.update(user.get_all_attributes())
 
         return redirect(url_for('home'))
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
@@ -63,6 +76,7 @@ def home():
 
     # Retrieve all classrooms the user is joined in 
     classrooms_info = user.get_classrooms_info()
+    
     # Display home page
     return render_template('home.html', user_data=user.get_all_attributes(), classrooms_info=classrooms_info)
 
@@ -87,7 +101,6 @@ def display():
     contents = dir.get_directory_contents()
 
     # Get all necessary data for the page to utilize
-    print(session)
     if session:
         user = User(session)
         user_data = user.get_all_attributes()
@@ -113,8 +126,6 @@ def quiz():
     }
     lesson = Lesson(args_dict)
     contents = lesson.get_directory_contents()
-    if quiz_type == 'identification':
-        pass
     return render_template(f'learningview/{quiz_type}.html', contents=contents)
 
 @app.route('/add_directory', methods=["POST"])
@@ -145,11 +156,10 @@ def add_directory():
 @app.route('/delete_directory', methods=["POST"])
 def delete_directory():
     directory_type = request.form['directory_type']
-    directory_id = request.form['directory_id']
 
     if directory_type == "classroom":
-        user = User(session)
-        user.delete_classroom(directory_id)
+        classroom = Classroom(request.form)
+        classroom.delete_directory()
         return redirect(url_for('home'))
     else:
         dir = Directory(request.form)
@@ -260,7 +270,7 @@ def upgrade_plan():
     duration_option = request.form['duration_option']
     user = User(session)
     user.upgrade_plan(duration_option)
-
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run()
