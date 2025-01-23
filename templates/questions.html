@@ -203,9 +203,10 @@
               value="{{ parent_directory_id }}"
             />
             <input type="hidden" name="quiz_type" value="flashcard" />
-            <div class="styled-input">
-              <input type="submit" value="📋 Flashcards"></input>
-            </div>
+            <input type="submit" class="flashcards">
+              <span class="icon">📋</span>
+              <span>Flashcards</span>
+            </input>
           </form>
 
           <!-- Multiple Choice -->
@@ -216,9 +217,10 @@
               value="{{ parent_directory_id }}"
             />
             <input type="hidden" name="quiz_type" value="multiple_choice" />
-            <div class="styled-input">
-              <input type="submit" value="✅ Multiple Choice"></input>
-            </div>
+            <input type="submit">
+              <span class="icon">✅</span>
+              <span>Multiple Choice</span>
+            </input>
           </form>
 
           <!-- Identification -->
@@ -229,9 +231,10 @@
               value="{{ parent_directory_id }}"
             />
             <input type="hidden" name="quiz_type" value="identification" />
-            <div class="styled-input">
-              <input type="submit" value="✏️ Identification"></input>
-            </div>
+            <input type="submit">
+              <span class="icon">✏️</span>
+              <span>Identification</span>
+            </input>
           </form>
         </div>
         <button class="close-button" id="closePopup">Close</button>
