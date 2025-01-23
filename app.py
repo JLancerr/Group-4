@@ -8,9 +8,9 @@ app = Flask(__name__)
 # Secret key is required for sessions to occur
 app.secret_key = "HARRY"
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def landing():
-    return render_template('landing.html')
+    return render_template('index.html')
 
 @app.route('/<page_name>')
 def render_page(page_name):
@@ -78,11 +78,15 @@ def display():
     contents = dir.get_directory_contents()
 
     # Get all necessary data for the page to utilize
+    print(session)
+    if session:
+        user = User(session)
+        user_data = user.get_all_attributes()
+        authored = dir.authorize_user(user.get_user_id())
+    else:
+        user_data = None
+        authored = '0'
 
-    user = User(session)
-    user_data = user.get_all_attributes()
-    authored = dir.authorize_user(user.get_user_id())
-    print(authored)
     parent_directory_name = dir.get_directory_name_from_database()
 
     # Determine page to render
