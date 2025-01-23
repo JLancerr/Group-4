@@ -68,14 +68,10 @@
     <table>
         <thead>
             <tr>
-                <th style="width: 15%;">USERNAME</th>
-                <th style="width: 15%;">NAME</th>
-                <th style="width: 22%;">EMAIL</th>
-                <th style="width: 15%;">ROLE</th>
-                <th style="width: 15%;">SUBSCRIPTION STATUS</th>
-                <th style="width: 8%;">START DATE</th>
-                <th style="width: 8%;">END DATE</th>
-                <th style="width: 10%;">ACTIONS</th>
+                <th style="width: 30%;">USERNAME</th>
+                <th style="width: 30%;">NAME</th>
+                <th style="width: 30%;">SUBSCRIPTION STATUS</th>
+                <th style="width: 10%;">ACTIONS</th>    
             </tr>
         </thead>
         <tbody id="userTableBody">
@@ -132,7 +128,7 @@
         membership_type VARCHAR(20),
         expiration_date DATE
     -->
-    <div>
+    <div class="hidden" style="display: none;">
         {% for user in all_users %}
             <div id="{{ user[7] }}">{{user}}</div>
         {% endfor %}
@@ -183,9 +179,7 @@
                 row.innerHTML = `
                     <td>${user[3]}</td>
                     <td>${user[1].concat(" ", user[2])}</td>
-                    <td data-role="${user.role}">${user.role}</td>
                     <td subscribe = "${user[5]}">${user[5]}"</td>
-                    <td>${user[6]}"</td>
                     <td>
                         <button class="action-btn" onclick="editUser(${start + index})">Edit</button>
                         <button class="action-btn delete-btn" onclick="deleteUser(${start + index})">Delete</button>
