@@ -26,8 +26,8 @@
           <i class="fas fa-random"></i> Shuffle
         </button>
         <form action="/display" method="get">
-          <input type="hidden" name="directory_type" value="lesson">
-          <input type="hidden" name="directory_id" value="{{ lesson_id }}">
+          <input type="hidden" name="directory_type" value="{{ parent_directory_type }}">
+          <input type="hidden" name="directory_id" value="{{ parent_directory_id }}">
           <button type="submit" class="primary-btn">Back</button>
         </form>
       </div>
@@ -63,9 +63,9 @@
       <div class="alert-buttons">
         <button class="retry-btn" onclick="retryQuiz()">Retry</button>
         <form action="/display" method="get">
-          <input type="hidden" name="directory_type" value="questions">
-          <input type="hidden" name="directory_id" value="{{ lessons_id }}">
-          <button class="finish-btn">Finish</button>
+          <input type="hidden" name="directory_type" value="{{ parent_directory_type }}">
+          <input type="hidden" name="directory_id" value="{{ parent_directory_id }}">
+          <button type="submit" class="finish-btn">Finish</button>
         </form>
       </div>
     </div>
