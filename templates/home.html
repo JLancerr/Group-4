@@ -10,15 +10,15 @@
     <script src="../static/js/home.js" defer></script>
     <title>Quizrev | Home</title>
   </head>
-    <script>
-      function display_error() {
-        current_url = new URL(window.location.href);
-        url_params = new URLSearchParams(current_url.search);
-        if (url_params.has("error")) {
-          window.alert(url_params.get("error"));
-        }
+  <script>
+    function display_error() {
+      current_url = new URL(window.location.href);
+      url_params = new URLSearchParams(current_url.search);
+      if (url_params.has("error")) {
+        window.alert(url_params.get("error"));
       }
-    </script>
+    }
+  </script>
   <body>
     <!-- Sidebar -->
     <div class="sidebar close">
@@ -54,6 +54,13 @@
               <a href="profile"
                 ><i class="bx bxs-face"
                   ><span class="text nav-text"> Profile</span></i
+                ></a
+              >
+            </li>
+            <li class="navlinks">
+              <a href="logout"
+                ><i class="bx bx-log-out"
+                  ><span class="text nav-text"> Logout</span></i
                 ></a
               >
             </li>
@@ -200,7 +207,7 @@
       </div>
     </div>
     <script>
-        display_error() 
+      display_error();
     </script>
   </body>
 </html>
