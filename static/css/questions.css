@@ -72,7 +72,7 @@ li {
 
 .primary-btn {
   background-color: var(--blue-primary);
-  border: 2px solid var(--blue-dark);
+  border: 2px solid var(--blue-secondary);
   border-radius: 12px;
   color: #f2f2f2;
   padding: 8px 15px;
@@ -88,7 +88,7 @@ li {
   background-color: #fff;
   border: 2px solid var(--gray-normal);
   border-radius: 12px;
-  color: var(--dark-color);
+  color: var(--blue-dark);
   padding: 8px 15px;
   transition: 0.3s;
 }
@@ -219,25 +219,11 @@ li {
   padding-bottom: 30px;
 }
 
-.dashboard-left {   /* Copy ID Button */
+.dashboard-left {
   display: flex;
-  gap: 15px;
-}
-
-.dashboard-left .copy-btn:hover::before {
-  content: 'Copy Classroom ID';
-  position: absolute;
-  width: 150px;
-  right: -160px;
-  font-size: 0.9rem;
-  padding: 1px;
-  border-radius: 5px;
-  color: #fff;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-.dashboard-left .copy-btn.secondary-btn {
-  padding: 5px 10px;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
 }
 
 .dashboard-title {
@@ -259,147 +245,103 @@ li {
   background-color: var(--gray-normal);
 }
 
-/* Dashboard Contents - Authored and Joined Classroom */
-.dashboard-content {
+/* Flashcard containers */
+#flashcard-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 5px;
+  gap: 20px; /* Add space between flashcards */
   margin-top: 30px;
 }
 
-.authored-classrooms,
-.joined-classrooms,
-.subjects,
-.lessons {
-  margin-bottom: 50px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 30px;
-  margin-top: 20px;
-}
-
-.item {
-  position: relative;
-  height: 200px;
+.flashcard {
   background-color: #fff;
-  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2);
-  border-radius: 30px;
+  border-radius: 10px;
+  width: 300px;
+  height: 200px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.flashcard:hover {
+  transform: scale(1.05);
+  background-color: var(--sidebar-color);
+}
+
+.flashcard__content {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.item .card-name {
-  background-color: transparent;
-  color: var(--blue-dark);
-  border: none;
-  cursor: pointer;
-  text-align: center;
+  position: relative;
   height: 100%;
-  width: 100%;
-  font-size: 1.2rem;
-  font-weight: 600;
-  padding: 20px;
 }
 
-.item .card-name:hover {
-  color: var(--blue-primary);
-}
-
-.item .card-buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.item .edit-icon {
-  display: inline-block;
-  color: var(--blue-secondary);
-  transition: 0.3s;
-}
-
-.item .edit-icon:hover {
-  color: var(--blue-vibrant);
-  transform: scale(1.03);
-}
-
-.item .delete-icon {
-  display: inline-block;
-  color: var(--blue-secondary);
-  transition: 0.3s;
-}
-
-.item .delete-icon:hover {
-  color: var(
-    --red-dark
-  ); /* Adjust this if you don't want hover to change the background */
-  transform: scale(1.03);
-}
-
-.item button {
-  position: absolute;
-  top: 20px;
-  background-color: transparent;
-  color: var(--blue-dark);
-  border: 0;
-  outline: 0;
-}
-
-.item button.delete-icon {
-  right: 20px;
-}
-
-.item button.edit-icon {
-  right: 50px;
-}
-
-/* Students List Styles */
-.students-joined {
-  margin-top: 20px;
-}
-
-.student-list {
-  list-style: none;
-  padding: 0;
-}
-
-.student-item {
+.flashcard__actions {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
 }
 
-.student-info {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 30px;
-  width: 100%;
-  justify-items: center;
-}
-
-.student-info p {
-  margin: 0;
-  padding: 0 10px;
-}
-
-.kick-btn {
-  background-color: var(--red-normal);
-  color: #fff;
-  border: none;
-  width: 50px;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
+.edit-icon,
+.delete-icon {
+  text-decoration: none;
+  color: var(--dark-color);
+  padding: 0;
   transition: 0.3s;
+  border: none;
+  background-color: transparent;
+  font-size: 1.2rem;
 }
 
-.kick-btn:hover {
-  background-color: var(--red-dark);
-  transform: scale(0.95);
+.edit-icon:hover {
+  color: var(--blue-secondary);
+}
+
+.delete-icon:hover {
+  color: var(--red-dark);
+}
+
+/* Buttons */
+#action-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+.delete-icon {
+  text-decoration: none;
+  color: var(--dark-color);
+  padding: 8px 15px;
+  transition: 0.3s;
+  border: none;
+  background-color: transparent;
+}
+
+.delete-icon:hover {
+  color: var(--red-dark);
+}
+
+.edit-icon:hover {
+  color: var(--red-dark);
+}
+
+#search-container {
+  margin: 20px 0;
+}
+
+#search-bar {
+  padding: 10px;
+  font-size: 16px;
+  width: 300px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
 /* Modal Styles */
@@ -485,4 +427,123 @@ li {
   color: var(--blue-dark);
   text-decoration: none;
   cursor: pointer;
+}
+
+/* Study Pop up */
+.popup-overlay {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup {
+  background: white;
+  border-radius: 8px;
+  padding: 40px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 400px;
+  position: relative;
+  z-index: 1001;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.popup h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.popup .options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.popup .options form {
+    width: 100%;
+}
+
+.popup .options button {
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 130px;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  width: 100%;
+}
+
+.popup .options button:hover {
+  background-color: #ffc107;
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.popup .options .flashcards {
+  grid-column: span; /* Ito palitan kung gusto baguhin size ng identification */
+}
+
+.popup .close-button {
+  background-color: #dc3545;
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.popup .close-button:hover {
+  background-color: #c82333;
+}
+
+.trigger-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.trigger-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.popup .icon {
+  font-size: 2rem;
+  margin-bottom: 5px;
 }

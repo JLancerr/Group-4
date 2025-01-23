@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/all.min.css" />
+    <link rel="stylesheet" href="../static/css/boxicons.min.css" />
+    <link rel="stylesheet" href="../static/css/font.css" />
+    <link rel="stylesheet" href="../static/css/questions.css" />
+    <script src="../static/js/questions.js" defer></script>
+    <title>QuizRev | Questions</title>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar close">
+      <header>
+        <div class="img-text">
+          <span class="image">
+            <img src="../static/images/QLarge.svg" alt="logo" />
+          </span>
+          <div class="text header-text">
+            <h1 class="name">Quizrev</h1>
+          </div>
+        </div>
+        <i class="bx bx-chevron-left toggle"></i>
+      </header>
+      <div class="menubar">
+        <div class="menu">
+          <ul class="links">
+            <li class="navlinks">
+              <a href="#"
+                ><i class="bx bx-home-smile"
+                  ><span class="text nav-text"> Dashboard</span></i
+                ></a
+              >
+            </li>
+            <li class="navlinks">
+              <a href="#"
+                ><i class="bx bx-book-alt"
+                  ><span class="text nav-text"> Libraries</span></i
+                ></a
+              >
+            </li>
+            <li class="navlinks">
+              <a href="#"
+                ><i class="bx bx-purchase-tag"
+                  ><span class="text nav-text"> Plan</span></i
+                ></a
+              >
+            </li>
+            <li class="navlinks">
+              <a href="#"
+                ><i class="bx bxs-face"
+                  ><span class="text nav-text"> Profile</span></i
+                ></a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content - Questions -->
+    <div class="main-content dashboard">
+      <!-- Dashboard Header -->
+      <div class="dashboard-header">
+        <div class="dashboard-left">
+          <h1 class="dashboard-title" id="lesson-title">
+            {{ parent_directory_name }}
+          </h1>
+          <!-- Search Bar -->
+          <div id="search-container">
+            <input
+              type="text"
+              id="search-bar"
+              placeholder="Search question..."
+            />
+          </div>
+        </div>
+        <div class="dashboard-buttons">
+          <button class="primary-btn" id="study-btn">Study</button>
+          <button class="primary-btn" id="add-card-btn">Add Card</button>
+        </div>
+      </div>
+
+      <div id="flashcard-container">
+        <!-- Flashcards will be dynamically populated -->
+        {% for question in contents %}
+        <div class="flashcard">
+          <div class="flashcard__content">
+            <div class="flashcard__front">
+              <p>{{ question[1] }}</p>
+            </div>
+            <div class="flashcard__back">
+              <p>{{ question[2] }}</p>
+            </div>
+            {% if authored == 1 %}
+            <div class="flashcard__actions">
+              <button
+                type="button"
+                class="edit-icon"
+                data-question-id="{{ question[0] }}"
+              >
+                <i class="fa-solid fa-edit"></i>
+              </button>
+              <button
+                type="button"
+                class="delete-icon"
+                data-question-id="{{ question[0] }}"
+              >
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Delete Question Modal -->
+    <div id="delete-question-modal" class="modal">
+      <div class="modal-content modal-centered">
+        <h3>Delete Question</h3>
+        <span class="modal-close" id="close-delete-question">&times;</span>
+        <form
+          id="delete-question-form"
+          action="/delete_directory"
+          method="post"
+        >
+          <input
+            type="hidden"
+            name="parent_id"
+            value="{{ parent_directory_id }}"
+          />
+          <input type="hidden" name="directory_type" value="question" />
+          <input type="hidden" name="directory_id" id="delete-question-id" />
+          <p>Are you sure you want to delete this question?</p>
+          <button type="submit" class="delete-btn">Delete</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Edit Question Modal -->
+    <div id="edit-question-modal" class="modal">
+      <div class="modal-content">
+        <h3>Edit Question</h3>
+        <span class="modal-close" id="close-edit-question">&times;</span>
+        <form id="edit-question-form" action="/edit_directory" method="post">
+          <input type="hidden" name="directory_type" value="question" />
+          <input type="hidden" name="directory_id" id="edit-question-id" />
+          <input
+            type="hidden"
+            name="parent_id"
+            value="{{ parent_directory_id }}"
+          />
+          <input name="new_question" placeholder="Enter New Question" />
+          <input name="new_answer" placeholder="Enter New Answer" />
+          <button type="submit" class="primary-btn">Save</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Study Mode Popup -->
+    <div class="popup-overlay" id="popupOverlay">
+      <div class="popup">
+        <h2>Select Study Mode</h2>
+        <div class="options">
+          <!-- Flashcards -->
+          <form action="/quiz" method="get">
+            <input
+              type="hidden"
+              name="parent_id"
+              value="{{ parent_directory_id }}"
+            />
+            <input type="hidden" name="quiz_type" value="flashcard" />
+            <button type="submit" class="flashcards">
+              <span class="icon">📋</span>
+              <span>Flashcards</span>
+            </button>
+          </form>
+
+          <!-- Multiple Choice -->
+          <form action="/quiz" method="get">
+            <input
+              type="hidden"
+              name="parent_id"
+              value="{{ parent_directory_id }}"
+            />
+            <input type="hidden" name="quiz_type" value="multiple_choice" />
+            <button type="submit">
+              <span class="icon">✅</span>
+              <span>Multiple Choice</span>
+            </button>
+          </form>
+
+          <!-- Identification -->
+          <form action="/quiz" method="get">
+            <input
+              type="hidden"
+              name="parent_id"
+              value="{{ parent_directory_id }}"
+            />
+            <input type="hidden" name="quiz_type" value="identification" />
+            <button type="submit">
+              <span class="icon">✏️</span>
+              <span>Identification</span>
+            </button>
+          </form>
+        </div>
+        <button class="close-button" id="closePopup">Close</button>
+      </div>
+    </div>
+  </body>
+</html>
