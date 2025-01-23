@@ -2,11 +2,13 @@
 :root {
   --blue-primary: #082a78;
   --blue-secondary: #05205f;
-  --blue-dark: #03143b;
+  --blue-dark: #061b4e;
   --blue-light: #f1f8ff;
   --blue-vibrant: #2f5bdf;
   --gray-normal: #d7d7d7;
   --gray-transparent: #e5e5e5c8;
+  --gray-dark: #666;
+  --gray-black: #333;
   --green-success: #5cb85c;
   --red-error: #d9534f;
 }
@@ -21,9 +23,27 @@
 
 body {
   background: #fff;
-  color: var(--blue-dark);
+  color: var(--gray-black);
   font-size: 15px;
   line-height: 1.5;
+}
+
+.index-body, .about-body {
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
 }
 
 h2 {
@@ -145,6 +165,7 @@ li {
 footer {
   height: 40vh;
   background-color: var(--blue-light);
+  color: var(--blue-dark);
   padding: 0 3rem;
 }
 
@@ -296,6 +317,7 @@ footer .container {
 .showcase h1 {
   max-width: 700px;
   font-size: 3rem;
+  color: var(--blue-dark);
 }
 
 .showcase p {
@@ -347,10 +369,11 @@ footer .container {
   text-align: left;
 }
 
-.quiz-text h1,
-.method-text h1,
-.share-text h1 {
-  font-size: 2rem;
+.quiz-text h2,
+.method-text h2,
+.share-text h2 {
+  font-size: 1.8rem;
+  color: var(--blue-dark);
 }
 
 .method-text {
@@ -371,6 +394,7 @@ footer .container {
 .price-overview {
   height: 40vh;
   background-color: var(--blue-light);
+  color: var(--blue-dark);
   margin-top: 50px;
   border-bottom: 1px solid var(--gray-transparent);
 }
@@ -392,6 +416,7 @@ footer .container {
 }
 
 .price-overview-text p {
+  margin-top: 5px;
   font-size: 1.2rem;
 }
 

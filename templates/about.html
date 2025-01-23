@@ -9,7 +9,7 @@
     <script src="https://unpkg.com/scrollreveal"></script>
     <title>QuizRev | About</title>
 </head>
-<body>
+<body class="about-body">
     <!-- Navbar -->
     <div class="navbar">
         <nav class="container">
@@ -25,13 +25,13 @@
             <ul class="menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="#">Pricing</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
             </ul>
 
             <!-- Button -->
             <div class="buttons">
-                <a href="#" class="secondary-btn">Sign In</a>
-                <a href="#" class="primary-btn">Get Started</a>
+                <a href="login.html" class="secondary-btn">Sign In</a>
+                <a href="signup.html" class="primary-btn">Get Started</a>
             </div>
         </nav>
     </div>
@@ -48,7 +48,7 @@
                 <div class="about-description">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit repellat, eligendi excepturi enim dicta assumenda, ducimus temporibus iste fugit laudantium nisi vitae dolores adipisci, asperiores sit necessitatibus quidem eveniet! Officiis assumenda debitis sit consectetur obcaecati dolor tenetur necessitatibus incidunt error qui harum dolorum atque excepturi deserunt, unde nemo quas aut. Velit, nostrum? Eligendi asperiores, suscipit, tempora magnam dolores nisi, hic fuga voluptates totam repellendus alias quas assumenda provident consectetur ea.</p>
                     <div class="contact-button">
-                        <a href="#"><button class="primary-btn" id="contactUs">Contact Us</button></a>
+                        <a href="#contact"><button class="primary-btn">Contact Us</button></a>
                     </div>
                 </div>
             </div>
@@ -135,7 +135,7 @@
                     <li><h3>General</h3></li>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About</a></li>
-                    <li><a href="#">Pricing</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
                 </ul>
             </div>
             <div class="footer-resources">
@@ -168,8 +168,8 @@
                 duration: 2500,
                 delay: 400
             });
-            ScrollReveal().reveal('.about-content', { delay: 200 });
-            ScrollReveal().reveal('.team-members', { delay: 200 });
+            ScrollReveal().reveal('.about-content', { delay: 100 });
+            ScrollReveal().reveal('.team-members', { delay: 100 });
             ScrollReveal().reveal('.contact-content', { delay: 50 });
         }
     
@@ -188,12 +188,6 @@
             // Run the animation immediately if the user has visited before
             runAnimation();
         }
-    
-        // Smooth scroll effect for Contact Us button
-        document.querySelector('#contactUs').addEventListener('click', function(e) {
-            e.preventDefault();
-            document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' });
-        });
     </script>
 </body>
 </html>

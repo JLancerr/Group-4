@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/font.css">
+    <link rel="stylesheet" href="../static/css/pricing.css" />
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+    />
+    <title>QuizRev | Pricing</title>
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <div class="navbar">
+      <nav class="container">
+        <!-- Logo -->
+        <a href="landing.html">
+          <div class="logo">
+            <img src="../static/images/QLarge.svg" alt="Logo" />
+            <h1>QuizRev</h1>
+          </div>
+        </a>
+
+        <!-- Menu Item -->
+        <ul class="menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+        </ul>
+
+        <!-- Button -->
+        <div class="buttons">
+          <a href="#" class="secondary-btn">Sign In</a>
+          <a href="#" class="primary-btn">Get Started</a>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Pricing -->
+    <div class="middle-container">
+      <!-- <br />
+      <br /> -->
+
+      <div class="header">
+        <h1 class="header-title">Choose Your Pricing Plan</h1>
+        <p class="header-subtitle">
+          Unlock the full potential of your studying with a subscription to
+          <strong>QuizRev</strong>. Whether you’re a student, professional, or
+          lifelong learner, we have a plan that fits your needs.
+        </p>
+        <a href="#" class="try-btn">Try It For Free Now</a>
+      </div>
+
+
+      <div class="toggle-container">
+        <div class="toggle-option">
+          <div id="monthly" class="toggle-button active">Monthly</div>
+          <div class="toggle" id="toggle"></div>
+          <div id="yearly" class="toggle-button">Yearly</div>
+          <div class="save-badge">Save up to 16%</div>
+        </div>
+      </div>
+
+      <div class="plans">
+        <div class="plan">
+          <br />
+          <h2>Guest</h2>
+          <p class="price" id="starter-price"></p>
+          <p class="subtext">No transaction fees</p>
+          <br />
+
+          <hr />
+
+          <ul class="plan-features">
+            <li><i class="fas fa-check"></i> Flashcards</li>
+            <li><i class="fas fa-check"></i> Share Class</li>
+          </ul>
+          <button>Start for free</button>
+        </div>
+
+        <div class="plan popular">
+          <h2>Pro</h2>
+          <p class="price" id="pro-price">₱149<span>/month</span></p>
+          <p class="subtext">No transaction fees</p>
+
+          <hr />
+
+          <ul class="plan-features">
+            <li><i class="fas fa-check"></i> Unlimited Classroom</li>
+            <li><i class="fas fa-check"></i> Unlimited Students</li>
+            <li><i class="fas fa-check"></i> Unlimited Subjects</li>
+            <li><i class="fas fa-check"></i> Unlimited Lessons</li>
+            <li><i class="fas fa-check"></i> Flashcards</li>
+            <li><i class="fas fa-check"></i> Identification</li>
+            <li><i class="fas fa-check"></i> Multiple Choice</li>
+            <li><i class="fas fa-check"></i> Share Class</li>
+          </ul>
+          <button>Start for free</button>
+        </div>
+
+        <div class="plan">
+          <br />
+          <h2>Free</h2>
+          <p class="price" id="pro-price"></p>
+          <p class="subtext">No transaction fees</p>
+          <br />
+
+          <hr />
+
+          <ul class="plan-features">
+            <li><i class="fas fa-check"></i> 3 Limited Classrooms</li>
+            <li><i class="fas fa-check"></i> 10 Limited Students</li>
+            <li><i class="fas fa-check"></i> 5 Limited Subjects</li>
+            <li><i class="fas fa-check"></i> 7 Limited Lessons</li>
+            <li><i class="fas fa-check"></i> Share class</li>
+            <li><i class="fas fa-check"></i> 3 Days Duration</li>
+          </ul>
+          <button>Start for free</button>
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+    <!-- DISCOVER FEATURES -->
+    <h1 class="top-title">Discover the Features</h1>
+
+    <div class="features">
+      <div class="feature">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path
+            d="M12 2L2 7v6c0 5.52 3.92 10.74 10 14 6.08-3.26 10-8.48 10-14V7l-10-5zm0 15.75c-.55 0-1-.45-1-1V8.25c0-.55.45-1 1-1s1 .45 1 1v8.5c0 .55-.45 1-1 1zm0 2.25c-.83 0-1.5-.67-1.5-1.5S11.17 17 12 17s1.5.67 1.5 1.5S12.83 20 12 20z"
+          />
+        </svg>
+        <h2>Affordable Pricing</h2>
+        <p>
+          Our platform offers competitive pricing tailored to students and
+          educators alike, ensuring accessibility for everyone.
+        </p>
+      </div>
+
+      <div class="feature">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path
+            d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 15c-1.1 0-2-.9-2-2h4c0 1.1-.9 2-2 2zm4.39-3H6.61c-.47-.9-.61-1.9-.61-3 0-3.07 2.61-5.5 6-5.5s6 2.43 6 5.5c0 1.1-.14 2.1-.61 3z"
+          />
+        </svg>
+        <h2>Live Learning Tools</h2>
+        <p>
+          Access live virtual classrooms, shared notes, and collaborative
+          features to enhance your learning experience.
+        </p>
+      </div>
+
+      <div class="feature">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path
+            d="M13 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm3 10H8v-2h8v2z"
+          />
+        </svg>
+        <h2>Free Courses</h2>
+        <p>
+          Explore free educational content to gain new skills and knowledge
+          without any cost or commitment.
+        </p>
+      </div>
+
+      <div class="feature">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path
+            d="M17 9.5c0-1.1-.9-2-2-2h-4V6.75c0-.41-.34-.75-.75-.75s-.75.34-.75.75V7.5H8c-1.1 0-2 .9-2 2v5.5c0 1.1.9 2 2 2h4v.75c0 .41.34.75.75.75s.75-.34.75-.75V17h3c1.1 0 2-.9 2-2V9.5zm-5 4.5h-4v-2h4v2zm4-2h-2v-2h2v2z"
+          />
+        </svg>
+        <h2>No Contracts</h2>
+        <p>
+          Start learning or teaching without any long-term commitments. Flexible
+          options for all users.
+        </p>
+      </div>
+
+      <div class="feature">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path
+            d="M11 2v6h2V2h-2zm0 14v6h2v-6h-2zM3.515 5.929l4.242 4.243 1.414-1.414-4.242-4.242-1.414 1.413zm11.314 11.313l4.243 4.242 1.414-1.414-4.242-4.242-1.414 1.414zm0-11.314l1.414 1.414 4.242-4.242-1.414-1.414-4.242 4.242zM5.929 18.071l1.414 1.414 4.242-4.243-1.414-1.414-4.242 4.243z"
+          />
+        </svg>
+        <h2>Personalized Learning Experience</h2>
+        <p>
+          Our platform tailors study plans to your individual goals and learning
+          style. Whether you’re preparing for exams or building new skills, we
+          adapt to fit your needs.
+        </p>
+      </div>
+
+      <div class="feature">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path
+            d="M20 6h-8.69L9 4H4v16h16V6zm-2 12H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V8h12v2z"
+          />
+        </svg>
+        <h2>Interactive Tools for Better Understanding</h2>
+        <p>
+          Engage with interactive quizzes, flashcards, and practice tests to
+          reinforce your knowledge and track your progress in real-time.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-section">
+      <h1 class="faq-title">Frequently Asked Questions</h1>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h3>Do I Retain Ownership of My Content?</h3>
+          <p>
+            Of course! Your content is 100% yours and will remain so, as well as
+            all your student data. We will not contact your students or market
+            our products to them.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Can I Create a Free Online Course?</h3>
+          <p>
+            Absolutely! Free courses make for ideal lead magnets. You can offer,
+            for example, a beginners course for free, and then at the end you
+            can talk about your other premium courses.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Can I Change My Plan?</h3>
+          <p>
+            Yes, you can upgrade or downgrade your plan at any time, and cancel
+            anytime as well. There are no signed contracts or long-term
+            commitments.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What happens if I cancel my subscription?</h3>
+          <p>
+            Upon cancellation, premium features remain accessible until the
+            current billing period ends. Afterward, your account reverts to the
+            free tier.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Does the subscription work across devices?</h3>
+          <p>
+            Yes, subscriptions generally sync across mobile, tablet, and desktop
+            versions of the platform.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What happens if I forget to renew my subscription?</h3>
+          <p>
+            If you don’t renew, your account typically reverts to the free tier,
+            but your data remains intact.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CURVE DIV -->
+    <div class="section">
+      <h1>Whatever work you do, you can do it in QuizRev</h1>
+      <!-- Floating design elements -->
+      <div class="circle small"></div>
+      <div class="circle medium"></div>
+      <div class="circle large"></div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="footer-logo">
+          <h1>Quizrev</h1>
+          <p></p>
+          <p>Copyright &copy; 2025</p>
+        </div>
+
+        <div class="footer-general">
+          <ul>
+            <li><h3>General</h3></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-resources">
+          <ul>
+            <li><h3>Resources</h3></li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+            <li><a href="about.html#contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-social">
+          <p>Follow us on:</p>
+          <div class="footer-icons">
+            <a href="#"><i class="fab fa-github fa-2x"></i></a>
+            <a href="#"><i class="fab fa-facebook fa-2x"></i></a>
+            <a href="#"><i class="fab fa-instagram fa-2x"></i></a>
+            <a href="#"><i class="fa-brands fa-x-twitter fa-2x"></i></a>
+            <a href="#"><i class="fa-brands fa-discord fa-2x"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const toggle = document.getElementById("toggle");
+      const monthly = document.getElementById("monthly");
+      const yearly = document.getElementById("yearly");
+
+      const prices = {
+        monthly: {
+          pro: "₱149",
+        },
+        yearly: {
+          pro: "₱1499",
+        },
+      };
+
+      toggle.addEventListener("click", () => {
+        toggle.classList.toggle("active");
+        monthly.classList.toggle("active");
+        yearly.classList.toggle("active");
+        updatePrices(
+          toggle.classList.contains("active") ? "yearly" : "monthly"
+        );
+      });
+
+      function updatePrices(type) {
+        document.getElementById("pro-price").innerHTML =
+          prices[type].pro +
+          "<span>/" +
+          (type === "monthly" ? "month" : "year") +
+          "</span>";
+      }
+
+      //Scroll-Triggered Animation
+      const faqItems = document.querySelectorAll(".faq-item");
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("show");
+            } else {
+              entry.target.classList.remove("show");
+            }
+          });
+        },
+        {
+          threshold: 0.2, // Trigger animation when 20% of the element is visible
+        }
+      );
+
+      faqItems.forEach((item) => observer.observe(item));
+    </script>
+  </body>
+</html>

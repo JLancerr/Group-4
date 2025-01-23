@@ -16,7 +16,6 @@
       referrerpolicy="no-referrer"
     />
     <script src="https://unpkg.com/scrollreveal"></script>
-    <title>QuizRev | Home</title>
     <script>
       function display_error() {
         current_url = new URL(window.location.href);
@@ -25,9 +24,10 @@
           window.alert(url_params.get("error"));
         }
       }
-    </script>
+      </script>
+    <title>QuizRev | Home</title>
   </head>
-  <body>
+  <body class="index-body">
     <!-- Navbar -->
     <div class="navbar">
       <nav class="container">
@@ -43,13 +43,13 @@
         <ul class="menu">
           <li><a href="index.html">Home</a></li>
           <li><a href="about.html">About</a></li>
-          <li><a href="#">Pricing</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
         </ul>
 
         <!-- Button -->
         <div class="buttons">
-          <a href="#" class="secondary-btn">Sign In</a>
-          <a href="#" class="primary-btn">Get Started</a>
+          <a href="login.html" class="secondary-btn">Sign In</a>
+          <a href="signup.html" class="primary-btn">Get Started</a>
         </div>
       </nav>
     </div>
@@ -136,9 +136,9 @@
         <div class="footer-general">
           <ul>
             <li><h3>General</h3></li>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Pricing</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
           </ul>
         </div>
         <div class="footer-resources">
@@ -146,7 +146,7 @@
             <li><h3>Resources</h3></li>
             <li><a href="#">Privacy</a></li>
             <li><a href="#">Terms & Conditions</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="about.html#contact">Contact</a></li>
           </ul>
         </div>
         <div class="footer-social">
@@ -180,9 +180,9 @@
           duration: 2500,
           delay: 400
         });
-        ScrollReveal().reveal('.feature-1', { origin: 'right', delay: 500 });
-        ScrollReveal().reveal('.feature-2', { origin: 'left', delay: 600 });
-        ScrollReveal().reveal('.feature-3', { origin: 'right', delay: 700 });
+        ScrollReveal().reveal('.feature-1', { origin: 'right', delay: 200 });
+        ScrollReveal().reveal('.feature-2', { origin: 'left', delay: 200 });
+        ScrollReveal().reveal('.feature-3', { origin: 'right', delay: 200 });
       }
 
       // Check if the user has visited the page before
