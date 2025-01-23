@@ -479,14 +479,13 @@ li {
   width: 100%;
 }
 
-.popup .options button {
+.popup .options .styled-input input[type="submit"] {
   padding: 10px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   background-color: var(--blue-primary);
   color: white;
-  font-size: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -536,7 +535,3 @@ li {
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
-.popup .icon {
-  font-size: 2rem;
-  margin-bottom: 5px;
-}
