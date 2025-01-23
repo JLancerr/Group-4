@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session, request, redirect, url_for
+from flask import Flask, render_template, session, request, redirect, url_for, send_from_directory
 from user import *
 from directory import *
 import sqlite3
@@ -11,6 +11,10 @@ app.secret_key = "HARRY"
 @app.route('/')
 def landing():
     return render_template('index.html')
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory('static/images', 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 @app.route('/<page_name>')
 def render_page(page_name):
