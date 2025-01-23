@@ -186,10 +186,8 @@ class User:
         self.__sqlite_connection.commit()
 
     def delete_self(self):
-        query = "DELETE FROM Users WHERE user_id = ?"
-        self.__cursor(query, (self.__user_id,))
         args_dict = {
-            'directory_id' : {self.__user_id},
+            'directory_id' : self.__user_id,
             'directory_type' : "user"
         }
         Directory(args_dict).delete_directory()

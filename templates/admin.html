@@ -22,7 +22,7 @@
     <div class="navbar">
       <nav class="container">
         <!-- Logo -->
-        <a href="landing.html"
+        <a href="index"
           ><div class="logo">
             <img src="../static/images/QLarge.svg" alt="Logo" />
             <h1>Quizrev</h1>
@@ -37,9 +37,7 @@
 
         <!-- Button -->
         <div class="buttons">
-           
-            <a href="#" class="primary-btn">Logout</a>
-           
+            <a href="index" class="primary-btn">Logout</a>
         </div>
       </nav>
       
@@ -288,7 +286,9 @@
 
         function deleteUser(id) {
             let form = document.createElement('form')
-            let input = form.createElement('input')
+            let input = document.createElement('input')
+            document.body.appendChild(form)
+            form.appendChild(input)
             form.action = "/delete_user"
             form.method = 'post'
             input.name = "user_id"

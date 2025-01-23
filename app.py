@@ -28,6 +28,11 @@ def attempt_login():
     if login_outcome != "success":
         return render_template('login.html', error=login_outcome)
     else:
+        # Login as admin if username is admin
+        username = user.get_username()
+        if username == 'admin':
+            return redirect(url_for('admin'))
+        
         # Put all user attributes to the session
         user_attributes = user.get_all_attributes()
         for key in user_attributes:
@@ -225,7 +230,7 @@ def edit_profile():
     
 # Required user_id
 @app.route('/delete_user', methods=['POST'])
-def edit_profile():
+def delete_profile():
     user = User(request.form)
     user.delete_self()
     return redirect(url_for('admin'))
