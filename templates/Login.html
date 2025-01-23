@@ -6,9 +6,17 @@
     <title>QuizRev | Log In</title>
     <link rel="stylesheet" href="../static/css/font.css" />
     <link rel="stylesheet" href="../static/css/styles.css" />
+    <script>
+      function display_error() {
+        current_url = new URL(window.location.href);
+        url_params = new URLSearchParams(current_url.search);
+        if (url_params.has("error")) {
+          window.alert(url_params.get("error"));
+        }
+      }
+    </script>
   </head>
   <body>
-    {{ error }}
     <!-- Log In -->
     <section class="sign-page">
       <div class="form-container">

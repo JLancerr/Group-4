@@ -20,20 +20,36 @@ def favicon():
 def render_page(page_name):
     return render_template(f'{page_name}.html')
 
+@app.route('/login')
+def login():
+    error = request.args.get('error')
+    if error == None:
+        return render_template('login.html', error=error)
+    return render_template('login.html')
+
 @app.route('/attempt_login', methods=['POST'])
 def attempt_login():
     user = User(request.form)
     login_outcome = user.login()
     
     if login_outcome != "success":
-        return render_template('login.html', error=login_outcome)
+        return redirect(url_for('login', error=login_outcome))
     else:
+        # Login as admin if username is admin
+        if user.get_username() == 'admin':
+            return redirect(url_for('admin'))
+        
         # Put all user attributes to the session
-        user_attributes = user.get_all_attributes()
-        for key in user_attributes:
-            session[f'{key}'] = user_attributes[f'{key}']
+        session.update(user.get_all_attributes())
 
         return redirect(url_for('home'))
+
+@app.route('/signup')
+def signup():
+    error = request.args.get('error')
+    if error == None:
+        return render_template('signup.html', error=error)
+    return render_template('signup.html')
 
 @app.route('/attempt_signup', methods=['POST'])
 def attempt_signup():
@@ -42,15 +58,17 @@ def attempt_signup():
 
     if signup_outcome != "success":
         # Direct user back to the login page
-        return render_template('signup.html', error=signup_outcome)
+        return redirect(url_for('signup', error=signup_outcome))
     else:
         # Put all user attributes to the session
-        user_attributes = user.get_all_attributes()
-
-        for key in user_attributes:
-            session[f'{key}'] = user_attributes[f'{key}']
+        session.update(user.get_all_attributes())
 
         return redirect(url_for('home'))
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
@@ -58,8 +76,14 @@ def home():
 
     # Retrieve all classrooms the user is joined in 
     classrooms_info = user.get_classrooms_info()
+    
     # Display home page
     return render_template('home.html', user_data=user.get_all_attributes(), classrooms_info=classrooms_info)
+
+@app.route('/profile')
+def profile():
+    user = User(session)
+    return render_template('profile.html', user=user.get_all_attributes())
 
 # Requires directory_type, directory_id
 # Note that any other routes that tries to redirect to /display will need to provide a directory_type
@@ -67,7 +91,7 @@ def home():
 def display():
     directory_type = request.args.get('directory_type')
     directory_id = request.args.get('directory_id')
-
+    print("Display: ", directory_id)
     args_dict = {
         'directory_type' : directory_type,
         'directory_id' : directory_id
@@ -82,7 +106,6 @@ def display():
     contents = dir.get_directory_contents()
 
     # Get all necessary data for the page to utilize
-    print(session)
     if session:
         user = User(session)
         user_data = user.get_all_attributes()
@@ -110,7 +133,7 @@ def quiz():
     contents = lesson.get_directory_contents()
     if quiz_type == 'identification':
         pass
-    return render_template(f'{quiz_type}.html', contents=contents)
+    return render_template(f'learningview/{quiz_type}.html', contents=contents)
 
 @app.route('/add_directory', methods=["POST"])
 def add_directory():
@@ -127,24 +150,26 @@ def add_directory():
     elif directory_type == "question":
         # Requires directory_type, question, answer, parent_id
         dir = Question(request.form)
+        dir.add_dir_to_database()
     else:
         # Requires directory_id, directory_type, and directory_name, parent_id
         dir = Directory(request.form)
-    dir.add_dir_to_database()
-
-    previous_dir_type = parent_of[f'{directory_type}']
-    previous_dir_id = request.form['parent_id']
+        outcome = dir.add_dir_to_database(session['membership_type'])
+        previous_dir_type = parent_of[f'{directory_type}']
+        previous_dir_id = request.form['parent_id']
+        if outcome != 'success':
+            return redirect(url_for('display', directory_id=previous_dir_id, directory_type=previous_dir_type, error=outcome))
+        
     return redirect(url_for('display', directory_id=previous_dir_id, directory_type=previous_dir_type))
 
 # Requires directory_id, directory_type
 @app.route('/delete_directory', methods=["POST"])
 def delete_directory():
     directory_type = request.form['directory_type']
-    directory_id = request.form['directory_id']
 
     if directory_type == "classroom":
-        user = User(session)
-        user.delete_classroom(directory_id)
+        classroom = Classroom(request.form)
+        classroom.delete_directory()
         return redirect(url_for('home'))
     else:
         dir = Directory(request.form)
@@ -169,11 +194,13 @@ def edit_directory():
         return redirect(url_for('home'))
     else:
         # Requires directory_id, directory_type, and new_directory_name
+        print(request.form)
         dir = Directory(request.form)
         dir.edit_directory(request.form['new_directory_name'])
 
     previous_dir_type = parent_of[f'{directory_type}']
     previous_dir_id = request.form['parent_id']
+    print("previous_dir_id: ", previous_dir_id)
     return redirect(url_for('display', directory_id=previous_dir_id, directory_type=previous_dir_type))
 
 # Requires user_id_to_kick, directory_id
@@ -211,14 +238,24 @@ def join_classroom():
     
 @app.route('/edit_profile', methods=['POST'])
 def edit_profile():
-    new_value = request.form['new_value']
-    user = User(session)
-    outcome = user.upgrade_plan(new_value)
-    if outcome != "success":
-        return redirect(url_for('home', error=outcome))
-    else:
-        return redirect(url_for('home'))
-    
+    user = User(request.form)
+    previous_page = None
+    for name in request.form:
+        if name == 'previous_page':
+            previous_page = request.form[name]
+            continue
+        outcome = user.edit_profile(name, request.form[name])
+        if outcome != "success":
+            return redirect(url_for(f'{previous_page}', error=outcome))
+    return redirect(url_for(f'{previous_page}'))
+
+# Required user_id
+@app.route('/delete_user', methods=['POST'])
+def delete_user():
+    user = User(request.form)
+    user.delete_self()
+    return redirect(url_for('admin'))
+
 @app.route('/admin', methods=['GET'])
 def admin():
     sqlite_connection = sqlite3.connect('app.db') 
@@ -241,7 +278,8 @@ def upgrade_plan():
     duration_option = request.form['duration_option']
     user = User(session)
     user.upgrade_plan(duration_option)
-
+    session['membership_type'] = 'pro'
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run()

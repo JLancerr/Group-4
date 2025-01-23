@@ -10,6 +10,11 @@ parent_of = {  "classroom" : "user",
                "lesson" : "subject",
                "question" : "lesson"}
 
+limit = {  "classroom" : 3,
+            "subject" : 5,
+            "lesson" : 7,
+            "student" : 10}
+
 class Directory:
     def __init__(self, args_dict):
         self._directory_name = args_dict.get('directory_name')
@@ -55,11 +60,17 @@ class Directory:
 
     # Works with classroom, subject, lesson directory types
     # Requires parent_id, directory_type, and directory_name
-    def add_dir_to_database(self):
+    def add_dir_to_database(self, membership_type):
         
         table_name = f"{self._directory_type}s".capitalize()
         name_column_name = f"{self._directory_type}_name"
         parent_id_column_name = f"{self._parent_type}_parent_id"
+
+        if membership_type != 'pro':
+            query2 = f'SELECT COUNT(*) FROM {table_name} WHERE {parent_id_column_name} = ?'
+            dir_count = self._cursor.execute(query2, (self._parent_id,)).fetchone()[0]
+            if dir_count >= limit[f'{self._directory_type}']:
+                return f"{self._directory_type}-limit-{limit[f'{self._directory_type}']}"
 
         query = f"INSERT INTO {table_name} ({name_column_name}, {parent_id_column_name}) VALUES (?, ?)"
         self._cursor.execute(query, (self._directory_name, self._parent_id))
@@ -71,7 +82,7 @@ class Directory:
     # Needs directory_id and directory_type to delete
     def delete_directory(self): 
         children_ids = self._get_children_directory_ids()
-
+        print('CLASS ID:', self._directory_id)
         current_dir_table_name = f"{self._directory_type}s".capitalize()
         current_dir_id_column_name = f"{self._directory_type}_id"
         query = f"DELETE FROM {current_dir_table_name} WHERE {current_dir_id_column_name} = ?"
@@ -134,7 +145,6 @@ class Directory:
             dir_table_name = f"{current_dir_type}s".capitalize()
             id_column_name = f"{current_dir_type}_id"
             query1 = f"SELECT {parent_id_column_name} FROM {dir_table_name} WHERE {id_column_name} = ?"
-            print(query1)
             parent_id = self._cursor.execute(query1, (current_id,)).fetchone()[0]
             if parent_id_column_name != target:
                 current_dir_type = current_parent_type
@@ -168,6 +178,10 @@ class Directory:
 
 # This Classroom variant of Directory exist cuz classroom needs to access the Users_Classrooms_Relationship to get participators of the classoom
 class Classroom(Directory):
+    def __init__(self, args_dict):
+        super().__init__(args_dict)
+        self._directory_type = 'classroom'
+
     def get_directory_contents(self):
         subjects_names_and_ids = super().get_directory_contents()
         names_of_users_joined = []
@@ -188,8 +202,17 @@ class Classroom(Directory):
 
         return [ subjects_names_and_ids, names_of_users_joined]
 
+    def delete_directory(self):
+        query2 = "DELETE FROM Users_Classrooms_Relationship WHERE classroom_id = ?"
+        self._cursor.execute(query2, (self._directory_id,))
+        super().delete_directory()
+
 # This Lesson variant of Directory exist cuz the child of Lessons is Questions which has an extra column, which is answer, that queries do not account for in the Parent class
 class Lesson(Directory):
+    def __init__(self, args_dict):
+        super().__init__(args_dict)
+        self._directory_type = 'lesson'
+
     def get_directory_contents(self):
         questions_info = []
         query1 = "SELECT question_id, question, answer FROM Questions WHERE lesson_parent_id = ?"
@@ -197,15 +220,13 @@ class Lesson(Directory):
         for row in questions_list:
             questions_info.append([ row[0], row[1], row[2] ])
         return questions_info
-    
-    def multiple_choice(self):
-        pass
 
 class Question(Directory):
     def __init__(self, args_dict):
         self._question = args_dict.get('question')
         self._answer = args_dict.get('answer')
         super().__init__(args_dict)
+        self._directory_type = 'question'
 
     # Requires question, answer, parent_id
     def add_dir_to_database(self):

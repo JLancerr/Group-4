@@ -14,6 +14,8 @@ class User:
         self.__last_name = args_dict.get('last_name')
         self.__username = args_dict.get('username')
         self.__password = args_dict.get('password')
+        self.__membership_type = args_dict.get('membership_type')
+        self.__expiration_date = args_dict.get('membership_type')
 
         if args_dict.get('connection') == None:
             self.__sqlite_connection = sqlite3.connect('app.db') 
@@ -45,8 +47,8 @@ class User:
             return "username-not-found"
 
         # If username exists but password does not match the user's given password
-        # data[password][first_name][last_name][user_id]
-        data = self.__cursor.execute('SELECT password, first_name, last_name, user_id FROM Users WHERE username = ?;', (username[0][0],)).fetchall()
+        # data[password][first_name][last_name][user_id][membership_type][expiration_date]
+        data = self.__cursor.execute('SELECT password, first_name, last_name, user_id, membership_type, expiration_date FROM Users WHERE username = ?;', (username[0][0],)).fetchall()
         if self.__password != data[0][0]:
             return "password-incorrect"
         
@@ -54,6 +56,8 @@ class User:
         self.__first_name = data[0][1]
         self.__last_name = data[0][2]
         self.__user_id = data[0][3]
+        self.__membership_type = data[0][4]
+        self.__expiration_date = data[0][5]
         return "success"
 
     # Gets info of user's joined and authored classrooms
@@ -75,12 +79,10 @@ class User:
         query3 = "SELECT classroom_name FROM Classrooms WHERE classroom_id = ? AND user_parent_id != ?"
         classroom_ids = self.__cursor.execute(query2, (self.__user_id,)).fetchall()
         for id in classroom_ids:
-            print(id[0])
             joined_classroom_name = self.__cursor.execute(query3, (id[0], self.__user_id)).fetchone()
-            print(joined_classroom_name)
             if joined_classroom_name != None:
                 joined_classroom_names_and_ids[id[0]] = joined_classroom_name[0]
-        print([authored_classroom_names_and_ids, joined_classroom_names_and_ids])
+
         return [authored_classroom_names_and_ids, joined_classroom_names_and_ids]
 
     def add_classroom(self, classroom_name):
@@ -89,6 +91,13 @@ class User:
         duplicate_classrooms = self.__cursor.execute(query, (classroom_name, self.__user_id)).fetchall()
         if len(duplicate_classrooms) > 0:
             return "no-duplicated-classrooms"
+
+        # Disallow more than 3 classrooms if user is not member
+        if self.__membership_type != 'pro':
+            query4 = "SELECT COUNT(classroom_id) FROM Classrooms WHERE user_parent_id = ?"
+            classroom_count = self.__cursor.execute(query4, (self.__user_id,)).fetchone()[0]
+            if classroom_count >= limit['classroom']:
+                return "reached-classroom-limit"
 
         query1 = "INSERT INTO Classrooms (classroom_name, user_parent_id) VALUES (?, ?)"
         self.__cursor.execute(query1, (classroom_name, self.__user_id))
@@ -115,6 +124,16 @@ class User:
         if len(duplicates) > 0:
             return "already-joined-classroom"
 
+        query4 = "SELECT membership_type FROM Users WHERE user_id = (SELECT user_parent_id FROM Classrooms WHERE classroom_id = ? LIMIT 1)"
+        author_membership_type = self.__cursor.execute(query4, (classroom_id,)).fetchone()[0]
+        print(author_membership_type)
+        if author_membership_type != 'pro':
+            query3 = "SELECT COUNT(user_id) FROM Users_Classrooms_Relationship WHERE classroom_id = ?"
+            user_joined_count = self.__cursor.execute(query3, (classroom_id,)).fetchone()[0]
+            print(user_joined_count)
+            if user_joined_count >= limit['student']:
+                return "classroom-full"
+
         query2 = "INSERT INTO Users_Classrooms_Relationship (user_id, classroom_id) VALUES (?, ?)"
         self.__cursor.execute(query2, (self.__user_id, classroom_id))
         self.__sqlite_connection.commit()
@@ -126,25 +145,12 @@ class User:
         user_parent_id = self.__cursor.execute(query1, (classroom_id,)).fetchone()
 
         if user_parent_id[0] == self.__user_id:
-            self.delete_classroom(classroom_id)
+            Classroom({'directory_id' : classroom_id}).delete_directory()
 
         query2 = "DELETE FROM Users_Classrooms_Relationship WHERE user_id = ? AND classroom_id = ?"
         self.__cursor.execute(query2, (self.__user_id, classroom_id))
         self.__sqlite_connection.commit()
         return "success"
-
-    def delete_classroom(self, classroom_id):
-        query2 = "DELETE FROM Users_Classrooms_Relationship WHERE classroom_id = ?"
-        self.__cursor.execute(query2, (classroom_id,))
-
-        classroom_info = {
-            'directory_type' : "classroom",
-            'directory_id' : classroom_id,
-            'connection' : self.__sqlite_connection,
-            'cursor' : self.__cursor
-        }
-        classroom = Directory(classroom_info)
-        return classroom.delete_directory()
 
     def kick_user(self, user_id_to_kick, classroom_id):
         query = "DELETE FROM Users_Classrooms_Relationship WHERE user_id = ? AND classroom_id = ?"
@@ -206,7 +212,13 @@ class User:
     
     def get_user_id(self):
         return self.__user_id
-
+    
+    def get_membership_type(self):
+        return self.__membership_type
+    
+    def get_expiration_date(self):
+        return self.__expiration_date
+    
     # Returns all attributes in dictionary form
     def get_all_attributes(self):
         return {
@@ -214,5 +226,7 @@ class User:
             'first_name': self.__first_name, 
             'last_name':  self.__last_name, 
             'username':  self.__username, 
-            'password':  self.__password}
+            'password':  self.__password, 
+            'membership_type':  self.__membership_type,
+            'expiration_date':  self.__expiration_date}
 
