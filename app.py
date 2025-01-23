@@ -133,7 +133,7 @@ def quiz():
     contents = lesson.get_directory_contents()
     if quiz_type == 'identification':
         pass
-    return render_template(f'learningview/{quiz_type}.html', contents=contents)
+    return render_template('{quiz_type}.html', contents=contents)
 
 @app.route('/add_directory', methods=["POST"])
 def add_directory():
@@ -248,6 +248,7 @@ def edit_profile():
         outcome = user.edit_profile(name, request.form[name])
         if outcome != "success":
             return redirect(url_for(f'{previous_page}', error=outcome))
+    
     return redirect(url_for(f'{previous_page}'))
 
 # Required user_id
