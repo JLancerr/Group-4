@@ -68,10 +68,11 @@
     <table>
         <thead>
             <tr>
-                <th style="width: 30%;">USERNAME</th>
-                <th style="width: 30%;">NAME</th>
-                <th style="width: 30%;">SUBSCRIPTION STATUS</th>
-                <th style="width: 10%;">ACTIONS</th>    
+                <th style="width: 20%;">USERNAME</th>
+                <th style="width: 20%;">NAME</th>
+                <th style="width: 20%;">SUBSCRIPTION STATUS</th>
+                <th style="width: 20%;">EXPIRATION DATE</th>
+                <th style="width: 20%;">ACTIONS</th>    
             </tr>
         </thead>
         <tbody id="userTableBody">
@@ -160,6 +161,11 @@
             users.push(arr)
             i += 1
         }
+
+        // users.push([1, 'John', 'Doe', 'johndoe', 'password123', 'free', '2023-01-01']);
+        // users.push([2, 'Jane', 'Smith', 'janesmith', 'password456', 'pro', '2023-01-01']);
+        // users.push([3, 'Alice', 'Johnson', 'alicejohnson', 'password789', 'free', '2023-01-01']);
+
         let currentPage = 1;
         const rowsPerPage = 10;
         let currentUserIndex = null; // Store the index of the user being edited
@@ -179,7 +185,8 @@
                 row.innerHTML = `
                     <td>${user[3]}</td>
                     <td>${user[1].concat(" ", user[2])}</td>
-                    <td subscribe = "${user[5]}">${user[5]}"</td>
+                    <td subscribe = "${user[5]}">${user[5]}</td>
+                    <td>${user[6]}</td>
                     <td>
                         <button class="action-btn" onclick="editUser(${start + index})">Edit</button>
                         <button class="action-btn delete-btn" onclick="deleteUser(${start + index})">Delete</button>
