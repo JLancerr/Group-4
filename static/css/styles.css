@@ -697,3 +697,82 @@ footer .container {
 .contact-form button:hover {
   background-color: var(--blue-secondary);
 }
+
+
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  animation: float 6s ease-in-out infinite;
+}
+
+.circle.small {
+  width: 50px;
+  height: 50px;
+  bottom: 10%;
+  left: 20%;
+  background-color: var(--blue-vibrant);
+}
+
+.circle.medium {
+  width: 150px;
+  height: 150px;
+  top: 30%;
+  right: 15%;
+  background-color: var(--blue-vibrant);
+  z-index: -1; 
+}
+
+.circle.large {
+  width: 300px;
+  height: 300px;
+  top: 10%;
+  left: 10%;
+  background-color: var(--blue-vibrant);
+  z-index: -1;
+  
+}
+
+ .circle #meds {
+  width: 50px;
+  height: 50px;
+  
+  left: 20%;
+  background-color: var(--blue-vibrant);
+  z-index: -1; 
+ 
+}
+
+.circle.medyolarge {
+  width: 150px;
+  height: 150px;
+  top: 10%;
+  left: 10%;
+  background-color: var(--blue-vibrant);
+  z-index: -1;
+  
+}
+
+
+
+
+
+/* Animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
