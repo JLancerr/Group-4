@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../static/css/all.min.css" />
-    <link rel="stylesheet" href="../static/css/font.css">
+    <link rel="stylesheet" href="../static/css/font.css" />
     <link rel="stylesheet" href="../static/css/pricing.css" />
     <title>QuizRev | Pricing</title>
   </head>
@@ -30,7 +30,7 @@
 
         <!-- Button -->
         <div class="buttons">
-          <a href="#" class="secondary-btn" style="opacity: 0;">Sign In</a>
+          <a href="#" class="secondary-btn" style="opacity: 0">Sign In</a>
           <a href="#" class="primary-btn">Log Out</a>
         </div>
       </nav>
@@ -50,7 +50,6 @@
         </p>
         <a href="#" class="try-btn">Try It For Free Now</a>
       </div>
-
 
       <div class="toggle-container">
         <div class="toggle-option">
@@ -95,7 +94,7 @@
             <li><i class="fas fa-check"></i> Multiple Choice</li>
             <li><i class="fas fa-check"></i> Share Class</li>
           </ul>
-          <button>Start for free</button>
+          <button onclick="showModal()">Buy it now</button>
         </div>
 
         <div class="plan">
@@ -312,6 +311,48 @@
       </div>
     </footer>
 
+    <!-- Modals -->
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <h2>CHOOSE YOUR PLAN</h2>
+
+        <form action="upgrade_plan" method="post">
+          <input type="hidden" name="user_id" value="any" />
+
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required />
+          </div>
+
+          <div class="form-group">
+            <label for="duration_option">Duration</label>
+            <select
+              id="duration_option"
+              name="duration_option"
+              required
+              onchange="updateTotal()"
+            >
+              <option value="" disabled selected>Select an option</option>
+              <option value="option_1" data-price="1499">1 Year - ₱1499</option>
+              <option value="option_2" data-price="149">1 Month - ₱149</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="total_amount">Total Amount</label>
+            <input type="text" id="total_amount" name="total_amount" readonly />
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="buy-btn">Buy Now</button>
+            <button type="button" class="cancel-btn" onclick="hideModal()">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <script>
       const toggle = document.getElementById("toggle");
       const monthly = document.getElementById("monthly");
@@ -362,6 +403,36 @@
       );
 
       faqItems.forEach((item) => observer.observe(item));
+
+      // Show modal
+      function showModal() {
+        document.getElementById("modal").style.display = "flex";
+      }
+
+      // Hide modal when clicking outside of it
+      document
+        .getElementById("modal")
+        .addEventListener("click", function (event) {
+          if (event.target === this) {
+            this.style.display = "none";
+          }
+        });
+
+      // Hide modal when cancel button is clicked
+      function hideModal() {
+        document.getElementById("modal").style.display = "none";
+      }
+
+      // Update total price based on selection
+      function updateTotal() {
+        const durationOption = document.getElementById("duration_option");
+        const totalAmount = document.getElementById("total_amount");
+        const selectedOption =
+          durationOption.options[durationOption.selectedIndex];
+        const price = selectedOption.getAttribute("data-price");
+
+        totalAmount.value = price ? `₱${price}` : "";
+      }
     </script>
   </body>
 </html>
