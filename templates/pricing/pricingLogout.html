@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pricing Plans</title>
+    <title>QuizRev | Pricing Plans</title>
     <link rel="stylesheet" href="pricing.css">
     <link
     rel="stylesheet"
@@ -104,7 +104,7 @@
                         <li><i class="fas fa-check"></i> Multiple Choice</li>
                         <li><i class="fas fa-check"></i> Share Class</li>
                     </ul>
-                    <button>Start for free</button>
+                    <button onclick="showModal()">Buy It Now</button>
                 </div>
         
                 <div class="plan">
@@ -130,9 +130,7 @@
         </div>
 
 
-
-
-
+        <br>
 
 
         <!-- DISCOVER FEATURES -->
@@ -176,9 +174,7 @@
                 <p>Engage with interactive quizzes, flashcards, and practice tests to reinforce your knowledge and track your progress in real-time.</p>
             </div>
         </div>
-
-
-
+    
 
 
 
@@ -280,7 +276,41 @@
 
 
 
+    <!-- Modals -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+                <h2>CHOOSE YOUR PLAN</h2>
 
+            <form action="upgrade_plan" method="post">
+
+                <input type="hidden" name="user_id" value="any">
+
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="duration_option">Duration</label>
+                            <select id="duration_option" name="duration_option" required onchange="updateTotal()">
+                                <option value="" disabled selected>Select an option</option>
+                                <option value="option_1" data-price="1499">1 Year - ₱1499</option>
+                                <option value="option_2" data-price="149">1 Month - ₱149</option>
+                            </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="total_amount">Total Amount</label>
+                        <input type="text" id="total_amount" name="total_amount" readonly>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="buy-btn">Buy Now</button>
+                        <button type="button" class="cancel-btn" onclick="hideModal()">Cancel</button>
+                    </div>
+            </form>
+        </div>
+    </div>
 
 
 
@@ -334,6 +364,39 @@
         });
 
         faqItems.forEach(item => observer.observe(item));
+
+
+
+
+
+        // Show modal
+        function showModal() {
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        // Hide modal when clicking outside of it
+        document.getElementById('modal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                this.style.display = 'none';
+            }
+        });
+
+        // Hide modal when cancel button is clicked
+        function hideModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        // Update total price based on selection
+        function updateTotal() {
+            const durationOption = document.getElementById('duration_option');
+            const totalAmount = document.getElementById('total_amount');
+            const selectedOption = durationOption.options[durationOption.selectedIndex];
+            const price = selectedOption.getAttribute('data-price');
+
+            totalAmount.value = price ? `₱${price}` : '';
+        }
+
+
 
     </script>
 
