@@ -197,6 +197,9 @@ class Lesson(Directory):
         for row in questions_list:
             questions_info.append([ row[0], row[1], row[2] ])
         return questions_info
+    
+    def multiple_choice(self):
+        pass
 
 class Question(Directory):
     def __init__(self, args_dict):
