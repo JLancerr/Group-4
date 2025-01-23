@@ -9,6 +9,15 @@
     <link rel="stylesheet" href="../static/css/dashboard.css" />
     <script src="../static/js/script.js" defer></script>
     <title>Quizrev | Lessons</title>
+    <script>
+      function display_error() {
+        current_url = new URL(window.location.href);
+        url_params = new URLSearchParams(current_url.search);
+        if (url_params.has("error")) {
+          window.alert(url_params.get("error"));
+        }
+      }
+    </script>
 </head>
 <body>
     <!-- Sidebar -->
@@ -37,7 +46,7 @@
               <a href="pricingLogout"><i class="bx bx-purchase-tag"><span class="text nav-text"> Plan</span></i></a>
             </li>
             <li class="navlinks">
-              <a href="#"><i class="bx bxs-face"><span class="text nav-text"> Profile</span></i></a>
+              <a href="profile"><i class="bx bxs-face"><span class="text nav-text"> Profile</span></i></a>
             </li>
           </ul>
         </div>
@@ -110,5 +119,8 @@
         </form>
       </div>
     </div>
+    <script>
+      display_error();
+    </script>
 </body>
 </html>

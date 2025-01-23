@@ -80,13 +80,18 @@ def home():
     # Display home page
     return render_template('home.html', user_data=user.get_all_attributes(), classrooms_info=classrooms_info)
 
+@app.route('/profile')
+def profile():
+    user = User(session)
+    return render_template('profile.html', user=user.get_all_attributes())
+
 # Requires directory_type, directory_id
 # Note that any other routes that tries to redirect to /display will need to provide a directory_type
 @app.route('/display', methods=['GET'])
 def display():
     directory_type = request.args.get('directory_type')
     directory_id = request.args.get('directory_id')
-
+    print("Display: ", directory_id)
     args_dict = {
         'directory_type' : directory_type,
         'directory_id' : directory_id
@@ -145,13 +150,16 @@ def add_directory():
     elif directory_type == "question":
         # Requires directory_type, question, answer, parent_id
         dir = Question(request.form)
+        dir.add_dir_to_database()
     else:
         # Requires directory_id, directory_type, and directory_name, parent_id
         dir = Directory(request.form)
-    dir.add_dir_to_database()
-
-    previous_dir_type = parent_of[f'{directory_type}']
-    previous_dir_id = request.form['parent_id']
+        outcome = dir.add_dir_to_database(session['membership_type'])
+        previous_dir_type = parent_of[f'{directory_type}']
+        previous_dir_id = request.form['parent_id']
+        if outcome != 'success':
+            return redirect(url_for('display', directory_id=previous_dir_id, directory_type=previous_dir_type, error=outcome))
+        
     return redirect(url_for('display', directory_id=previous_dir_id, directory_type=previous_dir_type))
 
 # Requires directory_id, directory_type
@@ -186,11 +194,13 @@ def edit_directory():
         return redirect(url_for('home'))
     else:
         # Requires directory_id, directory_type, and new_directory_name
+        print(request.form)
         dir = Directory(request.form)
         dir.edit_directory(request.form['new_directory_name'])
 
     previous_dir_type = parent_of[f'{directory_type}']
     previous_dir_id = request.form['parent_id']
+    print("previous_dir_id: ", previous_dir_id)
     return redirect(url_for('display', directory_id=previous_dir_id, directory_type=previous_dir_type))
 
 # Requires user_id_to_kick, directory_id
@@ -228,14 +238,24 @@ def join_classroom():
     
 @app.route('/edit_profile', methods=['POST'])
 def edit_profile():
-    new_value = request.form['new_value']
-    user = User(session)
-    outcome = user.upgrade_plan(new_value)
-    if outcome != "success":
-        return redirect(url_for('home', error=outcome))
-    else:
-        return redirect(url_for('home'))
-    
+    user = User(request.form)
+    previous_page = None
+    for name in request.form:
+        if name == 'previous_page':
+            previous_page = request.form[name]
+            continue
+        outcome = user.edit_profile(name, request.form[name])
+        if outcome != "success":
+            return redirect(url_for(f'{previous_page}', error=outcome))
+    return redirect(url_for(f'{previous_page}'))
+
+# Required user_id
+@app.route('/delete_user', methods=['POST'])
+def delete_user():
+    user = User(request.form)
+    user.delete_self()
+    return redirect(url_for('admin'))
+
 @app.route('/admin', methods=['GET'])
 def admin():
     sqlite_connection = sqlite3.connect('app.db') 
@@ -258,6 +278,7 @@ def upgrade_plan():
     duration_option = request.form['duration_option']
     user = User(session)
     user.upgrade_plan(duration_option)
+    session['membership_type'] = 'pro'
     return redirect(url_for('home'))
 
 if __name__ == '__main__':

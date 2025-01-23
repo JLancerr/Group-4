@@ -82,7 +82,7 @@ if 1:
 if 0:
     check_schema()
 
-print(1 == "1")
+query3 = "SELECT user_parent_id FROM Classrooms WHERE classroom_id = ?"
 # cursor.execute("UPDATE Users SET membership_type = 'pro', expiration_date = '2026-12-31' WHERE 1")
 
 sqlite_connection.commit()
