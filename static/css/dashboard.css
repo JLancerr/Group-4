@@ -327,7 +327,7 @@ li {
 
 .item .delete-icon {
   display: inline-block;
-  color: var(--blue-primary);
+  color: var(--blue-secondary);
   transition: 0.3s;
 }
 
