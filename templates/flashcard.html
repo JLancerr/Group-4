@@ -33,16 +33,18 @@
 
   <!-- Flashcard -->
   <div class="flashcard-container">
-    <div class="flashcard" id="flashcard">
+    {% for question in contents %}
+    <div class="flashcard">
       <div class="question">
-        Question Placeholderss
+        {{ question[1] }}
         <div class="click-message">Click to flip the card</div>
       </div>
       <div class="answer">
-        Answer Placeholder
+        {{ question[2] }}
         <div class="click-message">Click to flip the card</div>
       </div>
     </div>
+    {% endfor %}
     <div class="button">
       <button id="prevBtn">Previous</button>
       <button id="nextBtn">Next</button>
@@ -61,27 +63,23 @@
   </div>
 
   <script>
-    const flashcard = document.getElementById('flashcard');
+    const flashcards = document.querySelectorAll('.flashcard');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-    const reviealert = document.getElementById("reviewalert");
+    const reviewalert = document.getElementById("reviewalert");
 
     let currentIndex = 0;
 
-    const flashcards = [
-      { question: 'Question 1', answer: 'Answer 1' },
-      { question: 'Question 2', answer: 'Answer 2' },
-      { question: 'Question 3', answer: 'Answer 3' }
-    ];
-
     function updateFlashcard() {
-      flashcard.classList.remove('flipped');
-      document.querySelector('.question').firstChild.textContent = flashcards[currentIndex].question;
-      document.querySelector('.answer').firstChild.textContent = flashcards[currentIndex].answer;
+      flashcards.forEach((card, index) => {
+        card.style.display = index === currentIndex ? 'block' : 'none';
+      });
     }
 
-    flashcard.addEventListener('click', () => {
-      flashcard.classList.toggle('flipped');
+    flashcards.forEach(card => {
+      card.addEventListener('click', () => {
+        card.classList.toggle('flipped');
+      });
     });
 
     prevBtn.addEventListener('click', () => {
@@ -109,10 +107,16 @@
     }
 
     updateFlashcard();
-  
-  /* Shuffle */
+
+    /* Shuffle */
     document.getElementById('shuffle-btn').addEventListener('click', function() {
+      const container = document.querySelector('.flashcard-container');
+      for (let i = container.children.length; i >= 0; i--) {
+        container.appendChild(container.children[Math.random() * i | 0]);
+      }
       this.classList.toggle('active');
+      currentIndex = 0;
+      updateFlashcard();
     });
   </script>
 </body>
