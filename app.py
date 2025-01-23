@@ -100,7 +100,8 @@ def quiz():
     }
     lesson = Lesson(args_dict)
     contents = lesson.get_directory_contents()
-    
+    if quiz_type == 'identification':
+        pass
     return render_template(f'{quiz_type}.html', contents=contents)
 
 @app.route('/add_directory', methods=["POST"])
