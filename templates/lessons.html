@@ -117,7 +117,7 @@
         <span class="modal-close" id="close-rename-lesson">&times;</span>
         <form id="rename-lesson-form" action="/edit_directory" method="post">
           <input type="hidden" name="directory_type" value="lesson" />
-          <input type="hidden" name="parent_id" id="{{ parent_directory_id }}" />
+          <input type="hidden" name="parent_id" value="{{ parent_directory_id }}" />
           <input type="hidden" name="directory_id" id="rename-lesson-id" />
           <input
             name="new_directory_name"
