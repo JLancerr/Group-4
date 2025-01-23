@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Identification</title>
+    <link rel="stylesheet" href="../static/css/all.min.css">
+    <link rel="stylesheet" href="../static/css/font.css">
+    <link rel="stylesheet" href="../static/css/identification.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <div class="navbar">
+      <nav class="container">
+        <!-- Logo -->
+        <a href="index"
+          ><div class="logo">
+            <img src="../static/images/QLarge.svg" alt="Logo" />
+            <h1>QuizRev</h1>
+          </div>
+        </a>
+
+        <!-- Button -->
+        <div class="buttons">
+          <button id="shuffle-btn" class="secondary-btn">
+            <i class="fas fa-random"></i> Shuffle
+          </button>
+          <a href="#" class="primary-btn">Back</a>
+        </div>
+      </nav>
+    </div>
+
+    <div class="identification-container">
+      <div class="question" id="question">Question 1</div>
+      <textarea
+        class="textbox"
+        id="answer"
+        placeholder="Write your answer here"
+      ></textarea>
+      <button class="submit-btn" onclick="submitAnswer()">Submit</button>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="modal" id="modal">
+      <p id="modal-message"></p>
+      <div class="modal-buttons">
+        <button class="retry-btn" onclick="retry()">Retry</button>
+        <button class="continue-btn" id="continue-btn" onclick="continueQuiz()">
+          Continue
+        </button>
+      </div>
+    </div>
+
+    <script>
+      const questions = [
+        { question: "Question 1", answer: "Answer 1" },
+        { question: "Question 2", answer: "Answer 2" },
+        { question: "Question 3", answer: "Answer 3" },
+      ];
+
+      let currentQuestionIndex = 0;
+
+      function submitAnswer() {
+        const userAnswer = document.getElementById("answer").value.trim();
+        const correctAnswer = questions[currentQuestionIndex].answer;
+
+        const modalMessage = document.getElementById("modal-message");
+        if (userAnswer === correctAnswer) {
+          modalMessage.textContent = "Your Answer Correct!";
+        } else {
+          modalMessage.textContent =
+            "Incorrect Answer. The correct answer is " + correctAnswer;
+        }
+
+        document.getElementById("modal").style.display = "block";
+        document.getElementById("overlay").style.display = "block";
+
+        const continueBtn = document.getElementById("continue-btn");
+        if (currentQuestionIndex === questions.length - 1) {
+          continueBtn.textContent = "Finish";
+          continueBtn.onclick = finishQuiz;
+        } else {
+          continueBtn.textContent = "Continue";
+          continueBtn.onclick = continueQuiz;
+        }
+      }
+
+      function retry() {
+        document.getElementById("modal").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+      }
+
+      function continueQuiz() {
+        currentQuestionIndex++;
+
+        if (currentQuestionIndex < questions.length) {
+          document.getElementById("question").textContent =
+            questions[currentQuestionIndex].question;
+          document.getElementById("answer").placeholder =
+            "Write your answer here";
+          document.getElementById("answer").value = "";
+          document.getElementById("modal").style.display = "none";
+          document.getElementById("overlay").style.display = "none";
+        } else {
+          finishQuiz();
+        }
+      }
+
+      function finishQuiz() {
+        document.getElementById("modal-message").textContent =
+          "Quiz completed!";
+        document.getElementById("modal").style.display = "block";
+        document.getElementById("overlay").style.display = "block";
+
+        const modalButtons = document.querySelector(".modal-buttons");
+        modalButtons.innerHTML =
+          '<button class="retry-btn" onclick="retry()">Retry</button>' +
+          '<button class="finish-btn" onclick="Quizfinish()">Finish</button>';
+      }
+
+      function Quizfinish() {
+        window.location.href = "empty";
+      }
+
+      /* Shuffle */
+    document.getElementById('shuffle-btn').addEventListener('click', function() {
+      this.classList.toggle('active');
+    });
+    </script>
+  </body>
+</html>

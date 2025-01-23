@@ -3,11 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="flashcard.css">
+  <link rel="stylesheet" href="../static/css/all.min.css">
+  <link rel="stylesheet" href="../static/css/font.css">
+  <link rel="stylesheet" href="../static/css/flashcard.css">
   <title>FlashCard</title>
 </head>
 <body>
-  <div class="navbar"></div>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <nav class="container">
+      <!-- Logo -->
+      <a href="index"
+        ><div class="logo">
+          <img src="../static/images/QLarge.svg" alt="Logo" />
+          <h1>QuizRev</h1>
+        </div>
+      </a>
+
+      <!-- Button -->
+      <div class="buttons">
+        <button id="shuffle-btn" class="secondary-btn">
+          <i class="fas fa-random"></i> Shuffle
+        </button>
+        <a href="#" class="primary-btn">Back</a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Flashcard -->
   <div class="flashcard-container">
     <div class="flashcard" id="flashcard">
       <div class="question">
@@ -85,6 +109,11 @@
     }
 
     updateFlashcard();
+  
+  /* Shuffle */
+    document.getElementById('shuffle-btn').addEventListener('click', function() {
+      this.classList.toggle('active');
+    });
   </script>
 </body>
 </html>
