@@ -6,9 +6,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../static/css/all.min.css"/>
+    <link rel="stylesheet" href="../static/css/all.min.css" />
     <!-- ../static/css/all.min.css" -->
-    <link rel="stylesheet" href="../static/css/font.css">
+    <link rel="stylesheet" href="../static/css/font.css" />
     <link rel="stylesheet" href="../static/css/styles.css" />
     <script src="../static/js/scrollreveal.min.js"></script>
     <script>
@@ -19,7 +19,7 @@
           window.alert(url_params.get("error"));
         }
       }
-      </script>
+    </script>
     <title>QuizRev | Home</title>
   </head>
   <body class="index-body">
@@ -63,15 +63,12 @@
           <a href="#" class="secondary-btn">Learn More</a>
         </div>
 
-        <div class="section">
-         
+        <!-- Circle Graphics -->
+        <div class="circle-graphics">
           <div class="circle small"></div>
           <div class="circle medium"></div>
           <div class="circle large"></div>
         </div>
-
-
-
       </div>
     </section>
 
@@ -87,11 +84,7 @@
           <!-- Add content here -->
         </div>
       </div>
-      
-      
     </section>
-
-    
 
     <!-- Method -->
     <section class="method feature-2">
@@ -107,10 +100,9 @@
         </div>
       </div>
 
-      <div class="section">
-        
+      <!-- Circle Graphics -->
+      <div class="circle-graphics">
         <div class="circle medium" id="meds"></div>
-        
       </div>
     </section>
 
@@ -124,16 +116,12 @@
         <div class="share-figure">
           <!-- Add content here -->
         </div>
-
-        
-
-        
       </div>
-      <div class="section">
-        
+
+      <!-- Circle Graphics -->
+      <div class="circle-graphics">
         <div class="circle small"></div>
-        
-        <div class="circle medyolarge" ></div>
+        <div class="circle medyolarge"></div>
       </div>
     </section>
 
@@ -201,25 +189,25 @@
       function runAnimation() {
         ScrollReveal({
           reset: false,
-          distance: '100px',
+          distance: "100px",
           duration: 2500,
-          delay: 400
+          delay: 400,
         });
-        ScrollReveal().reveal('.feature-1', { origin: 'right', delay: 200 });
-        ScrollReveal().reveal('.feature-2', { origin: 'left', delay: 200 });
-        ScrollReveal().reveal('.feature-3', { origin: 'right', delay: 200 });
+        ScrollReveal().reveal(".feature-1", { origin: "right", delay: 200 });
+        ScrollReveal().reveal(".feature-2", { origin: "left", delay: 200 });
+        ScrollReveal().reveal(".feature-3", { origin: "right", delay: 200 });
       }
 
       // Check if the user has visited the page before
-      if (!localStorage.getItem('visited')) {
+      if (!localStorage.getItem("visited")) {
         // Set the flag in localStorage
-        localStorage.setItem('visited', 'true');
+        localStorage.setItem("visited", "true");
 
         // Add scroll event listener to run the animation on first scroll
-        window.addEventListener('scroll', function onScroll() {
+        window.addEventListener("scroll", function onScroll() {
           runAnimation();
           // Remove the event listener after running the animation
-          window.removeEventListener('scroll', onScroll);
+          window.removeEventListener("scroll", onScroll);
         });
       } else {
         // Run the animation immediately if the user has visited before
