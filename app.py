@@ -110,7 +110,7 @@ def quiz():
     contents = lesson.get_directory_contents()
     if quiz_type == 'identification':
         pass
-    return render_template(f'{quiz_type}.html', contents=contents)
+    return render_template(f'learningview/{quiz_type}.html', contents=contents)
 
 @app.route('/add_directory', methods=["POST"])
 def add_directory():
@@ -211,14 +211,25 @@ def join_classroom():
     
 @app.route('/edit_profile', methods=['POST'])
 def edit_profile():
-    new_value = request.form['new_value']
-    user = User(session)
-    outcome = user.upgrade_plan(new_value)
-    if outcome != "success":
-        return redirect(url_for('home', error=outcome))
-    else:
-        return redirect(url_for('home'))
+    user = User(request.form)
+    previous_page = None
+    for name in request.form:
+        if name == 'previous_page':
+            previous_page = request.form[name]
+            continue
+        outcome = user.edit_profile(name, request.form[name])
+        if outcome != "success":
+            return redirect(url_for(f'{previous_page}', error=outcome))
+
+    return redirect(url_for(f'{previous_page}'))
     
+# Required user_id
+@app.route('/delete_user', methods=['POST'])
+def edit_profile():
+    user = User(request.form)
+    user.delete_self()
+    return redirect(url_for('admin'))
+
 @app.route('/admin', methods=['GET'])
 def admin():
     sqlite_connection = sqlite3.connect('app.db') 
@@ -233,7 +244,10 @@ def admin():
             converted[6] = 'null'
         list_users.append(converted)
         i += 1
-    return render_template('admin.html', all_users=list_users)
+    total_users = len(list_users)
+
+    total_subscription = cursor.execute("SELECT COUNT(user_id) FROM Users WHERE membership_type = 'pro'").fetchone()[0]
+    return render_template('admin.html', all_users=list_users, total_users=total_users, total_subscription=total_subscription)
 
 # Requires user_id, duration_option ('option_1' for 12 months, 'option_2' for 6 months)
 @app.route('/upgrade_plan', methods=['POST'])

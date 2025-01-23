@@ -160,9 +160,10 @@ class User:
 
     def edit_profile(self, column_to_update, new_value):
         if column_to_update == 'username':
-            usernames = self.__cursor.execute('SELECT username FROM Users WHERE username = ?;', (new_value,)).fetchall()
-            if len(usernames) > 0:
-                return "username-already-exists"
+            info = self.__cursor.execute('SELECT user_id, username FROM Users WHERE username = ?;', (new_value,)).fetchall()
+            if len(info) > 0:
+                if int(info[0][0]) != int(self.__user_id):
+                    return "username-already-exists"
             
         query1 = f"UPDATE Users SET {column_to_update} = ? WHERE user_id = ?"
         self.__cursor.execute(query1, (new_value, self.__user_id))
@@ -183,6 +184,15 @@ class User:
         query2 = "UPDATE Users SET membership_type = 'pro', expiration_date = ? WHERE user_id = ?"
         self.__cursor.execute(query2, (membership_expiration_date, self.__user_id))
         self.__sqlite_connection.commit()
+
+    def delete_self(self):
+        query = "DELETE FROM Users WHERE user_id = ?"
+        self.__cursor(query, (self.__user_id,))
+        args_dict = {
+            'directory_id' : {self.__user_id},
+            'directory_type' : "user"
+        }
+        Directory(args_dict).delete_directory()
 
     def get_first_name(self):
         return self.__first_name

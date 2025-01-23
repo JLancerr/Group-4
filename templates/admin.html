@@ -7,7 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/admin.css">
     <title>Admin Dashboard</title>
-    
+    <script>
+        function display_error() {
+          current_url = new URL(window.location.href);
+          url_params = new URLSearchParams(current_url.search);
+          if (url_params.has("error")) {
+            window.alert(url_params.get("error"));
+          }
+        }
+      </script>
 </head>
 <body>
     <!-- Navbar -->
@@ -42,14 +50,14 @@
                 <h1>TOTAL USERS</h1>
                 <div class="pic">
                     <div class="left"><i class='bx bxs-user'></i></div>
-                    <div class="right"><h5>{total_users}</h5></div>
+                    <div class="right"><h5>{{total_users}}</h5></div>
                 </div>
             </div>  
                 
             <div class="subscribe"><h1>TOTAL SUBSCRIPTION</h1>
                 <div class="pic">
                     <div class="left"><i class='bx bxs-user'></i></div>
-                    <div class="right"><h5>{total_subscription}</h5></div>
+                    <div class="right"><h5>{{total_subscription}}</h5></div>
                 </div></div>
             <div class="earning"><h1>TOTAL EARNINGS</h1>
                 <div class="pic">
@@ -88,30 +96,35 @@
     <div class="modal" id="editModal">
         <div class="modal-content">
             <h2>EDIT USER</h2>
-            <form id="editForm" onsubmit="saveUserChanges(event)">
-                <input type="text" id="editUsername" placeholder="Username" required>
-                <input type="text" id="editName" placeholder="Name" required>
-                <input type="email" id="editEmail" placeholder="Email" required>
+            <!-- onsubmit="saveUserChanges(event)"> -->
+            <form action="/edit_profile" method="POST" id="editForm">
+                <input type="hidden" name="previous_page" value="admin">
+                <input type="text" name="username" id="editUsername" placeholder="Username" value="" required>
+                <input type="text" name="first_name" id="editFirstName" placeholder="First Name" value="" required>
+                <input type="text" name="last_name" id="editLastName" placeholder="Last Name" value="" required>
+
+                <input type="hidden" name="user_id" id="editID" value=""> 
                 
-                <!-- Role Dropdown -->
+                <!-- Role Dropdown
                 <select id="editRole" required>
                     <option value="" disabled selected>Select Role</option>
                     <option value="admin">Admin</option>
                     <option value="user">User</option>
-                </select>
+                </select> -->
 
                 <!-- Subscription Status Dropdown -->
-                <select id="editSubscriptionStatus" required>
-                    <option value="" disabled selected>Select Subscription Status</option>
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
+                <input name="membership_type" type="hidden" id="status" value=""> 
+                <select id="editSubscriptionStatus" onchange="setSubStatus()" required>
+                    <option disabled selected>Select Subscription Status</option>
+                    <option value="pro">pro</option>
+                    <option value="free">free</option>
                 </select>
 
-                <!-- Start Date -->
-                <input type="date" id="editStartDate" required>
+                <!-- Start Date
+                <input type="date" id="editStartDate" required> -->
 
                 <!-- End Date -->
-                <input type="date" id="editEndDate" required>
+                <input type="date" name="expiration_date" value="" id="editEndDate" required>
 
                 <div style="text-align: center;">
                     <button type="submit">Save Changes</button>
@@ -188,7 +201,7 @@
                     <td>${user[6]}</td>
                     <td>
                         <button class="action-btn" onclick="editUser(${start + index})">Edit</button>
-                        <button class="action-btn delete-btn" onclick="deleteUser(${start + index})">Delete</button>
+                        <button class="action-btn delete-btn" onclick="deleteUser(${user[0]})">Delete</button>
                     </td>
                 `;
                 tbody.appendChild(row);
@@ -235,13 +248,15 @@
         function editUser(index) {
             const user = users[index];
             currentUserIndex = index;
-            document.getElementById('editUsername').value = user.username;
-            document.getElementById('editName').value = user.name;
-            document.getElementById('editEmail').value = user.email;
-            document.getElementById('editRole').value = user.role;
-            document.getElementById('editSubscriptionStatus').value = user.subscriptionStatus;
-            document.getElementById('editStartDate').value = user.startDate;
-            document.getElementById('editEndDate').value = user.endDate;
+            console.log(user)
+            document.getElementById('editUsername').value = user[3];
+            document.getElementById('editFirstName').value = user[1];
+            document.getElementById('editLastName').value = user[2];
+            // document.getElementById('editEmail').value = user.email;
+            document.getElementById('status').value = user[5];
+            // document.getElementById('editStartDate').value = user.startDate;
+            document.getElementById('editEndDate').value = user[6];
+            document.getElementById('editID').value = user[0];
 
             document.getElementById('editModal').classList.add('show');
         }
@@ -252,34 +267,43 @@
         }
 
         // Save user change
-        function saveUserChanges(event) {
-            event.preventDefault();
+        // function saveUserChanges(event) {
+        //     event.preventDefault();
 
-            const updatedUser = {
-                username: document.getElementById('editUsername').value,
-                name: document.getElementById('editName').value,
-                email: document.getElementById('editEmail').value,
-                role: document.getElementById('editRole').value,
-                subscriptionStatus: document.getElementById('editSubscriptionStatus').value,
-                startDate: document.getElementById('editStartDate').value,
-                endDate: document.getElementById('editEndDate').value,
-            };
+        //     const updatedUser = [
+        //         document.getElementById('editUsername').value,
+        //         document.getElementById('editFirstName').value,
+        //         document.getElementById('editLastName').value,
+        //         // document.getElementById('editEmail').value = user.email;
+        //         document.getElementById('status').value,
+        //         // document.getElementById('editStartDate').value = user.startDate;
+        //         document.getElementById('editEndDate').value,
+        //         document.getElementById('editID').value
+        //     ];
 
-            users[currentUserIndex] = updatedUser;
-            closeModal();
-            displayUsers();
+        //     users[currentUserIndex] = updatedUser;
+        //     closeModal();
+        //     displayUsers();
+        // }
+
+        function deleteUser(id) {
+            let form = document.createElement('form')
+            let input = form.createElement('input')
+            form.action = "/delete_user"
+            form.method = 'post'
+            input.name = "user_id"
+            input.value = id
+            form.submit()
         }
-
-        // Delete user function
-        function deleteUser(index) {
-            if (confirm('Are you sure you want to delete this user?')) {
-                users.splice(index, 1);
-                displayUsers();
-            }
+        function setSubStatus() {
+            const selectElement = document.getElementById('editSubscriptionStatus');
+            const selectedText = selectElement.options[selectElement.selectedIndex].text; // Get the text inside the selected <option>
+            document.getElementById('status').value = selectedText; // Update the hidden input
+            console.log("Selected text:", selectedText); // Debug log
         }
-
         // Initial display
         displayUsers();
+        display_error() 
     </script>
 </body>
 </html>
