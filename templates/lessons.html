@@ -69,9 +69,9 @@
               <form action="/display" method="get" class="item">
                 <input type="hidden" name="directory_type" value="lesson">
                 <input type="hidden" name="directory_id" value="{{ lesson_info[0] }}">
-                <input type="submit" value="{{ lesson_info[1] }}" class="classroom-name">
+                <input type="submit" value="{{ lesson_info[1] }}" class="card-name">
                 {% if authored == "1" %}
-                <div class="classroom-buttons">
+                <div class="card-buttons">
                   <button type="button" class="edit-icon" data-lesson-id="{{ lesson_info[0] }}">
                     <i class="fa-solid fa-edit"></i>
                   </button>
