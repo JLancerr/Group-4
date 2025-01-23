@@ -210,6 +210,19 @@ Notes for the Frontend:
                 - directory_type = "question"
                 - directory_id = whatever the id of that question to delete
                 - parent_id = {{ parent_directory_id }}
+
+          - To add question or answer  
+            - Again, ipakita lang ang delete option kung sila ang author
+            - Send to route '/add_directory'
+            - Method is POST request
+            - With these data variables 
+                - directory_type = "question"
+                - directory_id = whatever the id of that question to change
+                - question = inputted by the user
+                - answer = inputted by the user
+                    - Note that hindi naman kaylangan maginput ni user in both new_question and new_answer, kahit isa oks lang
+                - parent_id = {{ parent_directory_id }}
+
         - To change question or answer  
             - Again, ipakita lang ang delete option kung sila ang author
             - Send to route '/edit_directory'

@@ -118,6 +118,25 @@
       </div>
     </div>
 
+    <!-- Add Question Modal -->
+    <div id="add-question-modal" class="modal">
+      <div class="modal-content">
+        <h3>Add Question</h3>
+        <span class="modal-close" id="close-add-question">&times;</span>
+        <form id="add-question-form" action="/add_directory" method="post">
+          <input type="hidden" name="directory_type" value="question" />
+          <input
+            type="hidden"
+            name="parent_id"
+            value="{{ parent_directory_id }}"
+          />
+          <input name="question" placeholder="Enter Question" required />
+          <input name="answer" placeholder="Enter Answer" required />
+          <button type="submit" class="primary-btn">Add</button>
+        </form>
+      </div>
+    </div>
+
     <!-- Delete Question Modal -->
     <div id="delete-question-modal" class="modal">
       <div class="modal-content modal-centered">
@@ -167,7 +186,7 @@
         <h2>Select Study Mode</h2>
         <div class="options">
           <!-- Flashcards -->
-          <form action="/quiz" method="get">
+          <form action="/quiz" method="get" class="flashcard-item">
             <input
               type="hidden"
               name="parent_id"
