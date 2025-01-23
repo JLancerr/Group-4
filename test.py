@@ -82,7 +82,7 @@ if 1:
 if 0:
     check_schema()
 
-
+print({} == {})
 # cursor.execute("UPDATE Users SET membership_type = 'pro', expiration_date = '2026-12-31' WHERE 1")
 
 sqlite_connection.commit()
