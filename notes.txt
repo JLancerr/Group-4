@@ -256,4 +256,8 @@ Notes for the Frontend:
     - Data that the backend will be sending to this file:
         contents[ [question_id, question, answer, [incorrect_answer1, incorrect_answer2, incorrect_answer3]] ]
 
+    route = /display
+    directory_type = "lessons"
+    directory_id = {{ lesson_id }}
+
 GOODLUCK HARRY! 

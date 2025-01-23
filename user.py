@@ -198,6 +198,18 @@ class User:
         }
         Directory(args_dict).delete_directory()
 
+    def get_all_attributes(self):
+        query = 'SELECT * FROM Users WHERE user_id = ?'
+        info = self.__cursor.execute(query, (self.__user_id,)).fetchone()
+        return {
+            'user_id': info[0], 
+            'first_name': info[1], 
+            'last_name':  info[2], 
+            'username':  info[3], 
+            'password':  info[4], 
+            'membership_type':  info[5],
+            'expiration_date':  info[6]}
+
     def get_first_name(self):
         return self.__first_name
     
@@ -219,14 +231,14 @@ class User:
     def get_expiration_date(self):
         return self.__expiration_date
     
-    # Returns all attributes in dictionary form
-    def get_all_attributes(self):
-        return {
-            'user_id': self.__user_id, 
-            'first_name': self.__first_name, 
-            'last_name':  self.__last_name, 
-            'username':  self.__username, 
-            'password':  self.__password, 
-            'membership_type':  self.__membership_type,
-            'expiration_date':  self.__expiration_date}
+    # # Returns all attributes in dictionary form
+    # def get_all_attributes(self):
+    #     return {
+    #         'user_id': self.__user_id, 
+    #         'first_name': self.__first_name, 
+    #         'last_name':  self.__last_name, 
+    #         'username':  self.__username, 
+    #         'password':  self.__password, 
+    #         'membership_type':  self.__membership_type,
+    #         'expiration_date':  self.__expiration_date}
 

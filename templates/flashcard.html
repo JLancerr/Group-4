@@ -14,7 +14,7 @@
   <div class="navbar">
     <nav class="container">
       <!-- Logo -->
-      <a href="index"
+      <a href="home"
         ><div class="logo">
           <img src="../static/images/QLarge.svg" alt="Logo" />
           <h1>QuizRev</h1>
@@ -26,7 +26,11 @@
         <button id="shuffle-btn" class="secondary-btn">
           <i class="fas fa-random"></i> Shuffle
         </button>
-        <a href="#" class="primary-btn">Back</a>
+        <form action="/display" method="get">
+          <input type="hidden" name="directory_type" value="lessons">
+          <input type="hidden" name="directory_id" value="{{ lessons_id }}">
+          <a href="#" class="primary-btn">Back</a>
+        </form>
       </div>
     </nav>
   </div>
@@ -57,7 +61,11 @@
       <p>Congratulations on completing your review session.</p>
       <div class="alert-buttons">
         <button class="retry-btn" onclick="retryReview()">Retry</button>
-        <button class="finish-btn" onclick="finishReview()">Finish</button>
+        <form action="/display" method="get">
+          <input type="hidden" name="directory_type" value="lessons">
+          <input type="hidden" name="directory_id" value="{{ lessons_id }}">
+          <button class="finish-btn">Finish</button>
+        </form>
       </div>
     </div>
   </div>
@@ -102,14 +110,10 @@
       reviewalert.style.display = "none";
     }
 
-    function finishReview() {
-      window.location.href = "empty";
-    }
-
     updateFlashcard();
 
     /* Shuffle */
-    document.getElementById('shuffle-btn').addEventListener('click', function() {
+    /* document.getElementById('shuffle-btn').addEventListener('click', function() {
       const container = document.querySelector('.flashcard-container');
       for (let i = container.children.length; i >= 0; i--) {
         container.appendChild(container.children[Math.random() * i | 0]);
@@ -117,7 +121,7 @@
       this.classList.toggle('active');
       currentIndex = 0;
       updateFlashcard();
-    });
+    }); */
   </script>
 </body>
 </html>

@@ -1,132 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Identification</title>
-    <link rel="stylesheet" href="../static/css/all.min.css">
-    <link rel="stylesheet" href="../static/css/font.css">
-    <link rel="stylesheet" href="../static/css/identification.css" />
-  </head>
-  <body>
-    <!-- Navbar -->
-    <div class="navbar">
-      <nav class="container">
-        <!-- Logo -->
-        <a href="index"
-          ><div class="logo">
-            <img src="../static/images/QLarge.svg" alt="Logo" />
-            <h1>QuizRev</h1>
-          </div>
-        </a>
-
-        <!-- Button -->
-        <div class="buttons">
-          <button id="shuffle-btn" class="secondary-btn">
-            <i class="fas fa-random"></i> Shuffle
-          </button>
-          <a href="#" class="primary-btn">Back</a>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Identification</title>
+  <link rel="stylesheet" href="../static/css/all.min.css">
+  <link rel="stylesheet" href="../static/css/font.css">
+  <link rel="stylesheet" href="../static/css/identification.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <nav class="container">
+      <!-- Logo -->
+      <a href="home">
+        <div class="logo">
+          <img src="../static/images/QLarge.svg" alt="Logo" />
+          <h1>QuizRev</h1>
         </div>
-      </nav>
-    </div>
+      </a>
 
-    <div class="identification-container">
-      <div class="question" id="question">Question 1</div>
-      <textarea
-        class="textbox"
-        id="answer"
-        placeholder="Write your answer here"
-      ></textarea>
-      <button class="submit-btn" onclick="submitAnswer()">Submit</button>
-    </div>
-
-    <div class="overlay" id="overlay"></div>
-
-    <div class="modal" id="modal">
-      <p id="modal-message"></p>
-      <div class="modal-buttons">
-        <button class="retry-btn" onclick="retry()">Retry</button>
-        <button class="continue-btn" id="continue-btn" onclick="continueQuiz()">
-          Continue
+      <!-- Button -->
+      <div class="buttons">
+        <button id="shuffle-btn" class="secondary-btn">
+          <i class="fas fa-random"></i> Shuffle
         </button>
+        <form action="/display" method="get">
+          <input type="hidden" name="directory_type" value="lessons">
+          <input type="hidden" name="directory_id" value="{{ lessons_id }}">
+          <a href="#" class="primary-btn">Back</a>
+        </form>
       </div>
+    </nav>
+  </div>
+
+  <div class="identification-container">
+    {% for question in contents %}
+    <div class="question-container" style="display: {% if loop.first %}flex{% else %}none{% endif %};">
+      <div class="question" data-answer="{{ question[2] }}">{{ question[1] }}</div>
+      <textarea class="textbox" placeholder="Write your answer here"></textarea>
+      <button class="submit-btn" onclick="submitAnswer(this)">Submit</button>
     </div>
+    {% endfor %}
+  </div>
 
-    <script>
-      const questions = [
-        { question: "Question 1", answer: "Answer 1" },
-        { question: "Question 2", answer: "Answer 2" },
-        { question: "Question 3", answer: "Answer 3" },
-      ];
+  <div class="overlay" id="overlay"></div>
 
-      let currentQuestionIndex = 0;
+  <div class="modal" id="modal">
+    <p id="modal-message"></p>
+    <div class="modal-buttons">
+      <button class="retry-btn" onclick="retry()">Retry</button>
+      <button class="continue-btn" id="continue-btn" onclick="continueQuiz()">Continue</button>
+    </div>
+  </div>
 
-      function submitAnswer() {
-        const userAnswer = document.getElementById("answer").value.trim();
-        const correctAnswer = questions[currentQuestionIndex].answer;
+  <script>
+    let currentQuestionIndex = 0;
+    const questionContainers = document.querySelectorAll('.question-container');
+    const questions = document.querySelectorAll('.question');
+    const textboxes = document.querySelectorAll('.textbox');
+    const submitButtons = document.querySelectorAll('.submit-btn');
 
-        const modalMessage = document.getElementById("modal-message");
-        if (userAnswer === correctAnswer) {
-          modalMessage.textContent = "Your Answer Correct!";
-        } else {
-          modalMessage.textContent =
-            "Incorrect Answer. The correct answer is " + correctAnswer;
-        }
+    function submitAnswer(button) {
+      const index = Array.from(submitButtons).indexOf(button);
+      const userAnswer = textboxes[index].value.trim();
+      const correctAnswer = questions[index].dataset.answer;
 
-        document.getElementById("modal").style.display = "block";
-        document.getElementById("overlay").style.display = "block";
-
-        const continueBtn = document.getElementById("continue-btn");
-        if (currentQuestionIndex === questions.length - 1) {
-          continueBtn.textContent = "Finish";
-          continueBtn.onclick = finishQuiz;
-        } else {
-          continueBtn.textContent = "Continue";
-          continueBtn.onclick = continueQuiz;
-        }
+      const modalMessage = document.getElementById("modal-message");
+      if (userAnswer === correctAnswer) {
+        modalMessage.textContent = "Your Answer is Correct!";
+      } else {
+        modalMessage.textContent = "Incorrect Answer. The correct answer is " + correctAnswer;
       }
 
-      function retry() {
+      document.getElementById("modal").style.display = "block";
+      document.getElementById("overlay").style.display = "block";
+
+      const continueBtn = document.getElementById("continue-btn");
+      if (index === questions.length - 1) {
+        continueBtn.textContent = "Finish";
+        continueBtn.onclick = finishQuiz;
+      } else {
+        continueBtn.textContent = "Continue";
+        continueBtn.onclick = () => continueQuiz(index + 1);
+      }
+    }
+
+    function retry() {
+      document.getElementById("modal").style.display = "none";
+      document.getElementById("overlay").style.display = "none";
+    }
+
+    function continueQuiz(nextIndex) {
+      questionContainers[currentQuestionIndex].style.display = 'none';
+      currentQuestionIndex = nextIndex;
+      if (currentQuestionIndex < questionContainers.length) {
+        questionContainers[currentQuestionIndex].style.display = 'flex';
         document.getElementById("modal").style.display = "none";
         document.getElementById("overlay").style.display = "none";
+      } else {
+        finishQuiz();
       }
+    }
 
-      function continueQuiz() {
-        currentQuestionIndex++;
+    function finishQuiz() {
+      document.getElementById("modal-message").textContent = "Quiz completed!";
+      document.getElementById("modal").style.display = "block";
+      document.getElementById("overlay").style.display = "block";
 
-        if (currentQuestionIndex < questions.length) {
-          document.getElementById("question").textContent =
-            questions[currentQuestionIndex].question;
-          document.getElementById("answer").placeholder =
-            "Write your answer here";
-          document.getElementById("answer").value = "";
-          document.getElementById("modal").style.display = "none";
-          document.getElementById("overlay").style.display = "none";
-        } else {
-          finishQuiz();
-        }
+      const modalButtons = document.querySelector(".modal-buttons");
+      modalButtons.innerHTML =
+        '<button class="retry-btn" onclick="retry()">Retry</button>' +
+        '<button class="finish-btn" onclick="Quizfinish()">Finish</button>';
+    }
+
+    function Quizfinish() {
+      window.location.href = "empty";
+    }
+
+    /* Shuffle */
+    /* document.getElementById('shuffle-btn').addEventListener('click', function() {
+      const container = document.querySelector('.identification-container');
+      const questionContainersArray = Array.from(container.querySelectorAll('.question-container'));
+      for (let i = questionContainersArray.length; i >= 0; i--) {
+        container.appendChild(questionContainersArray[Math.random() * i | 0]);
       }
-
-      function finishQuiz() {
-        document.getElementById("modal-message").textContent =
-          "Quiz completed!";
-        document.getElementById("modal").style.display = "block";
-        document.getElementById("overlay").style.display = "block";
-
-        const modalButtons = document.querySelector(".modal-buttons");
-        modalButtons.innerHTML =
-          '<button class="retry-btn" onclick="retry()">Retry</button>' +
-          '<button class="finish-btn" onclick="Quizfinish()">Finish</button>';
-      }
-
-      function Quizfinish() {
-        window.location.href = "empty";
-      }
-
-      /* Shuffle */
-    document.getElementById('shuffle-btn').addEventListener('click', function() {
       this.classList.toggle('active');
+      currentQuestionIndex = 0;
+      continueQuiz(0);
     });
-    </script>
-  </body>
+
+    continueQuiz(0); */
+  </script>
+</body>
 </html>

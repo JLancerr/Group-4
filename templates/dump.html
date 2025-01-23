@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/all.min.css">
+    <link rel="stylesheet" href="../static/css/boxicons.min.css">
+    <link rel="stylesheet" href="../static/css/font.css" />
+    <link rel="stylesheet" href="../static/css/dashboard.css" />
+
+    <script src="../static/js/script.js" defer></script>
+    <title>Quizrev | Home</title>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar close">
+        <header>
+            <div class="img-text">
+                <span class="image">
+                    <img src="../static/images/QLarge.svg" alt="logo" />
+                </span>
+                <div class="text header-text">
+                    <h1 class="name">Quizrev</h1>
+                </div>
+            </div>
+            <i class="bx bx-chevron-left toggle"></i>
+        </header>
+        <div class="menubar">
+            <div class="menu">
+                <!-- Menu content -->
+                <ul>
+                    <li class="navlinks">
+                        <a href="pricingLogout">
+                            <i class="bx bx-purchase-tag">
+                                <span class="text nav-text"> Plan</span>
+                            </i>
+                        </a>
+                    </li>
+                    <li class="navlinks">
+                        <a href="#">
+                            <i class="bx bxs-face">
+                                <span class="text nav-text"> Profile</span>
+                            </i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Home Section -->
+    <section class="home-section">
+        <div class="profile-container">
+            <h2>User Profile</h2>
+            <form action="/edit_profile" method="POST" class="profile-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" value="{{ user.username }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" readonly>
+                </div>
+                <!-- <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="{{ user.email }}" readonly>
+                </div> -->
+                <!-- <div class="form-group">
+                    <label for="membership_type">Subscription Status</label>
+                    <input type="text" id="membership_type" name="membership_type" value="{{ user.membership_type }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="expiration_date">Expiration Date</label>
+                    <input type="date" id="expiration_date" name="expiration_date" value="{{ user.expiration_date }}" readonly>
+                </div> -->
+                <div class="form-actions">
+                    <button type="button" class="edit-btn" id="editButton">Edit</button>
+                </div>
+                <input type="hidden" name="previous_page" value="profile" required>
+            </form>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div id="editModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <p>Edit your profile here.</p>
+            <form action="/edit_profile" method="POST" id="editForm" onsubmit="saveUserChanges(event)">
+                <div class="form-group">
+                    <label for="editUsername">Username</label>
+                    <input type="text" id="editUsername" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="editFirstName">First Name</label>
+                    <input type="text" id="editFirstName" name="first_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="editLastName">Last Name</label>
+                    <input type="text" id="editLastName" name="last_name" required>
+                </div>
+                <!-- <div class="form-group">
+                    <label for="editEmail">Email</label>
+                    <input type="email" id="editEmail" name="email" required>
+                </div> -->
+                <!-- <div class="form-group">
+                    <label for="editMembershipType">Subscription Status</label>
+                    <input type="text" id="editMembershipType" name="membership_type" required>
+                </div>
+                <div class="form-group">
+                    <label for="editExpirationDate">Expiration Date</label>
+                    <input type="date" id="editExpirationDate" name="expiration_date" required>
+                </div> -->
+                <div class="form-actions">
+                    <button type="submit" onclick="submitForm()">Save Changes</button>
+                    <button type="button" class="cancel-btn" onclick="closeEditModal()">Cancel</button>
+                </div>
+                <input type="hidden" name="user_id" value="{{ user.user_id }}" required>
+                <input type="hidden" name="previous_page" value="profile" required>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('editButton').addEventListener('click', function() {
+            document.getElementById('editModal').style.display = 'block';
+        });
+
+        document.querySelector('.close-button').addEventListener('click', function() {
+            document.getElementById('editModal').style.display = 'none';
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target == document.getElementById('editModal')) {
+                document.getElementById('editModal').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

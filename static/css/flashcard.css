@@ -134,6 +134,7 @@ li {
 .navbar .buttons {
   display: flex;
   gap: 7px;
+  align-items: center;
 }
 
 /* SHUFFLE */
