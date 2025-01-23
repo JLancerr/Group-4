@@ -776,7 +776,7 @@ li {
     position: relative;
     z-index: 2;
     animation: fadeIn 2s ease-in-out;
-    opacity: 1; /* Ensure text is visible initially */
+    opacity: 1;
 }
 
 /* Adding floating design elements */
