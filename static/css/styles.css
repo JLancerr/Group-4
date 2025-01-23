@@ -704,6 +704,7 @@ footer .container {
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.2);
   animation: float 6s ease-in-out infinite;
+  opacity: 0.5;
 }
 
 .circle.small {
@@ -750,10 +751,9 @@ footer .container {
   left: 10%;
   background-color: var(--blue-vibrant);
   z-index: -1;
+ 
   
 }
-
-
 
 
 
