@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../static/css/boxicons.min.css">
     <link rel="stylesheet" href="../static/css/font.css" />
     <link rel="stylesheet" href="../static/css/dashboard.css" />
-    <script src="../static/js/script.js" defer></script>
+    <script src="../static/js/subject.js" defer></script>
     <title>Quizrev | Subjects</title>
 </head>
 <body>
@@ -50,8 +50,8 @@
       <div class="dashboard-header">
         <div class="dashboard-left">
           <h1 class="dashboard-title" data-classroom-id="{{ parent_directory_id }}">{{ parent_directory_name }}</h1>
-          <button class="copy-btn" id="copy-classroom-id-btn">
-            <i class="fa-solid fa-clipboard"></i> Copy Classroom ID
+          <button class="copy-btn secondary-btn" id="copy-classroom-id-btn">
+            <i class="fa-solid fa-clipboard"></i> 
           </button>
         </div>
         <div class="dashboard-buttons">
@@ -103,9 +103,9 @@
                   <p>{{ user[3] }}</p>
                   <p>{{ 'Author' if user[4] else 'Member' }}</p>
                   {% if authored == "1" and not user[4] %}
-                    <button type="button" class="kick-btn" data-user-id="{{ user[0] }}">
-                      <i class="fa-solid fa-user-slash"></i>
-                    </button>
+                  <button type="button" class="kick-btn" data-user-id="{{ user[0] }}">
+                    <i class="fa-solid fa-user-slash"></i>
+                  </button>
                   {% endif %}
                 </div>
               </div>
@@ -134,11 +134,12 @@
       <div class="modal-content">
         <h3>Rename Subject</h3>
         <span class="modal-close" id="close-rename-subject">&times;</span>
-        <form id="rename-class-form" action="/edit_directory" method="post">
-          <input type="hidden" name="directory_type" value="classroom" />
+        <form id="rename-subject-form" action="/edit_directory" method="post">
+          <input type="hidden" name="directory_type" value="subject" />
+          <input type="hidden" name="parent_id" id="{{ parent_directory_id }}" />
           <input type="hidden" name="directory_id" id="rename-subject-id" />
           <input
-            name="new_subject_name"
+            name="new_directory_name"
             placeholder="Enter New Subject Name"
           />
           <button type="submit" class="primary-btn">Rename</button>

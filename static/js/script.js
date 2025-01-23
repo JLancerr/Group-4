@@ -98,6 +98,16 @@ document.getElementById("close-rename-subject").addEventListener("click", () => 
   document.getElementById("rename-subject-modal").style.display = "none";
 });
 
+// Copy Classroom ID functionality
+document.getElementById("copy-classroom-id-btn").addEventListener("click", () => {
+  const classroomId = document.querySelector(".dashboard-title").getAttribute("data-classroom-id");
+  navigator.clipboard.writeText(classroomId).then(() => {
+    alert("Classroom ID copied to clipboard!");
+  }).catch(err => {
+    console.error("Failed to copy: ", err);
+  });
+});
+
 // Kick button functionality for subjects.html
 document.querySelectorAll(".kick-btn").forEach((button) => {
   button.addEventListener("click", function () {
@@ -117,15 +127,5 @@ document.querySelectorAll(".delete-icon").forEach((button) => {
     deleteLessonId.value = lessonId;
     const deleteLessonModal = document.getElementById("delete-lesson-modal");
     deleteLessonModal.style.display = "block";
-  });
-});
-
-// Copy Classroom ID functionality
-document.getElementById("copy-classroom-id-btn").addEventListener("click", () => {
-  const classroomId = document.querySelector(".dashboard-title").getAttribute("data-classroom-id");
-  navigator.clipboard.writeText(classroomId).then(() => {
-    alert("Classroom ID copied to clipboard!");
-  }).catch(err => {
-    console.error("Failed to copy: ", err);
   });
 });
