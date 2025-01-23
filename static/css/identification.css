@@ -1,0 +1,264 @@
+/* BASE STYLES */
+:root {
+  --blue-primary: #082a78;
+  --blue-secondary: #05205f;
+  --blue-dark: #061b4e;
+  --blue-light: #f1f8ff;
+  --blue-vibrant: #2f5bdf;
+  --gray-normal: #d7d7d7;
+  --gray-transparent: #e5e5e5c8;
+  --gray-dark: #666;
+  --gray-black: #333;
+  --yellow: #ffc107;
+  --green: #28a745;
+  --red: #c93828;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", "sans-serif";
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #fff;
+  color: var(--gray-black);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+h3 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+p {
+  font-size: 1.06rem;
+  margin-bottom: 10px;
+}
+
+a {
+  color: var(--blue-dark);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+li {
+  list-style-type: none;
+}
+
+/* Utilities */
+.container {
+  height: 100%;
+  width: 90%;
+  margin: 0 auto;
+  padding: 0 4rem;
+  display: flex;
+}
+
+.primary-btn {
+  background-color: var(--blue-primary);
+  border: 2px solid var(--blue-dark);
+  border-radius: 12px;
+  color: #f2f2f2;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.primary-btn:hover {
+  background-color: var(--blue-secondary);
+  transform: scale(0.95);
+}
+
+.secondary-btn {
+  background-color: #fff;
+  border: 2px solid var(--gray-normal);
+  border-radius: 12px;
+  color: var(--dark-color);
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.secondary-btn:hover {
+  background-color: #f5f5f5;
+  transform: scale(0.95);
+}
+
+/* NAVIGATION BAR */
+.navbar {
+  position: sticky;
+  top: 0;
+  height: 80px;
+  background-color: #fff;
+  border-bottom: 1px solid var(--gray-transparent);
+  width: 100%;
+  z-index: 100;
+}
+
+.navbar .container {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar .logo {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.navbar .logo img {
+  max-width: 4rem;
+  margin-right: 7px;
+}
+
+.navbar .logo h1 {
+  margin: 0;
+  font-size: 1.7rem;
+}
+
+.navbar .buttons {
+  display: flex;
+  gap: 7px;
+}
+
+/* SHUFFLE */
+#shuffle-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 1rem;
+}
+
+#shuffle-btn.active {
+  background-color: var(--yellow);
+  color: #fff;
+}
+
+/* IDENTIFICATION */
+.identification-container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 50px auto;
+  border: 1px solid var(--gray-transparent);
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.question {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.textbox {
+  width: 100%;
+  height: 250px;
+  padding: 15px;
+  font-size: 18px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: none;
+}
+
+.submit-btn {
+  width: 150px;
+  padding: 12px;
+  font-size: 16px;
+  color: white;
+  background-color: var(--blue-primary);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: flex-end;
+  box-sizing: border-box;
+  margin-top: 20px;
+}
+
+.submit-btn:hover {
+  background-color: var(--blue-secondary);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 20px;
+  text-align: center;
+}
+
+.modal p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal-buttons button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.retry-btn {
+  background-color: var(--red);
+  color: white;
+}
+
+.retry-btn:hover {
+  background-color: #b23224;
+}
+
+.continue-btn,
+.finish-btn {
+  background-color: var(--green);
+  color: white;
+}
+
+.continue-btn:hover,
+.finish-btn:hover {
+  background-color: #218838;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}

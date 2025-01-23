@@ -4,44 +4,69 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Multiple Choice</title>
-  <link rel="stylesheet" href="multiplechoice.css">
+  <link rel="stylesheet" href="../static/css/all.min.css">
+  <link rel="stylesheet" href="../static/css/font.css">
+  <link rel="stylesheet" href="../static/css/multiplechoice.css">
 </head>
 <body>
-  <div class="navbar"></div>
-  <div class="container">
-    <div class="question active">
-      <h3>1. Question Placeholder</h3>
-      <div class="options">
-        <label><input type="radio" name="q1"> Option 1</label>
-        <label><input type="radio" name="q1"> Option 2</label>
-        <label><input type="radio" name="q1"> Option 3</label>
-        <label><input type="radio" name="q1"> Option 4</label>
+  <!-- Navbar -->
+  <div class="navbar">
+    <nav class="container">
+      <!-- Logo -->
+      <a href="index"
+        ><div class="logo">
+          <img src="../static/images/QLarge.svg" alt="Logo" />
+          <h1>QuizRev</h1>
+        </div>
+      </a>
+
+      <!-- Button -->
+      <div class="buttons">
+        <button id="shuffle-btn" class="secondary-btn">
+          <i class="fas fa-random"></i> Shuffle
+        </button>
+        <a href="#" class="primary-btn">Back</a>
       </div>
-    </div>
-    <div class="question">
-      <h3>2. Question Placeholder</h3>
-      <div class="options">
-        <label><input type="radio" name="q2"> Option 1</label>
-        <label><input type="radio" name="q2"> Option 2</label>
-        <label><input type="radio" name="q2"> Option 3</label>
-        <label><input type="radio" name="q2"> Option 4</label>
-      </div>
-    </div>
-    <div class="question">
-      <h3>3. Question Placeholder</h3>
-      <div class="options">
-        <label><input type="radio" name="q3"> Option 1</label>
-        <label><input type="radio" name="q3"> Option 2</label>
-        <label><input type="radio" name="q3"> Option 3</label>
-        <label><input type="radio" name="q3"> Option 4</label>
-      </div>
-    </div>
-    <div class="nav-btns">
-      <button class="prev-btn" onclick="navigate(-1)" style="display:none;">Previous</button>
-      <button class="complete-btn" onclick="completeQuiz()" style="display:none;">Complete</button>
-      <button class="next-btn" onclick="navigate(1)">Next</button>
-    </div>
+    </nav>
   </div>
+
+  <!-- Multiple Choice -->
+  <section>
+    <div class="multiplechoice-container">
+      <div class="question active">
+        <h3>1. Question Placeholder</h3>
+        <div class="options">
+          <label><input type="radio" name="q1"> Option 1</label>
+          <label><input type="radio" name="q1"> Option 2</label>
+          <label><input type="radio" name="q1"> Option 3</label>
+          <label><input type="radio" name="q1"> Option 4</label>
+        </div>
+      </div>
+      <div class="question">
+        <h3>2. Question Placeholder</h3>
+        <div class="options">
+          <label><input type="radio" name="q2"> Option 1</label>
+          <label><input type="radio" name="q2"> Option 2</label>
+          <label><input type="radio" name="q2"> Option 3</label>
+          <label><input type="radio" name="q2"> Option 4</label>
+        </div>
+      </div>
+      <div class="question">
+        <h3>3. Question Placeholder</h3>
+        <div class="options">
+          <label><input type="radio" name="q3"> Option 1</label>
+          <label><input type="radio" name="q3"> Option 2</label>
+          <label><input type="radio" name="q3"> Option 3</label>
+          <label><input type="radio" name="q3"> Option 4</label>
+        </div>
+      </div>
+      <div class="nav-btns">
+        <button class="prev-btn" onclick="navigate(-1)" style="display:none;">Previous</button>
+        <button class="complete-btn" onclick="completeQuiz()" style="display:none;">Complete</button>
+        <button class="next-btn" onclick="navigate(1)">Next</button>
+      </div>
+    </div>
+  </section>
 
   <div class="alert" id="resultalert">
     <div class="alert-content">
@@ -60,7 +85,7 @@
     const prevBtn = document.querySelector('.prev-btn');
     const nextBtn = document.querySelector('.next-btn');
     const completeBtn = document.querySelector('.complete-btn');
-    const container = document.querySelector('.container');
+    const container = document.querySelector('.multiplechoice-container');
 
     function navigate(direction) {
       questions[currentQuestion].classList.remove('active');
