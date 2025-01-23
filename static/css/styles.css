@@ -101,7 +101,7 @@ li {
   background-color: #fff;
   border: 2px solid var(--gray-normal);
   border-radius: 12px;
-  color: var(--dark-color);
+  color: var(--gray-black);
   padding: 8px 15px;
   cursor: pointer;
   transition: 0.3s;
