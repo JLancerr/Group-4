@@ -98,18 +98,20 @@ li {
   transform: scale(0.95);
 }
 
-.delete-icn {
+.delete-btn {
   display: inline-block;
   border: 2px solid var(--red-dark);
   border-radius: 12px;
-  color: var(--blue-secondary);
-  padding: 8px 15px;
+  color: #fff;
+  background-color: var(--red-normal);
+  padding: 5px 10px;
   transition: 0.3s;
-   
 }
 
-.delete-icn:hover {
-  background-color: var(--red-dark); /* Adjust this if you don't want hover to change the background */
+.delete-btn:hover {
+  background-color: var(
+    --red-dark
+  ); /* Adjust this if you don't want hover to change the background */
 }
 
 /* HOME */
@@ -217,6 +219,12 @@ li {
   padding-bottom: 30px;
 }
 
+/* Copy ID Button */
+.dashboard-left {
+  display: flex;
+  gap: 15px;
+}
+
 .dashboard-title {
   font-size: 24px;
   margin: 0;
@@ -241,7 +249,10 @@ li {
   margin-top: 30px;
 }
 
-.authored-classrooms, .joined-classrooms, .subjects, .lessons {
+.authored-classrooms,
+.joined-classrooms,
+.subjects,
+.lessons {
   margin-bottom: 50px;
 }
 
@@ -281,18 +292,52 @@ li {
   color: var(--blue-primary);
 }
 
+.item .classroom-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.item .edit-icon {
+  display: inline-block;
+  color: var(--blue-secondary);
+  transition: 0.3s;
+}
+
+.item .edit-icon:hover {
+  color: var(--blue-vibrant);
+  transform: scale(1.03);
+}
+
+.item .delete-icon {
+  display: inline-block;
+  color: var(--blue-primary);
+  transition: 0.3s;
+}
+
+.item .delete-icon:hover {
+  color: var(
+    --red-dark
+  ); /* Adjust this if you don't want hover to change the background */
+  transform: scale(1.03);
+}
+
 .item button {
   position: absolute;
   top: 20px;
-  right: 20px;
   background-color: transparent;
   color: var(--blue-dark);
   border: 0;
   outline: 0;
 }
 
-.item button:hover {
-  color: var(--red-normal);
+.item button.delete-icon {
+  right: 20px;
+}
+
+.item button.edit-icon {
+  right: 50px;
 }
 
 /* Modal Styles */

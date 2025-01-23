@@ -48,7 +48,12 @@
     <div class="main-content dashboard">
       <!-- Dashboard Header -->
       <div class="dashboard-header">
-        <h1 class="dashboard-title">{{ classroom_name }}</h1>
+        <div class="dashboard-left">
+          <h1 class="dashboard-title" data-classroom-id="{{ parent_directory_id }}">{{ parent_directory_name }}</h1>
+          <button class="copy-btn" id="copy-classroom-id-btn">
+            <i class="fa-solid fa-clipboard"></i> Copy Classroom ID
+          </button>
+        </div>
         <div class="dashboard-buttons">
           {% if authored == "1" %}
             <button class="primary-btn" id="add-subject-btn">Add Subject</button>
@@ -72,9 +77,14 @@
                 <input type="hidden" name="directory_id" value="{{ subject_info[0] }}">
                 <input type="submit" value="{{ subject_info[1] }}" class="classroom-name">
                 {% if authored == "1" %}
+                <div class="classroom-buttons">
+                  <button type="button" class="edit-icon" data-subject-id="{{ subject_info[0] }}">
+                    <i class="fa-solid fa-edit"></i>
+                  </button>
                   <button type="button" class="delete-icon" data-subject-id="{{ subject_info[0] }}">
                     <i class="fa-solid fa-trash"></i>
                   </button>
+                </div>
                 {% endif %}
               </form>
             {% endfor %}
@@ -115,6 +125,23 @@
           <input type="hidden" name="directory_type" value="subject">
           <input name="directory_name" placeholder="Enter Subject Name">
           <button type="submit" class="primary-btn">Add</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Rename Subject Modal -->
+    <div id="rename-subject-modal" class="modal">
+      <div class="modal-content">
+        <h3>Rename Subject</h3>
+        <span class="modal-close" id="close-rename-subject">&times;</span>
+        <form id="rename-class-form" action="/edit_directory" method="post">
+          <input type="hidden" name="directory_type" value="classroom" />
+          <input type="hidden" name="directory_id" id="rename-subject-id" />
+          <input
+            name="new_subject_name"
+            placeholder="Enter New Subject Name"
+          />
+          <button type="submit" class="primary-btn">Rename</button>
         </form>
       </div>
     </div>
