@@ -229,8 +229,12 @@ Notes for the Frontend:
                 - parent_id = {{ parent_directory_id }}
                 - quiz_type = 'flashcard' or 'identification' or 'multiple_choice'
 
-- flashcard.html or identifaction.html or multiplechoice.html
+- flashcard.html or identifaction.html 
     - Data that the backend will be sending to this file:
         contents[ [question_id, question, answer] ]
+
+- multiplechoice.html
+    - Data that the backend will be sending to this file:
+        contents[ [question_id, question, answer, [incorrect_answer1, incorrect_answer2, incorrect_answer3]] ]
 
 GOODLUCK HARRY! 
