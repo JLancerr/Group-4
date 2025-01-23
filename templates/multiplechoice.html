@@ -25,7 +25,11 @@
         <button id="shuffle-btn" class="secondary-btn">
           <i class="fas fa-random"></i> Shuffle
         </button>
-        <a href="#" class="primary-btn">Back</a>
+        <form action="/display" method="get">
+          <input type="hidden" name="directory_type" value="lesson">
+          <input type="hidden" name="directory_id" value="{{ lesson_id }}">
+          <button type="submit" class="primary-btn">Back</button>
+        </form>
       </div>
     </nav>
   </div>
@@ -58,7 +62,11 @@
       <p id="scoreMessage">Your score: 0/{{ contents|length }}</p>
       <div class="alert-buttons">
         <button class="retry-btn" onclick="retryQuiz()">Retry</button>
-        <button class="finish-btn" onclick="finishQuiz()">Finish</button>
+        <form action="/display" method="get">
+          <input type="hidden" name="directory_type" value="questions">
+          <input type="hidden" name="directory_id" value="{{ lessons_id }}">
+          <button class="finish-btn">Finish</button>
+        </form>
       </div>
     </div>
   </div>

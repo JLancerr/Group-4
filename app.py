@@ -93,8 +93,8 @@ def display():
     directory_id = request.args.get('directory_id')
     print("Display: ", directory_id)
     args_dict = {
-        'directory_type' : directory_type,
-        'directory_id' : directory_id
+        'directory_type': directory_type,
+        'directory_id': directory_id
     }
     
     if directory_type == "classroom":
@@ -131,8 +131,6 @@ def quiz():
     }
     lesson = Lesson(args_dict)
     contents = lesson.get_directory_contents()
-    if quiz_type == 'identification':
-        pass
     return render_template(f'{quiz_type}.html', contents=contents, lesson_id=lesson_id)
 
 @app.route('/add_directory', methods=["POST"])

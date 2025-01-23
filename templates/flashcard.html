@@ -14,8 +14,8 @@
   <div class="navbar">
     <nav class="container">
       <!-- Logo -->
-      <a href="home"
-        ><div class="logo">
+      <a href="home">
+        <div class="logo">
           <img src="../static/images/QLarge.svg" alt="Logo" />
           <h1>QuizRev</h1>
         </div>
@@ -27,9 +27,9 @@
           <i class="fas fa-random"></i> Shuffle
         </button>
         <form action="/display" method="get">
-          <input type="hidden" name="directory_type" value="lessons">
-          <input type="hidden" name="directory_id" value="{{ lessons_id }}">
-          <a href="#" class="primary-btn">Back</a>
+          <input type="hidden" name="directory_type" value="lesson">
+          <input type="hidden" name="directory_id" value="{{ lesson_id }}">
+          <button type="submit" class="primary-btn">Back</button>
         </form>
       </div>
     </nav>
@@ -62,7 +62,7 @@
       <div class="alert-buttons">
         <button class="retry-btn" onclick="retryReview()">Retry</button>
         <form action="/display" method="get">
-          <input type="hidden" name="directory_type" value="lessons">
+          <input type="hidden" name="directory_type" value="questions">
           <input type="hidden" name="directory_id" value="{{ lessons_id }}">
           <button class="finish-btn">Finish</button>
         </form>
